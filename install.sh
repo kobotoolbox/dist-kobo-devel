@@ -21,9 +21,13 @@ CURDIR=`pwd`
 # GISTS_BASHRC_APPEND="$_GISTS_ROOT/1b8e5b1240aa17133865/raw/af55155cf501ed42bad7a0bc47c9d4005943f8d6/bashrc_appended.sh"
 
 install_info "Add keys for relevant libraries: Mongo, Node, Postgres"
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+
+sudo apt-get install python-software-properties
+
+export DEBIAN_FRONTEND=noninteractive
+sudo apt-key -q adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
-sudo add-apt-repository -y ppa:chris-lea/node.js
+sudo add-apt-repository -q -y ppa:chris-lea/node.js
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" >> /etc/apt/sources.list'
 wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
 
@@ -31,7 +35,6 @@ install_info "Updating repositories after keys have been added"
 sudo apt-get -q update
 
 install_info "Upgrade packages (recommended)"
-export DEBIAN_FRONTEND=noninteractive
 sudo apt-get -q -y upgrade
 
 install_info "Install core dependencies"
@@ -72,6 +75,9 @@ git clone https://github.com/kobotoolbox/kobocat.git $KOBOCAT_PROJ
 
 install_info "Clone templates repository"
 git clone https://github.com/kobotoolbox/kobocat-template.git $KOBOCAT_TEMPLATES_PROJ
+
+install_info "Launch DBs"
+sudo service mongod start
 
 install_info "Create database"
 sudo -u postgres createdb $KOBO_PSQL_DB_NAME
@@ -121,7 +127,7 @@ python manage.py migrate logger
 install_info "Create a user"
 python manage.py createsuperuser
 
-install_info "Display completion message"
+install_info "All done"
 cd $CURDIR
 echo "[ All done ]"
 echo "run 'source ~/virtualenv/bin/activate'   to launch virtualenv"
