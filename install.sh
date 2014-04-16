@@ -1,8 +1,9 @@
-# Environment settings
-# --------------------
+#!/bin/sh
+
 function install_info() {
     echo "KoBoCat install: $1"
 }
+install_info "Environment settings"
 
 KOBO_PSQL_DB_USER=kobo
 KOBO_PSQL_DB_PASS=kobo
