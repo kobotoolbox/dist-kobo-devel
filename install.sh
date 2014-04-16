@@ -1,6 +1,6 @@
 #!/bin/sh
 
-function install_info() {
+install_info() {
     echo "KoBoCat install: $1"
 }
 install_info "Environment settings"
