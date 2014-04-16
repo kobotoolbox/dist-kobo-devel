@@ -1,0 +1,4 @@
+export DIST_KOBO_DEVEL_DIR="$HOME/dist-kobo-devel"
+if [ -d "$DIST_KOBO_DEVEL_DIR" ] && [ -f "$DIST_KOBO_DEVEL_DIR/koborc" ]; then
+    . "$HOME/dist-kobo-devel/koborc"
+fi
