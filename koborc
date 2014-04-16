@@ -3,3 +3,8 @@ export KOBOCAT_REPO="$HOME/kobocat"
 export DJANGO_SETTINGS_MODULE="onadata.settings.kobocat"
 export PIP_DOWNLOAD_CACHE="$HOME/.pip_cache"
 
+function run_kobocat() {
+    . $HOME/virtualenv/bin/activate
+    cd $HOME/kobocat
+    python manage.py runserver 0.0.0.0:8000
+}
