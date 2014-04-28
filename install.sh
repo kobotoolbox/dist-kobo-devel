@@ -32,13 +32,13 @@ sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main
 wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
 
 install_info "Updating repositories after keys have been added"
-sudo apt-get -q update
+sudo apt-get update
 
 install_info "Upgrade packages (recommended)"
-sudo apt-get -q -y upgrade
+sudo apt-get -y upgrade
 
 install_info "Install core dependencies"
-sudo apt-get -q -y install \
+sudo apt-get -y --force-yes install \
  git-core \
  g++ \
  make \
@@ -66,9 +66,14 @@ install_info "Install some extra node dependencies"
 npm install --save-dev
 npm install bower karma grunt-cli
 
-install_info "Create a python virtualenv"
-virtualenv ~/virtualenv
-. ~/virtualenv/bin/activate
+if [ -d "$HOME/virtualenv" ]; then
+    install_info "virtualenv already exists."
+else
+    install_info "Create a python virtualenv"
+    virtualenv $HOME/virtualenv
+fi
+install_info "...activating"
+. $HOME/virtualenv/bin/activate
 
 install_info "Clone repository"
 git clone https://github.com/kobotoolbox/kobocat.git $KOBOCAT_PROJ
@@ -90,7 +95,7 @@ install_info "Symlink LibJPEG dependencies"
 sudo ln -s /usr/lib/`uname -i`-linux-gnu/libjpeg.so ~/virtualenv/lib/python2.7/
 sudo ln -s /usr/lib/`uname -i`-linux-gnu/libz.so ~/virtualenv/lib/python2.7/
 
-install_info "Add a "koborc" file and directory"
+install_info "DL 'dist-kobo-devel' file and directory"
 git clone "https://github.com/kobotoolbox/dist-kobo-devel.git" $DIST_KOBO_DEVEL_DIR
 
 echo "" >> ~/.bashrc
