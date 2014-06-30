@@ -1,5 +1,9 @@
 #!/bin/sh -u
 
+# ENVIRONMENT PRESETS ALREADY IN /vagrant/koborc 	# <-- checked into the repository
+# THIS FILE PULLS IN THE ENVIRONMENT AS DEFINED IN /vagrant/(env_kobocat|env_koboform) # respectively, for each project
+# THESE VALUES MAY BE OVERRIDDEN BY /vagrant/env.sh (optional file) # <-- not checked into the repository
+
 # scripts/01_environment_vars.sh
 
 install_info() {
@@ -29,6 +33,8 @@ export KOBOCAT_TEMPLATES_PATH="/vagrant/kobocat-template"
 export KOBOFORM_REPO="https://github.com/kobotoolbox/dkobo.git"
 export KOBOFORM_BRANCH="master"
 export KOBOFORM_PATH="/vagrant/koboform"
+
+export AUTOLAUNCH="1"
 
 #export KOBOFORM_SERVER="localhost"
 #export KOBOFORM_SERVER_PORT="8000"

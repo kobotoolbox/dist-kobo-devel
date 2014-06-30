@@ -1,5 +1,15 @@
 #!/bin/bash -u
 
+# ============================
+# EXTEND ENVIRONMENT VARIABLES
+. /vagrant/scripts/01_environment_vars.sh
+# ============================
+
+if [ "$AUTOLAUNCH" = "0" ]; then
+	echo "Autolaunch prevented"
+	exit;
+fi
+
 LOGS="/vagrant/logs"
 SCRIPTS="/vagrant/scripts"
 

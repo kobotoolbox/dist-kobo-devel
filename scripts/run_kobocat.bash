@@ -5,8 +5,6 @@
 . /vagrant/scripts/01_environment_vars.sh
 # ============================
 
-whoami > /vagrant/logs/whoami
-
 . ~/.profile
 workon kc
 cd $KOBOCAT_PATH

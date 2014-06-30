@@ -45,9 +45,9 @@ TEMPLATE_OVERRIDE_ROOT_DIR = os.path.join(PROJECT_ROOT, '..', '..', 'kobocat-tem
 TEMPLATE_DIRS = ( os.path.join(PROJECT_ROOT, TEMPLATE_OVERRIDE_ROOT_DIR, 'templates'), ) + TEMPLATE_DIRS
 STATICFILES_DIRS += ( os.path.join(PROJECT_ROOT, TEMPLATE_OVERRIDE_ROOT_DIR, 'static'), )
 
-KOBOFORM_SERVER="localhost"
-KOBOFORM_SERVER_PORT="8000"
-KOBOFORM_SERVER_PROTOCOL="http"
+KOBOFORM_SERVER=os.environ.get("KOBOFORM_SERVER", "localhost")
+KOBOFORM_SERVER_PORT=os.environ.get("KOBOFORM_SERVER_PORT", "80")
+KOBOFORM_SERVER_PROTOCOL=os.environ.get("KOBOFORM_SERVER_PROTOCOL", "http")
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'onadata.kobocat.context_processors.koboform_integration',
@@ -59,4 +59,4 @@ if CSRF_COOKIE_DOMAIN:
     SESSION_COOKIE_DOMAIN = CSRF_COOKIE_DOMAIN
     SESSION_COOKIE_NAME = 'kobonaut'
 
-
+SESSION_SERIALIZER='django.contrib.sessions.serializers.JSONSerializer'

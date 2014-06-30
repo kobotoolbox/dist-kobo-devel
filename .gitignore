@@ -1,4 +1,5 @@
 .vagrant
+env.sh
 node_modules
 kobocat
 koboform
