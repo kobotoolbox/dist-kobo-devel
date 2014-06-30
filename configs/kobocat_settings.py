@@ -13,7 +13,7 @@ DATABASES = {
     'default': dj_database_url.config(default="sqlite:///%s/db.sqlite3" % BASE_DIR)
 }
 
-SECRET_KEY = 'mlfs33^s1l4xf6a36$0xsrgcpj_dd*sisfo6HOktYXB9y'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'mlfs33^s1l4xf6a36$0xsrgcpj_dd*sisfo6HOktYXB9y')
 
 TESTING_MODE = False
 if len(sys.argv) >= 2 and (sys.argv[1] == "test"):
@@ -48,15 +48,21 @@ STATICFILES_DIRS += ( os.path.join(PROJECT_ROOT, TEMPLATE_OVERRIDE_ROOT_DIR, 'st
 KOBOFORM_SERVER=os.environ.get("KOBOFORM_SERVER", "localhost")
 KOBOFORM_SERVER_PORT=os.environ.get("KOBOFORM_SERVER_PORT", "80")
 KOBOFORM_SERVER_PROTOCOL=os.environ.get("KOBOFORM_SERVER_PROTOCOL", "http")
+KOBOFORM_LOGIN_AUTOREDIRECT=False
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'onadata.kobocat.context_processors.koboform_integration',
 ) + TEMPLATE_CONTEXT_PROCESSORS
 
-CSRF_COOKIE_DOMAIN = os.environ.get('CSRF_COOKIE_DOMAIN', 'localhost')
+CSRF_COOKIE_DOMAIN = os.environ.get('CSRF_COOKIE_DOMAIN', None)
 
 if CSRF_COOKIE_DOMAIN:
     SESSION_COOKIE_DOMAIN = CSRF_COOKIE_DOMAIN
     SESSION_COOKIE_NAME = 'kobonaut'
 
 SESSION_SERIALIZER='django.contrib.sessions.serializers.JSONSerializer'
+
+# for debugging
+# print "KOBOFORM_SERVER=%s" % KOBOFORM_SERVER
+# print "SECRET_KEY=%s" % SECRET_KEY
+# print "CSRF_COOKIE_DOMAIN=%s " % CSRF_COOKIE_DOMAIN

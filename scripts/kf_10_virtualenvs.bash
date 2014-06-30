@@ -24,11 +24,6 @@ if [ ! -d "$VENV_LOCATION" ]; then
 		echo "source /vagrant/env/koborc" >> /home/vagrant/.profile
 	fi
 
-	# add local node installs to path
-	if [ $(cat /home/vagrant/.profile | grep node_modules/.bin | wc -l) = "0" ]; then
-		echo 'export PATH="$PATH:./node_modules/.bin"' >> /home/vagrant/.profile
-	fi
-
 	. /home/vagrant/.profile
 
 	if [ -d "/home/vagrant/.virtualenvs/$KENV" ]; then

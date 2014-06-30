@@ -1,11 +1,1 @@
-export PIP_DOWNLOAD_CACHE="$HOME/.pip_cache"
-
-export DJANGO_LIVE_RELOAD="False"
-export DJANGO_SITE_ID="1"
-
-export DATABASE_URL="postgis://kobo:kobo@localhost:5432/kobotoolbox"
-
-export CSRF_COOKIE_DOMAIN='localhost'
-
-# THESE VALUES MAY BE OVERRIDDEN BY /vagrant/scripts/01_environment_vars.sh
-# THESE VALUES MAY BE OVERRIDDEN BY /vagrant/env.sh # <-- optional file, not checked into repository
+#!/bin/sh

@@ -9,4 +9,4 @@
 workon kf
 cd $KOBOFORM_PATH
 
-python manage.py gruntserver 0.0.0.0:8000
+python manage.py gruntserver 0.0.0.0:$KOBOFORM_SERVER_PORT
