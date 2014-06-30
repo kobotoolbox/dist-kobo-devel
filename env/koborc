@@ -13,3 +13,6 @@ run_kobocat() {
     cd $HOME/kobocat
     python manage.py runserver 0.0.0.0:8000
 }
+
+CSRF_COOKIE_DOMAIN='localhost'
+

@@ -10,7 +10,7 @@ export HOME="/home/vagrant"
 
 export KOBO_PSQL_DB_USER="kobo"
 export KOBO_PSQL_DB_PASS="kobo"
-export KOBO_PSQL_DB_NAME="kobocat"
+# export KOBO_PSQL_DB_NAME="kobotoolbox"
 
 export VH="/vagrant"
 export VS="/vagrant/scripts"
@@ -32,3 +32,7 @@ export KOBOFORM_PATH="/vagrant/koboform"
 
 #export KOBOFORM_SERVER="localhost"
 #export KOBOFORM_SERVER_PORT="8000"
+
+if [ -f "/vagrant/env.sh" ]; then
+	. /vagrant/env.sh
+fi

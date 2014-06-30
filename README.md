@@ -27,7 +27,8 @@ Installing Kobocat / Koboform Development Box
 Location of the code
 --------------------
 
-If the installation is scucessful, dist-kobo-devel should include the following git repositories inside
+If the installation is successful, dist-kobo-devel should include the following git repositories inside
 
  * kobocat
  * kobocat-template
+ * koboform

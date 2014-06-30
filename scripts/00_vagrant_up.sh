@@ -41,7 +41,7 @@ sudo -u vagrant     bash /vagrant/scripts/kf_10_virtualenvs.bash
 
 sudo -u vagrant     sh   /vagrant/scripts/kf_20_clone_code.sh
 sudo -u vagrant     bash /vagrant/scripts/kf_30_install_pip_requirements.bash
-sudo -u root        sh   /vagrant/scripts/kf_40_npm_installs.sh
+sudo -u vagrant     sh   /vagrant/scripts/kf_40_npm_installs.sh
 sudo -u vagrant     bash /vagrant/scripts/kf_50_migrate_db.bash
 
 sudo -u vagrant     sh   /vagrant/scripts/09_add_cronjobs.sh

@@ -52,3 +52,11 @@ KOBOFORM_SERVER_PROTOCOL="http"
 TEMPLATE_CONTEXT_PROCESSORS = (
     'onadata.kobocat.context_processors.koboform_integration',
 ) + TEMPLATE_CONTEXT_PROCESSORS
+
+CSRF_COOKIE_DOMAIN = os.environ.get('CSRF_COOKIE_DOMAIN', 'localhost')
+
+if CSRF_COOKIE_DOMAIN:
+    SESSION_COOKIE_DOMAIN = CSRF_COOKIE_DOMAIN
+    SESSION_COOKIE_NAME = 'kobonaut'
+
+

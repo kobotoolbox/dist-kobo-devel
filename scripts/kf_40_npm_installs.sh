@@ -10,5 +10,5 @@ install_info "KF NPM installs"
 cd $KOBOFORM_PATH
 
 npm install bower
-bower install -s
+bower install --config.interactive=false
 npm install

@@ -3,6 +3,9 @@
 LOGS="/vagrant/logs"
 SCRIPTS="/vagrant/scripts"
 
+# ensure logs dir exists
+mkdir -p $LOGS
+
 # move the logs
 [ -f "$LOGS/kobocat.log" ] && { mv "$LOGS/kobocat.log" "$LOGS/kobocat.log.1"; }
 [ -f "$LOGS/koboform.log" ] && { mv "$LOGS/koboform.log" "$LOGS/koboform.log.1"; }
