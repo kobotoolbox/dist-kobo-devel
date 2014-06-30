@@ -1,25 +1,19 @@
+import os
 from common import *  # nopep8
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 TEMPLATE_STRING_IF_INVALID = ''
 
-#postgres
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+import dj_database_url
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'kobocat',
-        'USER': 'kobo',
-        'PASSWORD': 'kobo',
-        'HOST': 'localhost',
-        # NOTE: this option becomes obsolete in django 1.6
-        'OPTIONS': {
-            'autocommit': True,
-        }
-    },
+    'default': dj_database_url.config(default="sqlite:///%s/db.sqlite3" % BASE_DIR)
 }
 
-SECRET_KEY = 'mlfs33^s1l4xf6a36$0#srgcpj%dd*sisfo6HOktYXB9y'
+SECRET_KEY = 'mlfs33^s1l4xf6a36$0xsrgcpj_dd*sisfo6HOktYXB9y'
 
 TESTING_MODE = False
 if len(sys.argv) >= 2 and (sys.argv[1] == "test"):
@@ -45,3 +39,16 @@ if PRINT_EXCEPTION and DEBUG:
 # Clear out the test database
 if TESTING_MODE:
     MONGO_DB.instances.drop()
+
+# include the kobocat-template directory
+TEMPLATE_OVERRIDE_ROOT_DIR = os.path.join(PROJECT_ROOT, '..', '..', 'kobocat-template')
+TEMPLATE_DIRS = ( os.path.join(PROJECT_ROOT, TEMPLATE_OVERRIDE_ROOT_DIR, 'templates'), ) + TEMPLATE_DIRS
+STATICFILES_DIRS += ( os.path.join(PROJECT_ROOT, TEMPLATE_OVERRIDE_ROOT_DIR, 'static'), )
+
+KOBOFORM_SERVER="localhost"
+KOBOFORM_SERVER_PORT="8000"
+KOBOFORM_SERVER_PROTOCOL="http"
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'onadata.kobocat.context_processors.koboform_integration',
+) + TEMPLATE_CONTEXT_PROCESSORS

@@ -1,7 +1,12 @@
 export KOBOCAT_VIRTUALENV="$HOME/virtualenv"
 export KOBOCAT_REPO="$HOME/kobocat"
-export DJANGO_SETTINGS_MODULE="onadata.settings.kobocat"
+
+export DJANGO_SITE_ID="1"
+
 export PIP_DOWNLOAD_CACHE="$HOME/.pip_cache"
+
+export DATABASE_URL="postgis://kobo:kobo@localhost:5432/kobotoolbox"
+
 
 run_kobocat() {
     . $HOME/virtualenv/bin/activate

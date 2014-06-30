@@ -1,0 +1,9 @@
+.vagrant
+node_modules
+kobocat
+koboform
+kobocat-template
+logs/*
+
+.DS_Store
+
