@@ -14,6 +14,8 @@ set -e
 . /vagrant/scripts/01_environment_vars.sh
 # ============================
 
+sudo apt-get update
+
 sudo apt-get install -y python-software-properties git-core
 
 [ -f $HOME/.mark_keys_added ] || {
