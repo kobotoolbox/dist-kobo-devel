@@ -1,0 +1,5 @@
+#!/bin/sh
+
+#koboform specific environment varialbes
+export DJANGO_SETTINGS_MODULE="dkobo.settings"
+export PATH="$PATH:./node_modules/.bin"
