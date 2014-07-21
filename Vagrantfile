@@ -8,6 +8,5 @@ Vagrant.configure("2") do |config|
   config.vm.network :forwarded_port, host: 8001, guest: 8001
 
   config.vm.provision :shell, :path => "scripts/00_vagrant_up.sh"
-  config.vm.post_up_message = "KoBoToolbox VM has been launched on port 8000 and 8001"
 
 end
