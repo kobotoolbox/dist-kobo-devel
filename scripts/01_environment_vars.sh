@@ -25,15 +25,15 @@ export V_L="/vagrant/logs"
 
 export KOBOCAT_REPO="https://github.com/kobotoolbox/kobocat.git"
 export KOBOCAT_BRANCH="master"
-export KOBOCAT_PATH="$V_R/kobocat"
+export KOBOCAT_PATH="$HOME/kobocat"
 
 export KOBOCAT_TEMPLATES_REPO="https://github.com/kobotoolbox/kobocat-template.git"
 export KOBOCAT_TEMPLATES_BRANCH="master"
-export KOBOCAT_TEMPLATES_PATH="$V_R/kobocat-template"
+export KOBOCAT_TEMPLATES_PATH="$HOME/kobocat-template"
 
 export KOBOFORM_REPO="https://github.com/kobotoolbox/dkobo.git"
 export KOBOFORM_BRANCH="master"
-export KOBOFORM_PATH="$V_R/koboform"
+export KOBOFORM_PATH="$HOME/koboform"
 
 export KOBO_PSQL_DB_NAME="kobotoolbox"
 export KOBO_PSQL_DB_USER="kobo"
@@ -69,6 +69,6 @@ run_koboform () {
 }
 
 
-if [ -f "$V_R/$ENV_OVERRIDE_FILE" ]; then
+if [ -f "$HOME/$ENV_OVERRIDE_FILE" ]; then
 	. $V_R/$ENV_OVERRIDE_FILE
 fi
