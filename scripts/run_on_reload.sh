@@ -10,21 +10,18 @@ if [ "$AUTOLAUNCH" = "0" ]; then
 	exit;
 fi
 
-LOGS="/vagrant/logs"
-SCRIPTS="/vagrant/scripts"
-
 # ensure logs dir exists
-mkdir -p $LOGS
+mkdir -p $V_L
 
 # move the logs
-[ -f "$LOGS/kobocat.log" ] && { mv "$LOGS/kobocat.log" "$LOGS/kobocat.log.1"; }
-[ -f "$LOGS/koboform.log" ] && { mv "$LOGS/koboform.log" "$LOGS/koboform.log.1"; }
+[ -f "$V_L/kobocat.log" ] && { mv "$V_L/kobocat.log" "$V_L/kobocat.log.1"; }
+[ -f "$V_L/koboform.log" ] && { mv "$V_L/koboform.log" "$V_L/koboform.log.1"; }
 
 # start the servers
-if [ -f "$SCRIPTS/run_kobocat.bash" ]; then
-	bash "$SCRIPTS/run_kobocat.bash" >> "$LOGS/kobocat.log" 2>&1 &
+if [ -f "$V_S/run_kobocat.bash" ]; then
+	bash "$V_S/run_kobocat.bash" >> "$V_L/kobocat.log" 2>&1 &
 fi
 
-if [ -f "$SCRIPTS/run_koboform.bash" ]; then
-	bash "$SCRIPTS/run_koboform.bash" >> "$LOGS/koboform.log" 2>&1 &
+if [ -f "$V_S/run_koboform.bash" ]; then
+	bash "$V_S/run_koboform.bash" >> "$V_L/koboform.log" 2>&1 &
 fi

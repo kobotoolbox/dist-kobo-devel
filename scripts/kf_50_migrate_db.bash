@@ -8,7 +8,7 @@
 install_info "Migrate KF Database"
 
 cd $KOBOFORM_PATH
-. /home/vagrant/.profile
+. $HOME_VAGRANT/.profile
 workon kf
 
 python manage.py syncdb --noinput

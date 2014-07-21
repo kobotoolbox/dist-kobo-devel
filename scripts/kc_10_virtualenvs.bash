@@ -1,38 +1,38 @@
 #!/bin/bash -u
 
-# scripts/kc_10_virtualenvs.sh
-
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
 . /vagrant/scripts/01_environment_vars.sh
 # ============================
 
-VENV_LOCATION="/home/vagrant/.virtualenvs/kc"
+KENV="kc"
+KENV_SHELL_EXTENDS="$V_E/env_koboform"
+VENV_LOCATION="$HOME_VAGRANT/.virtualenvs/$KENV"
 
 if [ ! -d "$VENV_LOCATION" ]; then
     install_info "Creating a new virtualenv"
 
 	# [ $(whoami) = "vagrant" ] || { echo "create_virtualenv must be run as user 'vagrant'"; exit 1; }
-	cd /home/vagrant
+	cd $HOME_VAGRANT
 
-	if [ $(cat /home/vagrant/.profile | grep virtualenvwrapper | wc -l) = "0" ]; then
-		echo 'export "WORKON_HOME=/home/vagrant/.virtualenvs"' >> /home/vagrant/.profile
-		echo ". /usr/local/bin/virtualenvwrapper.sh" >> /home/vagrant/.profile
+	if [ $(cat $HOME_VAGRANT/.profile | grep virtualenvwrapper | wc -l) = "0" ]; then
+		echo 'export WORKON_HOME="$HOME_VAGRANT/.virtualenvs"' >> $HOME_VAGRANT/.profile
+		echo ". /usr/local/bin/virtualenvwrapper.sh" >> $HOME_VAGRANT/.profile
 	fi
 
-	if [ $(cat /home/vagrant/.profile | grep koborc | wc -l) = "0" ]; then
-		echo "source /vagrant/env/koborc" >> /home/vagrant/.profile
+	if [ $(cat $HOME_VAGRANT/.profile | grep koborc | wc -l) = "0" ]; then
+		echo "source $V_E/koborc" >> $HOME_VAGRANT/.profile
 	fi
 
-	. /home/vagrant/.profile
+	. $HOME_VAGRANT/.profile
 
-	if [ -d "/home/vagrant/.virtualenvs/kc" ]; then
-		echo "Activating KC virtualenv"
-		workon kc
+	if [ -d "$VENV_LOCATION" ]; then
+		echo "Activating '$KENV' virtualenv"
+		workon $KENV
 	else
 		echo "Creating a new virtualenv"
-		mkvirtualenv kc
-		echo "source /vagrant/env/env_kobocat" >> /home/vagrant/.virtualenvs/kc/bin/postactivate
+		mkvirtualenv $KENV
+		echo "source $V_E/env_kobocat" >> $VENV_LOCATION/bin/postactivate
 	fi
 
 	# if [ -f "/usr/lib/i386-linux-gnu/libjpeg.so" ]; then

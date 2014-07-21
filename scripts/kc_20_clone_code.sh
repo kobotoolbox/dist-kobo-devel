@@ -16,8 +16,8 @@ install_info "5 clone_code"
 # [ -d "$KOBOCAT_TEMPLATES_PATH" ] && { cd $KOBOCAT_PATH; git pull origin $KOBOCAT_TEMPLATES_BRANCH; }
 [ -d "$KOBOCAT_TEMPLATES_PATH" ] || { git clone $KOBOCAT_TEMPLATES_REPO $KOBOCAT_TEMPLATES_PATH -b $KOBOCAT_TEMPLATES_BRANCH; }
 
-ONA_KCSETS="/vagrant/kobocat/onadata/settings/kobocat_settings.py"
-[ ! -f "$ONA_KCSETS" ] && { ln -s /vagrant/configs/kobocat_settings.py $ONA_KCSETS; }
+ONA_KCSETS="$V_H/kobocat/onadata/settings/kobocat_settings.py"
+[ ! -f "$ONA_KCSETS" ] && { ln -s $V_H/configs/kobocat_settings.py $ONA_KCSETS; }
 
 echo "code cloned"
 exit

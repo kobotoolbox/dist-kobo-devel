@@ -10,7 +10,7 @@
 install_info "Migrate KC Database"
 
 cd $KOBOCAT_PATH
-. /home/vagrant/.profile
+. $HOME_VAGRANT/.profile
 workon kc
 
 python manage.py syncdb --noinput
