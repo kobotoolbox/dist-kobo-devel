@@ -16,7 +16,7 @@ if [ ! -d "$VENV_LOCATION" ]; then
 	cd $HOME_VAGRANT
 
 	if [ $(cat $HOME_VAGRANT/.profile | grep virtualenvwrapper | wc -l) = "0" ]; then
-		echo 'export WORKON_HOME="$HOME_VAGRANT/.virtualenvs"' >> $HOME_VAGRANT/.profile
+		echo "export WORKON_HOME='$HOME_VAGRANT/.virtualenvs'" >> $HOME_VAGRANT/.profile
 		echo ". /usr/local/bin/virtualenvwrapper.sh" >> $HOME_VAGRANT/.profile
 	fi
 

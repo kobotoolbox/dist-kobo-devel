@@ -19,18 +19,19 @@ sudo apt-get -y --force-yes install \
     g++ \
     make \
     python-dev \
-    python-lxml \
     mongodb-org-server \
     gfortran \
     libatlas-base-dev \
     libjpeg-dev \
     python-numpy \
     python-software-properties \
+    openjdk-6-jre \
     zlib1g-dev \
     binutils \
     libproj-dev \
     libxslt1-dev \
     libxml2-dev \
+    python-lxml \
     libpq-dev \
     rabbitmq-server \
     python-virtualenv \

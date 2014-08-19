@@ -1,6 +1,6 @@
 #!/bin/sh -u
 
-# ENVIRONMENT PRESETS ALREADY IN /vagrant/koborc 	# <-- checked into the repository
+# ENVIRONMENT PRESETS ALREADY IN /vagrant/koborc    # <-- checked into the repository
 # THIS FILE PULLS IN THE ENVIRONMENT AS DEFINED IN /vagrant/(env_kobocat|env_koboform) # respectively, for each project
 # THESE VALUES MAY BE OVERRIDDEN BY /vagrant/env.sh (optional file) # <-- not checked into the repository
 
@@ -24,16 +24,16 @@ export V_L="/vagrant/logs"
 # export DIST_KOBO_DEVEL="dist-kobo-devel"
 
 export KOBOCAT_REPO="https://github.com/kobotoolbox/kobocat.git"
-export KOBOCAT_BRANCH="master"
 export KOBOCAT_PATH="$HOME/kobocat"
+[ -z "$KOBOCAT_BRANCH" ] &&           { export KOBOCAT_BRANCH="master"; }
 
 export KOBOCAT_TEMPLATES_REPO="https://github.com/kobotoolbox/kobocat-template.git"
-export KOBOCAT_TEMPLATES_BRANCH="master"
 export KOBOCAT_TEMPLATES_PATH="$HOME/kobocat-template"
+[ -z "$KOBOCAT_TEMPLATES_BRANCH" ] && { export KOBOCAT_TEMPLATES_BRANCH="master"; }
 
 export KOBOFORM_REPO="https://github.com/kobotoolbox/dkobo.git"
-export KOBOFORM_BRANCH="master"
 export KOBOFORM_PATH="$HOME/koboform"
+[ -z "$KOBOFORM_BRANCH" ] &&          { export KOBOFORM_BRANCH="master"; }
 
 export KOBO_PSQL_DB_NAME="kobotoolbox"
 export KOBO_PSQL_DB_USER="kobo"
@@ -41,10 +41,11 @@ export KOBO_PSQL_DB_PASS="kobo"
 export DATABASE_URL="postgis://$KOBO_PSQL_DB_USER:$KOBO_PSQL_DB_PASS@localhost:5432/$KOBO_PSQL_DB_NAME"
 
 # deployment / server details
-export KOBOFORM_SERVER="localhost"
-export KOBOFORM_SERVER_PORT="8000"
-export KOBOCAT_SERVER="localhost"
-export KOBOCAT_SERVER_PORT="8001"
+[ -z "$KOBOFORM_SERVER" ] &&      { export KOBOFORM_SERVER="localhost"; }
+[ -z "$KOBOFORM_SERVER_PORT" ] && { export KOBOFORM_SERVER_PORT="8000"; }
+[ -z "$KOBOCAT_SERVER" ] &&       { export KOBOCAT_SERVER="localhost"; }
+[ -z "$KOBOCAT_SERVER_PORT" ] &&  { export KOBOCAT_SERVER_PORT="8001"; }
+
 
 # django settings specific details
 export DJANGO_LIVE_RELOAD="False"
@@ -61,14 +62,14 @@ export AUTOLAUNCH="1"
 
 
 run_kobocat () {
-	bash -c ". ~/.profile && workon kc && cd $KOBOCAT_PATH && python manage.py runserver 0.0.0.0:$KOBOCAT_SERVER_PORT"
+   bash -c ". ~/.profile && workon kc && cd $KOBOCAT_PATH && python manage.py runserver 0.0.0.0:$KOBOCAT_SERVER_PORT"
 }
 
 run_koboform () {
-	bash -c ". ~/.profile && workon kf && cd $KOBOFORM_PATH && python manage.py gruntserver 0.0.0.0:$KOBOFORM_SERVER_PORT"
+   bash -c ". ~/.profile && workon kf && cd $KOBOFORM_PATH && python manage.py gruntserver 0.0.0.0:$KOBOFORM_SERVER_PORT"
 }
 
 
 if [ -f "$HOME/$ENV_OVERRIDE_FILE" ]; then
-	. $V_R/$ENV_OVERRIDE_FILE
+   . $V_R/$ENV_OVERRIDE_FILE
 fi
