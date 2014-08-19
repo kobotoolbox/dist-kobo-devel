@@ -20,7 +20,7 @@ sudo apt-get -y --force-yes install \
     make \
     python-dev \
     python-lxml \
-    mongodb-org \
+    mongodb-org-server \
     gfortran \
     libatlas-base-dev \
     libjpeg-dev \
@@ -32,6 +32,7 @@ sudo apt-get -y --force-yes install \
     libxslt1-dev \
     libxml2-dev \
     libpq-dev \
+    rabbitmq-server \
     python-virtualenv \
     nodejs
 

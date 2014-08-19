@@ -51,8 +51,10 @@ KOBOFORM_SERVER_PROTOCOL=os.environ.get("KOBOFORM_SERVER_PROTOCOL", "http")
 KOBOFORM_LOGIN_AUTOREDIRECT=False
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    'onadata.kobocat.context_processors.koboform_integration',
+    'onadata.koboform.context_processors.koboform_integration',
 ) + TEMPLATE_CONTEXT_PROCESSORS
+
+MIDDLEWARE_CLASSES = ('onadata.koboform.redirect_middleware.ConditionalRedirects', ) + MIDDLEWARE_CLASSES
 
 CSRF_COOKIE_DOMAIN = os.environ.get('CSRF_COOKIE_DOMAIN', None)
 
