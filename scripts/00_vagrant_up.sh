@@ -11,6 +11,8 @@ set -e
 
 sudo apt-get update
 
+# TODO: Check release number and instead install `software-properties-common` for > 12.04
+#   (see http://stackoverflow.com/a/16032073)
 sudo apt-get install -y python-software-properties git-core
 
 [ -f $HOME/.mark_keys_added ] || {
