@@ -35,6 +35,7 @@ export KOBOFORM_REPO="https://github.com/kobotoolbox/dkobo.git"
 export KOBOFORM_BRANCH="master"
 export KOBOFORM_PATH="$HOME/koboform"
 
+export PSQL_ADMIN="postgres"
 export KOBO_PSQL_DB_NAME="kobotoolbox"
 export KOBO_PSQL_DB_USER="kobo"
 export KOBO_PSQL_DB_PASS="kobo"
