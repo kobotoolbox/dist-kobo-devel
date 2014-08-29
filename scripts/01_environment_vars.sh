@@ -16,7 +16,7 @@ install_info() {
 export PIP_DOWNLOAD_CACHE="$HOME_VAGRANT/.pip_cache"
 
 SCRIPT_PATH=$(readlink -f "$0")
-SCRIPT_DIR=SCRIPTPATH=$(dirname "$SCRIPT_PATH")
+SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
 export V_R="$SCRIPT_DIR/.." # vagrant root
 export V_E="$V_R/env"
 export V_S="$V_R/scripts"

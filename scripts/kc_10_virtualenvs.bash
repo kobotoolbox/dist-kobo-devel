@@ -30,7 +30,7 @@ if [ ! -d "$VENV_LOCATION" ]; then
 	fi
 
 	# Ensure the profile is loaded (once).
-	[ ! ${KOBO_PROFILE_LOADED:-"false"} = "true" ] && [ . $HOME_VAGRANT/.profile ]
+	[ ! ${KOBO_PROFILE_LOADED:-"false"} = "true" ] && . $HOME_VAGRANT/.profile
 
 	if [ -d "$VENV_LOCATION" ]; then
 		echo "Activating '$KENV' virtualenv"
