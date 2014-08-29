@@ -14,4 +14,4 @@ sudo npm install -g --save-dev
 sudo npm install -g bower karma grunt-cli
 
 # $HOME is overridden for root
-sudo chown -R vagrant:vagrant $HOME_VAGRANT
+[ $(whoami) = "vagrant" ] && sudo chown -R vagrant:vagrant $HOME_VAGRANT

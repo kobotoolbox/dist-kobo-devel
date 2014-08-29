@@ -10,10 +10,10 @@ install_info() {
     echo "KoBoToolbox install: [$0] $1"
 }
 
-export HOME="/home/vagrant"
-export HOME_VAGRANT="/home/vagrant"
+[ $(whoami) = "vagrant" ] && export HOME_VAGRANT="/home/vagrant"
+[ ! $(whoami) = "vagrant" ] && export HOME_VAGRANT=$HOME
 
-export PIP_DOWNLOAD_CACHE="$HOME/.pip_cache"
+export PIP_DOWNLOAD_CACHE="$HOME_VAGRANT/.pip_cache"
 
 SCRIPT_PATH=$(readlink -f "$0")
 SCRIPT_DIR=SCRIPTPATH=$(dirname "$SCRIPT_PATH")
@@ -27,15 +27,15 @@ export V_L="$V_R/logs"
 
 export KOBOCAT_REPO="https://github.com/kobotoolbox/kobocat.git"
 export KOBOCAT_BRANCH="master"
-export KOBOCAT_PATH="$HOME/kobocat"
+export KOBOCAT_PATH="$HOME_VAGRANT/kobocat"
 
 export KOBOCAT_TEMPLATES_REPO="https://github.com/kobotoolbox/kobocat-template.git"
 export KOBOCAT_TEMPLATES_BRANCH="master"
-export KOBOCAT_TEMPLATES_PATH="$HOME/kobocat-template"
+export KOBOCAT_TEMPLATES_PATH="$HOME_VAGRANT/kobocat-template"
 
 export KOBOFORM_REPO="https://github.com/kobotoolbox/dkobo.git"
 export KOBOFORM_BRANCH="master"
-export KOBOFORM_PATH="$HOME/koboform"
+export KOBOFORM_PATH="$HOME_VAGRANT/koboform"
 
 export PSQL_ADMIN="postgres"
 export KOBO_PSQL_DB_NAME="kobotoolbox"
@@ -72,6 +72,6 @@ run_koboform () {
 }
 
 
-if [ -f "$HOME/$ENV_OVERRIDE_FILE" ]; then
+if [ -f "$HOME_VAGRANT/$ENV_OVERRIDE_FILE" ]; then
 	. $V_R/$ENV_OVERRIDE_FILE
 fi

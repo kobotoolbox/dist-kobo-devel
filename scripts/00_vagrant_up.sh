@@ -15,7 +15,7 @@ sudo apt-get update
 #   (see http://stackoverflow.com/a/16032073)
 sudo apt-get install -y python-software-properties git-core
 
-[ -f $HOME/.mark_keys_added ] || {
+[ -f $HOME_VAGRANT/.mark_keys_added ] || {
     sudo -u root sh $V_S/02_installation_keys.sh
 }
 

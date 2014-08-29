@@ -20,5 +20,5 @@ echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | 
 sudo add-apt-repository -y ppa:chris-lea/node.js
 
 echo "KEYS > All keys added '$VHOME'"
-touch $HOME/.mark_keys_added
+touch $HOME_VAGRANT/.mark_keys_added
 
