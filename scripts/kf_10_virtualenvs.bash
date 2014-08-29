@@ -1,4 +1,4 @@
-#!/bin/bash -u
+#!/bin/bash
 
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
@@ -15,6 +15,7 @@ if [ ! -d "$VENV_LOCATION" ]; then
 	# [ $(whoami) = "vagrant" ] || { echo "create_virtualenv must be run as user 'vagrant'"; exit 1; }
 	cd $HOME_VAGRANT
 
+	touch $HOME_VAGRANT/.profile # In case the file doesn't exist
 	if [ $(cat $HOME_VAGRANT/.profile | grep virtualenvwrapper | wc -l) = "0" ]; then
 		echo 'export WORKON_HOME="$HOME_VAGRANT/.virtualenvs"' >> $HOME_VAGRANT/.profile
 		echo ". /usr/local/bin/virtualenvwrapper.sh" >> $HOME_VAGRANT/.profile
@@ -24,7 +25,8 @@ if [ ! -d "$VENV_LOCATION" ]; then
 		echo "source $V_E/koborc" >> $HOME_VAGRANT/.profile
 	fi
 
-	. $HOME_VAGRANT/.profile
+	# Ensure the profile is loaded (once).
+	[ ! ${KOBO_PROFILE_LOADED:-"false"} = "true" ] && [ . $HOME_VAGRANT/.profile]
 
 	if [ -d "$VENV_LOCATION" ]; then
 		echo "Activating '$KENV' virtualenv"

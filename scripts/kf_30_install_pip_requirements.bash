@@ -1,4 +1,4 @@
-#!/bin/sh -u
+#!/bin/bash
 
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
@@ -8,7 +8,8 @@
 # kf_3_install_pip_requirements
 [ $(whoami) = "vagrant" ] || { echo "$0 must be run as user 'vagrant'"; exit 1; }
 
-. /usr/local/bin/virtualenvwrapper.sh
+# Ensure the profile is loaded (once).
+[ ! ${KOBO_PROFILE_LOADED:-"false"} = "true" ] && [ . $HOME_VAGRANT/.profile]
 workon kf
 
 cd $KOBOFORM_PATH
