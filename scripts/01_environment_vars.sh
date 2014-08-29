@@ -15,10 +15,12 @@ export HOME_VAGRANT="/home/vagrant"
 
 export PIP_DOWNLOAD_CACHE="$HOME/.pip_cache"
 
-export V_R="/vagrant" # vagrant root
-export V_E="/vagrant/env"
-export V_S="/vagrant/scripts"
-export V_L="/vagrant/logs"
+SCRIPT_PATH=$(readlink -f "$0")
+SCRIPT_DIR=SCRIPTPATH=$(dirname "$SCRIPT_PATH")
+export V_R="$SCRIPT_DIR/.." # vagrant root
+export V_E="$V_R/env"
+export V_S="$V_R/scripts"
+export V_L="$V_R/logs"
 # export KOBOCAT="kobocat"
 
 # export DIST_KOBO_DEVEL="dist-kobo-devel"

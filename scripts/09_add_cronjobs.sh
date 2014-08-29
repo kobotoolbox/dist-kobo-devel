@@ -4,7 +4,7 @@ set -e
 
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
-. /vagrant/scripts/01_environment_vars.sh
+. ./01_environment_vars.sh
 # ============================
 
 BOOT_LAUNCH_SCRIPT="$HOME_VAGRANT/boot_launch_servers.sh"

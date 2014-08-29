@@ -2,7 +2,7 @@
 
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
-. /vagrant/scripts/01_environment_vars.sh
+. ./01_environment_vars.sh
 # ============================
 
 install_info "KF clone code"

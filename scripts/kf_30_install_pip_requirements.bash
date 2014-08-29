@@ -2,7 +2,7 @@
 
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
-. /vagrant/scripts/01_environment_vars.sh
+. ./01_environment_vars.sh
 # ============================
 
 # kf_3_install_pip_requirements
