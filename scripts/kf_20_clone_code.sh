@@ -7,6 +7,7 @@
 
 install_info "KF clone code"
 
-[ $(whoami) = "vagrant" ] || { echo "$0 must be run as user 'vagrant'"; exit 1; }
+# If on a Vagrant system, check that the current user is 'vagrant'
+[ $(whoami) = "vagrant" ] || [ -d /home/vagrant ] && { echo "$0 must be run as user 'vagrant'"; exit 1; }
 
 [ -d "$KOBOFORM_PATH" ] || { git clone $KOBOFORM_REPO $KOBOFORM_PATH -b $KOBOFORM_BRANCH; }

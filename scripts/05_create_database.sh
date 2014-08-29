@@ -11,6 +11,9 @@ set -e
 
 install_info "Creating postgres database"
 
+# Idempotently ensure that PostgreSQL is running.
+sudo service postgresql start
+
 if [ $(sudo -u $PSQL_ADMIN psql -l | grep $KOBO_PSQL_DB_NAME | wc -l) = "0" ]; then
 	sudo -u $PSQL_ADMIN createdb $KOBO_PSQL_DB_NAME
 	sudo -u $PSQL_ADMIN psql -d template1 -c "CREATE USER `echo $KOBO_PSQL_DB_USER` WITH PASSWORD '`echo $KOBO_PSQL_DB_PASS`';"
