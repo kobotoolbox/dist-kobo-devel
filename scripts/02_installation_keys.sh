@@ -9,6 +9,12 @@ set -e
 . ./01_environment_vars.sh
 # ============================
 
+sudo apt-get update
+
+# In Ubuntu releases starting with 12.10 (which is now EOL) `software-properties-common` replaces `python-software-properties`
+UBUNTU_PACKAGE_NAME= cat /etc/issue.net |  awk '{x=2 ; if (substr($x,0,3) >= '13') {system("echo software-properties-common") } else {system("echo python-software-properties") }}'
+
+sudo apt-get install -qq $UBUNTU_PACKAGE_NAME
 
 echo "KEYS >"
 

@@ -9,12 +9,6 @@ set -e
 . ./01_environment_vars.sh
 # ============================
 
-sudo apt-get update
-
-# TODO: Check release number and instead install `software-properties-common` for > 12.04
-#   (see http://stackoverflow.com/a/16032073)
-sudo apt-get install -y python-software-properties git-core
-
 [ -f $HOME_VAGRANT/.mark_keys_added ] || {
     sudo -u root sh $V_S/02_installation_keys.sh
 }
