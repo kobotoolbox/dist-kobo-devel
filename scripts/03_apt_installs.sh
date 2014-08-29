@@ -11,10 +11,10 @@ set -e
 
 install_info "Install core dependencies"
 
-sudo apt-get -q update
-sudo apt-get -y upgrade
+sudo apt-get -qq update
+sudo apt-get -qq upgrade
 
-sudo apt-get -y --force-yes install \
+sudo apt-get -qq --force-yes install \
     git-core \
     g++ \
     make \
