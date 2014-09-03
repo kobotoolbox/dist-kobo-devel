@@ -4,15 +4,21 @@
 
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
-. ./01_environment_vars.sh
+if [ -d /home/vagrant ]; then
+    SCRIPT_DIR=/vagrant/scripts
+else
+    THIS_SCRIPT_PATH=$(readlink -f "$0")
+    SCRIPT_DIR=$(dirname "$THIS_SCRIPT_PATH")
+fi
+. $SCRIPT_DIR/01_environment_vars.sh
 # ============================
 
-install_info "install_pip_requirements"
+install_info "Installing KoBoCat pip requirements."
 
 cd $KOBOCAT_PATH
 
 # Ensure the profile is loaded (once).
-[ ! ${KOBO_PROFILE_LOADED:-"false"} = "true" ] && . $HOME_VAGRANT/.profile
+[ ! ${KOBO_PROFILE_LOADED:-"false"} = "true" ] && . $PROFILE_PATH
 workon kc
 
 if [ "$VIRTUAL_ENV" = "" ]; then

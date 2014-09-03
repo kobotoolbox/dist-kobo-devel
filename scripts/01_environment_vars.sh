@@ -1,4 +1,4 @@
-#!/bin/sh -u
+#!/usr/bin/env bash
 
 # ENVIRONMENT PRESETS ALREADY IN /vagrant/koborc 	# <-- checked into the repository
 # THIS FILE PULLS IN THE ENVIRONMENT AS DEFINED IN /vagrant/(env_kobocat|env_koboform) # respectively, for each project
@@ -10,13 +10,23 @@ install_info() {
     echo "KoBoToolbox install: [$0] $1"
 }
 
-[ $(whoami) = "vagrant" ] && export HOME_VAGRANT="/home/vagrant"
-[ ! $(whoami) = "vagrant" ] && export HOME_VAGRANT=$HOME
+if [ -d /home/vagrant ]; then
+    export HOME_VAGRANT="/home/vagrant"
+    export PROFILE_PATH=$HOME_VAGRANT/.profile
+else
+    export HOME_VAGRANT=$HOME
+    [ `whoami` = "root" ] && export PROFILE_PATH=/root/.profile
+    [ ! `whoami` = "root" ] && export PROFILE_PATH=$HOME_VAGRANT/.profile
+fi
 
 export PIP_DOWNLOAD_CACHE="$HOME_VAGRANT/.pip_cache"
 
-SCRIPT_PATH=$(readlink -f "$0")
-SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
+if [ -d /home/vagrant ]; then
+    SCRIPT_DIR=/vagrant/scripts
+else
+    THIS_SCRIPT_PATH=$(readlink -f "$0")
+    SCRIPT_DIR=$(dirname "$THIS_SCRIPT_PATH")
+fi
 export V_R="$SCRIPT_DIR/.." # vagrant root
 export V_E="$V_R/env"
 export V_S="$V_R/scripts"
@@ -64,11 +74,11 @@ export AUTOLAUNCH="1"
 
 
 run_kobocat () {
-	bash -c ". ~/.profile && workon kc && cd $KOBOCAT_PATH && python manage.py runserver 0.0.0.0:$KOBOCAT_SERVER_PORT"
+	bash -c ". $PROFILE_PATH && workon kc && cd $KOBOCAT_PATH && python manage.py runserver 0.0.0.0:$KOBOCAT_SERVER_PORT"
 }
 
 run_koboform () {
-	bash -c ". ~/.profile && workon kf && cd $KOBOFORM_PATH && python manage.py gruntserver 0.0.0.0:$KOBOFORM_SERVER_PORT"
+	bash -c ". $PROFILE_PATH && workon kf && cd $KOBOFORM_PATH && python manage.py gruntserver 0.0.0.0:$KOBOFORM_SERVER_PORT"
 }
 
 
