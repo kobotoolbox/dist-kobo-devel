@@ -45,7 +45,7 @@ sudo -u vagrant     sh   $V_S/kf_20_clone_code.sh
 sudo -u vagrant     bash $V_S/kf_30_install_pip_requirements.bash
 sudo -u vagrant     HOME=$VAGRANT_HOME sh   $V_S/kf_40_npm_installs.sh
 sudo -u vagrant     bash $V_S/kf_50_migrate_db.bash
-#sudo -u vagrant     bash $V_S/enketo_install.bash
+sudo -u vagrant     bash $V_S/enketo_install.bash
 
 sudo -u vagrant     sh   $V_S/09_add_cronjobs.sh
 
