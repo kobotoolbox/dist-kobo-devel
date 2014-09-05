@@ -9,7 +9,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, host: 8001, guest: 8001
   
   # Copied from Enketo's `Vagrantfile`
-  config.vm.network :forwarded_port, host: 8006, guest: 8005
+  config.vm.network :forwarded_port, host: 8005, guest: 8005
   config.vm.network :forwarded_port, host: 35729, guest: 35729
 
   # Suppress subsequent stdin/tty complaints (for `root` user only).
