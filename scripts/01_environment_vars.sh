@@ -36,7 +36,8 @@ export V_L="$V_R/logs"
 # export DIST_KOBO_DEVEL="dist-kobo-devel"
 
 export KOBOCAT_REPO="https://github.com/kobotoolbox/kobocat.git"
-export KOBOCAT_BRANCH="master"
+# FIXME: Revert to 'master' once KC changes have been tested and merged.
+export KOBOCAT_BRANCH="local-enketo"
 export KOBOCAT_PATH="$HOME_VAGRANT/kobocat"
 
 export KOBOCAT_TEMPLATES_REPO="https://github.com/kobotoolbox/kobocat-template.git"

@@ -18,6 +18,7 @@ fi
 cd $HOME_VAGRANT
 
 export ENKETO_EXPRESS_REPO_DIR="$HOME_VAGRANT/enketo-express"
+echo ''>> $PROFILE_PATH
 echo "export ENKETO_EXPRESS_REPO_DIR=\"$ENKETO_EXPRESS_REPO_DIR\"" >> $PROFILE_PATH
 
 export ENKETO_EXPRESS_UPDATE_REPO="false"
@@ -28,12 +29,16 @@ git clone https://github.com/kobotoolbox/enketo-express.git $ENKETO_EXPRESS_REPO
 cd $ENKETO_EXPRESS_REPO_DIR
 sudo -E sh $ENKETO_EXPRESS_REPO_DIR/setup/bootstrap.sh # `-E` option preserves calling shell's environment variables.
 
+# FIXME: Need to manipulate '$ENKETO_EXPRESS_REPO_DIR/config/config.json' to use `"server url": "localhost:8001"`.
+
 # Record the local server's existence for use with KoBoForm.
-echo 'export ENKETO_SERVER="localhost"' >> $PROFILE_PATH
+echo 'export ENKETO_SERVER="http://localhost:8005"' >> $PROFILE_PATH
 echo 'export ENKETO_PREVIEW_URI="/preview"' >> $PROFILE_PATH
 
-echo 'export KOBOFORM_PREVIEW_SERVER="localhost:8000"' >> $PROFILE_PATH
-
 # KoBoCat
-echo 'export ENKETO_URL="localhost"' >> $PROFILE_PATH
+echo 'export ENKETO_URL="http://localhost:8005"' >> $PROFILE_PATH
+echo 'export ENKETO_API_URL_PARTIAL="/api/v1"' >> $PROFILE_PATH
+echo 'export ENKETO_PREVIEW_URL_PARTIAL="/preview"' >> $PROFILE_PATH
+# FIXME: Should pull directly from local 'enketo-express/config/config.json' instead of hard coding (synergy w/ above FIXME).
+echo 'export ENKETO_API_TOKEN="enketorules"' >> $PROFILE_PATH
 
