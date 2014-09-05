@@ -36,7 +36,7 @@ sudo -u vagrant     sh   $V_S/kc_20_clone_code.sh
 sudo -u vagrant     bash $V_S/kc_30_install_pip_requirements.bash
 sudo -u root        sh   $V_S/kc_40_npm_installs.sh
 sudo -u vagrant     bash $V_S/kc_50_migrate_db.bash
-
+bash $V_S/kc_60_environment_setup.bash
 
 sudo -u vagrant     bash $V_S/kf_10_virtualenvs.bash
 [ $? -ne 0 ] && { install_info "virtualenv was not created"; exit 1; }
