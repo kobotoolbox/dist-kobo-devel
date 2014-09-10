@@ -20,6 +20,7 @@ else
 fi
 
 export PIP_DOWNLOAD_CACHE="$HOME_VAGRANT/.pip_cache"
+#export npm_config_cache="$HOME_VAGRANT/.npm"
 
 if [ -d /home/vagrant ]; then
     SCRIPT_DIR=/vagrant/scripts
@@ -27,7 +28,7 @@ else
     THIS_SCRIPT_PATH=$(readlink -f "$0")
     SCRIPT_DIR=$(dirname "$THIS_SCRIPT_PATH")
 fi
-export V_R="$SCRIPT_DIR/.." # vagrant root
+export V_R="$(readlink -f $SCRIPT_DIR/..)" # vagrant root
 export V_E="$V_R/env"
 export V_S="$V_R/scripts"
 export V_L="$V_R/logs"
@@ -36,8 +37,7 @@ export V_L="$V_R/logs"
 # export DIST_KOBO_DEVEL="dist-kobo-devel"
 
 export KOBOCAT_REPO="https://github.com/kobotoolbox/kobocat.git"
-# FIXME: Revert to 'master' once KC changes have been tested and merged.
-export KOBOCAT_BRANCH="local-enketo"
+export KOBOCAT_BRANCH="master"
 export KOBOCAT_PATH="$HOME_VAGRANT/kobocat"
 
 export KOBOCAT_TEMPLATES_REPO="https://github.com/kobotoolbox/kobocat-template.git"
@@ -53,6 +53,21 @@ export KOBO_PSQL_DB_NAME="kobotoolbox"
 export KOBO_PSQL_DB_USER="kobo"
 export KOBO_PSQL_DB_PASS="kobo"
 export DATABASE_URL="postgis://$KOBO_PSQL_DB_USER:$KOBO_PSQL_DB_PASS@localhost:5432/$KOBO_PSQL_DB_NAME"
+
+# Enketo-Express-related configurations.
+# For Enketo Express's installation ('enketo-express/setup/bootstrap.sh').
+export ENKETO_EXPRESS_REPO_DIR="$HOME_VAGRANT/enketo-express"
+export ENKETO_EXPRESS_UPDATE_REPO="false"
+export ENKETO_EXPRESS_USE_NODE_ENV="true"
+# For KoBoForm.
+export ENKETO_SERVER="http://localhost:8005"
+export ENKETO_PREVIEW_URL="/preview"
+# For KoBoCat.
+export ENKETO_URL="http://localhost:8005"
+export ENKETO_API_URL_PARTIAL="/api/v1"
+export ENKETO_PREVIEW_URL_PARTIAL="/preview"
+export ENKETO_PROTOCOL="http"
+[ -f $ENKETO_EXPRESS_REPO_DIR/config/config.json ] && export ENKETO_API_TOKEN=$(python -c "import json;f=open('$ENKETO_EXPRESS_REPO_DIR/config/config.json');print json.loads(f.read()).get('linked form and data server').get('api key')")
 
 # deployment / server details
 export KOBOFORM_SERVER="localhost"

@@ -1,4 +1,4 @@
-#!/bin/bash -u
+#!/usr/bin/env bash
 
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
@@ -31,3 +31,7 @@ fi
 if [ -f "$V_S/run_koboform.bash" ]; then
 	bash "$V_S/run_koboform.bash" >> "$V_L/koboform.log" 2>&1 &
 fi
+
+# Start PM2 to manage running Enketo if not already done.
+sudo sh -E -c "cd $ENKETO_EXPRESS_REPO_DIR && . env/bin/activate && pm2 describe enketo || pm2 start app.js -n enketo"
+

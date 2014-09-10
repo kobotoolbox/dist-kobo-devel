@@ -1,4 +1,4 @@
-#!/bin/sh -u
+#!/usr/bin/env sh
 
 # To be run with the crontab
 # @reboot sh /path/to/boot_launch_servers.sh
@@ -37,9 +37,6 @@ check_for_vagrant_up() {
 
 echo "server has booted" >> $CRONLOG_LOGFILE
 date >> $CRONLOG_LOGFILE
-
-# Start PM2 to manage running Enketo if not already done.
-pm2 describe enketo || sudo sh -c "cd $ENKETO_EXPRESS_REPO_DIR && pm2 start app.js -n enketo"
 
 # wait $max seconds before giving up on waiting for vagrant shared folders to appear
 max=60
