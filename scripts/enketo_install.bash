@@ -26,5 +26,6 @@ git checkout allow-nodeenv
 sudo -E sh $ENKETO_EXPRESS_REPO_DIR/setup/bootstrap.sh # `-E` option preserves calling shell's environment variables.
 
 # Edit the Enketo Express configuration JSON so the `server url` field is set to the local KoBoCat server.
-sed -r -i 's/("server url":.*)".+"/\1 "http://localhost:8001"/' $ENKETO_EXPRESS_REPO_DIR/config/config.json
-
+CONFIG_FILE_PATH="$ENKETO_EXPRESS_REPO_DIR/config/config.json"
+python -c "import json;f=open('$CONFIG_FILE_PATH');config=json.loads(f.read());config['linked form and data server']['server url']='$KOBOCAT_URL';f2=open('$CONFIG_FILE_PATH~','w');f2.write(json.dumps(config, indent=4))"
+mv $CONFIG_FILE_PATH~ $CONFIG_FILE_PATH
