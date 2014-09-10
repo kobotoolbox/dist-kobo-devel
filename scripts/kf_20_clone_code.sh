@@ -18,6 +18,3 @@ install_info "KF clone code"
 
 [ -d "$KOBOFORM_PATH" ] || { git clone --depth 1 $KOBOFORM_REPO $KOBOFORM_PATH -b $KOBOFORM_BRANCH; }
 
-echo '' >> $PROFILE_PATH
-echo 'export KOBOFORM_PREVIEW_SERVER="http://localhost:8000"' >> $PROFILE_PATH
-

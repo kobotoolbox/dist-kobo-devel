@@ -20,8 +20,8 @@ else
 fi
 
 export PIP_DOWNLOAD_CACHE="$HOME_VAGRANT/.pip_cache"
-#export npm_config_cache="$HOME_VAGRANT/.npm"
 
+# Directories.
 if [ -d /home/vagrant ]; then
     SCRIPT_DIR=/vagrant/scripts
 else
@@ -34,6 +34,17 @@ export V_S="$V_R/scripts"
 export V_L="$V_R/logs"
 # export KOBOCAT="kobocat"
 
+
+# deployment / server details
+export SERVER_IP="127.0.0.1"
+export KOBOFORM_SERVER="$SERVER_IP"
+export KOBOFORM_SERVER_PORT="8000"
+export KOBOCAT_SERVER="$SERVER_IP"
+export KOBOCAT_SERVER_PORT="8001"
+export KOBOFORM_URL="http://$KOBOFORM_SERVER:$KOBOFORM_SERVER_PORT"
+export KOBOCAT_URL="http://$KOBOCAT_SERVER:$KOBOCAT_SERVER_PORT"
+export ENKETO_EXPRESS_SERVER_PORT="8005"
+
 # export DIST_KOBO_DEVEL="dist-kobo-devel"
 
 export KOBOCAT_REPO="https://github.com/kobotoolbox/kobocat.git"
@@ -44,6 +55,7 @@ export KOBOCAT_TEMPLATES_REPO="https://github.com/kobotoolbox/kobocat-template.g
 export KOBOCAT_TEMPLATES_BRANCH="master"
 export KOBOCAT_TEMPLATES_PATH="$HOME_VAGRANT/kobocat-template"
 
+export KOBOFORM_PREVIEW_SERVER="http://$SERVER_IP:$KOBOFORM_SERVER_PORT"
 export KOBOFORM_REPO="https://github.com/kobotoolbox/dkobo.git"
 export KOBOFORM_BRANCH="master"
 export KOBOFORM_PATH="$HOME_VAGRANT/koboform"
@@ -52,7 +64,7 @@ export PSQL_ADMIN="postgres"
 export KOBO_PSQL_DB_NAME="kobotoolbox"
 export KOBO_PSQL_DB_USER="kobo"
 export KOBO_PSQL_DB_PASS="kobo"
-export DATABASE_URL="postgis://$KOBO_PSQL_DB_USER:$KOBO_PSQL_DB_PASS@localhost:5432/$KOBO_PSQL_DB_NAME"
+export DATABASE_URL="postgis://$KOBO_PSQL_DB_USER:$KOBO_PSQL_DB_PASS@$SERVER_IP:5432/$KOBO_PSQL_DB_NAME"
 
 # Enketo-Express-related configurations.
 # For Enketo Express's installation ('enketo-express/setup/bootstrap.sh').
@@ -60,20 +72,14 @@ export ENKETO_EXPRESS_REPO_DIR="$HOME_VAGRANT/enketo-express"
 export ENKETO_EXPRESS_UPDATE_REPO="false"
 export ENKETO_EXPRESS_USE_NODE_ENV="true"
 # For KoBoForm.
-export ENKETO_SERVER="http://localhost:8005"
+export ENKETO_SERVER="http://$SERVER_IP:$ENKETO_EXPRESS_SERVER_PORT"
 export ENKETO_PREVIEW_URL="/preview"
 # For KoBoCat.
-export ENKETO_URL="http://localhost:8005"
+export ENKETO_URL="http://$SERVER_IP:$ENKETO_EXPRESS_SERVER_PORT"
 export ENKETO_API_URL_PARTIAL="/api/v1"
 export ENKETO_PREVIEW_URL_PARTIAL="/preview"
 export ENKETO_PROTOCOL="http"
 [ -f $ENKETO_EXPRESS_REPO_DIR/config/config.json ] && export ENKETO_API_TOKEN=$(python -c "import json;f=open('$ENKETO_EXPRESS_REPO_DIR/config/config.json');print json.loads(f.read()).get('linked form and data server').get('api key')")
-
-# deployment / server details
-export KOBOFORM_SERVER="localhost"
-export KOBOFORM_SERVER_PORT="8000"
-export KOBOCAT_SERVER="localhost"
-export KOBOCAT_SERVER_PORT="8001"
 
 # django settings specific details
 export DJANGO_LIVE_RELOAD="False"
