@@ -11,4 +11,4 @@ fi
 . $SCRIPT_DIR/01_environment_vars.sh
 # ============================
 
-sudo bash -c 'echo "\n# KoBoCat requires journaling.\njournal= true" >> /etc/mongod.conf'
+sudo bash -c 'echo -e "\n# KoBoCat: Ensure journaling is enabled.\njournal= true" >> /etc/mongod.conf'

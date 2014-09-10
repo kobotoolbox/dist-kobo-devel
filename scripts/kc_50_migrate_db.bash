@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # scripts/kc_50_migrate_db.sh
 
@@ -25,3 +25,4 @@ python manage.py syncdb --noinput
 python manage.py migrate --noinput
 
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('kobo', 'kobo@example.com', 'kobo');" | python manage.py shell
+

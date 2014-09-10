@@ -1,4 +1,4 @@
-#!/bin/sh -u
+#!/usr/bin/env sh
 
 # scripts/kc_40_npm_installs.sh
 

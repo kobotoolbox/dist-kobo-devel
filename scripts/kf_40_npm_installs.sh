@@ -1,4 +1,4 @@
-#!/bin/sh -u
+#!/usr/bin/env sh
 
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
@@ -14,8 +14,6 @@ fi
 install_info "KF NPM installs"
 
 cd $KOBOFORM_PATH
-
-echo $HOME
 
 npm install bower
 [ $(whoami) = "root" ] &&   bower install --config.interactive=false --allow-root

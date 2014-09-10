@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # scripts/kc_30_install_pip_requirements.sh
 

@@ -1,4 +1,4 @@
-#!/bin/sh -u
+#!/usr/bin/env sh
 
 # scripts/kc_20_clone_code.sh
 
