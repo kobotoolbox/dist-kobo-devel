@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
@@ -11,11 +11,4 @@ fi
 . $SCRIPT_DIR/01_environment_vars.sh
 # ============================
 
-install_info "KF NPM installs"
-
-cd $KOBOFORM_PATH
-
-npm install bower
-[ $(whoami) = "root" ] &&   bower install --config.interactive=false --allow-root
-[ ! $(whoami) = "root" ] && bower install --config.interactive=false
-npm install
+sudo bash -c 'echo -e "\n# KoBoCat: Ensure journaling is enabled.\njournal= true" >> /etc/mongod.conf'

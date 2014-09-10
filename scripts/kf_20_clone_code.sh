@@ -1,12 +1,23 @@
-#!/bin/sh -u
+#!/usr/bin/env sh
 
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
-. /vagrant/scripts/01_environment_vars.sh
+if [ -d /home/vagrant ]; then
+    SCRIPT_DIR=/vagrant/scripts
+else
+    THIS_SCRIPT_PATH=$(readlink -f "$0")
+    SCRIPT_DIR=$(dirname "$THIS_SCRIPT_PATH")
+fi
+. $SCRIPT_DIR/01_environment_vars.sh
 # ============================
 
 install_info "KF clone code"
 
-[ $(whoami) = "vagrant" ] || { echo "$0 must be run as user 'vagrant'"; exit 1; }
+# If on a Vagrant system, check that the current user is 'vagrant'
+[ -d /home/vagrant ] && [ ! $(whoami) = "vagrant" ] && { echo "$0 must be run as user 'vagrant'"; exit 1; }
 
-[ -d "$KOBOFORM_PATH" ] || { git clone $KOBOFORM_REPO $KOBOFORM_PATH -b $KOBOFORM_BRANCH; }
+[ -d "$KOBOFORM_PATH" ] || { git clone --depth 1 $KOBOFORM_REPO $KOBOFORM_PATH -b $KOBOFORM_BRANCH; }
+
+echo '' >> $PROFILE_PATH
+echo 'export KOBOFORM_PREVIEW_SERVER="http://localhost:8000"' >> $PROFILE_PATH
+

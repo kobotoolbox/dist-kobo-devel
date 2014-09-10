@@ -23,6 +23,7 @@ Installing Kobocat / Koboform Development Box
 
 1. Wait (this process will take a long time, 30 mins+ depending on network connection)
 
+1. Open your browser to [http://localhost:8000](http://localhost:8000) and log in with the credentials username `kobo` and password `kobo`.
 
 Location of the code
 --------------------

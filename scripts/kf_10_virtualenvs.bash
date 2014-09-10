@@ -1,8 +1,14 @@
-#!/bin/bash -u
+#!/usr/bin/env bash
 
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
-. /vagrant/scripts/01_environment_vars.sh
+if [ -d /home/vagrant ]; then
+    SCRIPT_DIR=/vagrant/scripts
+else
+    THIS_SCRIPT_PATH=$(readlink -f "$0")
+    SCRIPT_DIR=$(dirname "$THIS_SCRIPT_PATH")
+fi
+. $SCRIPT_DIR/01_environment_vars.sh
 # ============================
 
 KENV="kf"
@@ -12,19 +18,23 @@ VENV_LOCATION="$HOME_VAGRANT/.virtualenvs/$KENV"
 if [ ! -d "$VENV_LOCATION" ]; then
     install_info "Creating a new virtualenv"
 
-	# [ $(whoami) = "vagrant" ] || { echo "create_virtualenv must be run as user 'vagrant'"; exit 1; }
+	# If on a Vagrant system, check that the current user is 'vagrant'
+    [ -d /home/vagrant ] && [ ! $(whoami) = "vagrant" ] && { echo "$0 must be run as user 'vagrant'"; exit 1; }
+
 	cd $HOME_VAGRANT
 
-	if [ $(cat $HOME_VAGRANT/.profile | grep virtualenvwrapper | wc -l) = "0" ]; then
-		echo 'export WORKON_HOME="$HOME_VAGRANT/.virtualenvs"' >> $HOME_VAGRANT/.profile
-		echo ". /usr/local/bin/virtualenvwrapper.sh" >> $HOME_VAGRANT/.profile
+	touch $PROFILE_PATH # In case the file doesn't exist
+	if [ $(cat $PROFILE_PATH | grep virtualenvwrapper | wc -l) = "0" ]; then
+		echo 'export WORKON_HOME="$HOME_VAGRANT/.virtualenvs"' >> $PROFILE_PATH
+		echo ". /usr/local/bin/virtualenvwrapper.sh" >> $PROFILE_PATH
 	fi
 
-	if [ $(cat $HOME_VAGRANT/.profile | grep koborc | wc -l) = "0" ]; then
-		echo "source $V_E/koborc" >> $HOME_VAGRANT/.profile
+	if [ $(cat $PROFILE_PATH | grep koborc | wc -l) = "0" ]; then
+		echo "source $V_E/koborc" >> $PROFILE_PATH
 	fi
 
-	. $HOME_VAGRANT/.profile
+	# Ensure the profile is loaded (once).
+	[ ! ${KOBO_PROFILE_LOADED:-"false"} = "true" ] && . $PROFILE_PATH
 
 	if [ -d "$VENV_LOCATION" ]; then
 		echo "Activating '$KENV' virtualenv"
@@ -40,3 +50,4 @@ if [ ! -d "$VENV_LOCATION" ]; then
 else
 	install_info "Virtualenv already exists"
 fi
+

@@ -1,4 +1,4 @@
-#!/bin/sh -u
+#!/usr/bin/env sh
 
 # To be run with the crontab
 # @reboot sh /path/to/boot_launch_servers.sh
