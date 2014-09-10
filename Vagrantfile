@@ -17,6 +17,4 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   config.vm.provision :shell, path: 'scripts/00_vagrant_up.sh'
 
-  config.vm.post_up_message = "KoBoToolbox VM has been launched on port 8000 and 8001"
-
 end
