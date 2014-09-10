@@ -17,13 +17,12 @@ fi
 
 cd $HOME_VAGRANT
 
-git clone https://github.com/kobotoolbox/enketo-express.git $ENKETO_EXPRESS_REPO_DIR
+[ -d "$ENKETO_EXPRESS_REPO_DIR" ] || git clone https://github.com/kobotoolbox/enketo-express.git $ENKETO_EXPRESS_REPO_DIR
 cd $ENKETO_EXPRESS_REPO_DIR
-# FIXME: Remove this upon merge https://github.com/kobotoolbox/enketo-express/pull/71
-git checkout allow-nodeenv
 
 # Install Enketo Express
-sudo -E sh $ENKETO_EXPRESS_REPO_DIR/setup/bootstrap.sh # `-E` option preserves calling shell's environment variables.
+# one of the byproducts of bootstrap.sh is it creates a directory "env"
+[ -d "env" ] || sudo -E sh $ENKETO_EXPRESS_REPO_DIR/setup/bootstrap.sh
 
 # Edit the Enketo Express configuration JSON so the `server url` field is set to the local KoBoCat server.
 CONFIG_FILE_PATH="$ENKETO_EXPRESS_REPO_DIR/config/config.json"
