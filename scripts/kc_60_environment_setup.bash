@@ -11,4 +11,5 @@ fi
 . $SCRIPT_DIR/01_environment_vars.sh
 # ============================
 
+# enabling journaling as described here: http://docs.mongodb.org/v2.4/reference/configuration-options/#journal
 sudo bash -c 'echo -e "\n# KoBoCat: Ensure journaling is enabled.\njournal= true" >> /etc/mongod.conf'
