@@ -1,19 +1,27 @@
-#!/bin/sh
+#!/usr/bin/env sh
+
+set -e
 
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
-. /vagrant/scripts/01_environment_vars.sh
+if [ -d /home/vagrant ]; then
+    SCRIPT_DIR=/vagrant/scripts
+else
+    THIS_SCRIPT_PATH=$(readlink -f "$0")
+    SCRIPT_DIR=$(dirname "$THIS_SCRIPT_PATH")
+fi
+. $SCRIPT_DIR/01_environment_vars.sh
 # ============================
 
-BOOT_LAUNCH_SCRIPT="/home/vagrant/boot_launch_servers.sh"
-cp /vagrant/scripts/X_boot_launch_servers.sh $BOOT_LAUNCH_SCRIPT
+install_info "Adding cron jobs."
+
+BOOT_LAUNCH_SCRIPT="$HOME_VAGRANT/boot_launch_servers.sh"
+cp $V_S/X_boot_launch_servers.sh $BOOT_LAUNCH_SCRIPT
 
 if [ $( crontab -l | grep boot_launch | wc -l ) = "0" ]; then
 	crontab -l | { cat; echo "@reboot sh $BOOT_LAUNCH_SCRIPT &"; } | crontab -
 	install_info "crontab added"
-	install_info "launching server (see 'logs' if there is a problem)"
-	bash /vagrant/scripts/run_on_reload.sh
-	install_info "servers should be running on ports 8000 and 8001"
+	bash $V_S/run_on_reload.sh
 else
 	echo "crontab already added"
 fi

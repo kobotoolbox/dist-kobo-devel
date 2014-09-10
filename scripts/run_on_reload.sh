@@ -1,8 +1,14 @@
-#!/bin/bash -u
+#!/usr/bin/env bash
 
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
-. /vagrant/scripts/01_environment_vars.sh
+if [ -d /home/vagrant ]; then
+    SCRIPT_DIR=/vagrant/scripts
+else
+    THIS_SCRIPT_PATH=$(readlink -f "$0")
+    SCRIPT_DIR=$(dirname "$THIS_SCRIPT_PATH")
+fi
+. $SCRIPT_DIR/01_environment_vars.sh
 # ============================
 
 if [ "$AUTOLAUNCH" = "0" ]; then
@@ -10,21 +16,22 @@ if [ "$AUTOLAUNCH" = "0" ]; then
 	exit;
 fi
 
-LOGS="/vagrant/logs"
-SCRIPTS="/vagrant/scripts"
-
 # ensure logs dir exists
-mkdir -p $LOGS
+mkdir -p $V_L
 
 # move the logs
-[ -f "$LOGS/kobocat.log" ] && { mv "$LOGS/kobocat.log" "$LOGS/kobocat.log.1"; }
-[ -f "$LOGS/koboform.log" ] && { mv "$LOGS/koboform.log" "$LOGS/koboform.log.1"; }
+[ -f "$V_L/kobocat.log" ] && { mv "$V_L/kobocat.log" "$V_L/kobocat.log.1"; }
+[ -f "$V_L/koboform.log" ] && { mv "$V_L/koboform.log" "$V_L/koboform.log.1"; }
 
 # start the servers
-if [ -f "$SCRIPTS/run_kobocat.bash" ]; then
-	bash "$SCRIPTS/run_kobocat.bash" >> "$LOGS/kobocat.log" 2>&1 &
+if [ -f "$V_S/run_kobocat.bash" ]; then
+	bash "$V_S/run_kobocat.bash" >> "$V_L/kobocat.log" 2>&1 &
 fi
 
-if [ -f "$SCRIPTS/run_koboform.bash" ]; then
-	bash "$SCRIPTS/run_koboform.bash" >> "$LOGS/koboform.log" 2>&1 &
+if [ -f "$V_S/run_koboform.bash" ]; then
+	bash "$V_S/run_koboform.bash" >> "$V_L/koboform.log" 2>&1 &
 fi
+
+# Start PM2 to manage running Enketo if not already done.
+sudo sh -E -c "cd $ENKETO_EXPRESS_REPO_DIR && . env/bin/activate && pm2 describe enketo || pm2 start app.js -n enketo"
+

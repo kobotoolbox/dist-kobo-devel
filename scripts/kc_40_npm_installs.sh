@@ -1,17 +1,27 @@
-#!/bin/sh -u
+#!/usr/bin/env sh
 
 # scripts/kc_40_npm_installs.sh
 
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
-. /vagrant/scripts/01_environment_vars.sh
+if [ -d /home/vagrant ]; then
+    SCRIPT_DIR=/vagrant/scripts
+else
+    THIS_SCRIPT_PATH=$(readlink -f "$0")
+    SCRIPT_DIR=$(dirname "$THIS_SCRIPT_PATH")
+fi
+. $SCRIPT_DIR/01_environment_vars.sh
 # ============================
 
 cd $KOBOCAT_PATH
 
-install_info "Install some extra node dependencies"
+install_info "Install some extra node dependencies for KoBoCat."
+
 sudo npm install -g --save-dev
 sudo npm install -g bower karma grunt-cli
 
-# $HOME is /home/vagrant
-sudo chown -R vagrant:vagrant /home/vagrant
+# $HOME is overridden for root
+if [ $(whoami) = "vagrant" ]; then 
+    sudo chown -R vagrant:vagrant $HOME_VAGRANT
+fi
+

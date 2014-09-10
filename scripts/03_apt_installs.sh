@@ -1,39 +1,49 @@
-#!/bin/sh -u
+#!/usr/bin/env sh
 
 # scripts/03_apt_installs.sh
 
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
-. /vagrant/scripts/01_environment_vars.sh
+if [ -d /home/vagrant ]; then
+    SCRIPT_DIR=/vagrant/scripts
+else
+    THIS_SCRIPT_PATH=$(readlink -f "$0")
+    SCRIPT_DIR=$(dirname "$THIS_SCRIPT_PATH")
+fi
+. $SCRIPT_DIR/01_environment_vars.sh
 # ============================
 
 set -e
 
 install_info "Install core dependencies"
 
-sudo apt-get -q update
-sudo apt-get -y upgrade
-
+sudo apt-get update
+sudo apt-get upgrade -y
 sudo apt-get -y --force-yes install \
     git-core \
     g++ \
     make \
     python-dev \
-    python-lxml \
-    mongodb-org \
+    mongodb-org-server \
     gfortran \
     libatlas-base-dev \
     libjpeg-dev \
     python-numpy \
     python-software-properties \
+    openjdk-6-jre \
     zlib1g-dev \
     binutils \
     libproj-dev \
     libxslt1-dev \
     libxml2-dev \
+    python-lxml \
     libpq-dev \
+    rabbitmq-server \
     python-virtualenv \
     nodejs
 
 sudo easy_install pip
 sudo pip install virtualenvwrapper
+
+sudo apt-get clean # Clear out cached packages.
+

@@ -1,7 +1,10 @@
-#!/bin/sh -u
+#!/usr/bin/env sh
 
 # To be run with the crontab
-# @reboot sh /home/vagrant/boot_launch_servers.sh
+# @reboot sh /path/to/boot_launch_servers.sh
+
+# identical to 01_env...
+V_S="/vagrant/scripts"
 
 CRONLOG_DIR="$HOME/cronlog"
 CRONLOG_LOGFILE="$CRONLOG_DIR/boot_launch_servers.log"
@@ -10,8 +13,8 @@ CRONLOG_LOGFILE="$CRONLOG_DIR/boot_launch_servers.log"
 mkdir -p $CRONLOG_DIR
 [ -f "$CRONLOG_LOGFILE" ] && { mv "$CRONLOG_LOGFILE" "$CRONLOG_LOGFILE.1"; }
 
-VAGRANT_IS_UP_DIR="/vagrant/scripts"
-VAGRANT_IS_UP_SCRIPT="/vagrant/scripts/run_on_reload.sh"
+VAGRANT_IS_UP_DIR="$V_S"
+VAGRANT_IS_UP_SCRIPT="$V_S/run_on_reload.sh"
 WAIT_TIME_AFTER_VAGRANT_IS_UP=1
 
 vagrant_is_up() {
