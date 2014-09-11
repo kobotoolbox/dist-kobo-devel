@@ -67,13 +67,13 @@ export KOBO_PSQL_DB_PASS="kobo"
 export DATABASE_URL="postgis://$KOBO_PSQL_DB_USER:$KOBO_PSQL_DB_PASS@$SERVER_IP:5432/$KOBO_PSQL_DB_NAME"
 
 # Enketo-Express-related configurations.
-# For Enketo Express's installation ('enketo-express/setup/bootstrap.sh').
+# For Enketo Express's installation script ('enketo-express/setup/bootstrap.sh').
 export ENKETO_EXPRESS_REPO_DIR="$HOME_VAGRANT/enketo-express"
 export ENKETO_EXPRESS_UPDATE_REPO="false"
 export ENKETO_EXPRESS_USE_NODE_ENV="true"
 # For KoBoForm.
 export ENKETO_SERVER="http://$SERVER_IP:$ENKETO_EXPRESS_SERVER_PORT"
-export ENKETO_PREVIEW_URL="/preview"
+export ENKETO_PREVIEW_URI="/preview"
 # For KoBoCat.
 export ENKETO_URL="http://$SERVER_IP:$ENKETO_EXPRESS_SERVER_PORT"
 export ENKETO_API_URL_PARTIAL="/api/v1"
