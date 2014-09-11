@@ -13,3 +13,7 @@ fi
 
 # enabling journaling as described here: http://docs.mongodb.org/v2.4/reference/configuration-options/#journal
 sudo bash -c 'echo -e "\n# KoBoCat: Ensure journaling is enabled.\njournal= true" >> /etc/mongod.conf'
+
+# Bring the configuration change into effect.
+sudo service mongod restart
+
