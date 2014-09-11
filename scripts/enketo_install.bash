@@ -20,11 +20,12 @@ cd $HOME_VAGRANT
 [ -d "$ENKETO_EXPRESS_REPO_DIR" ] || git clone https://github.com/kobotoolbox/enketo-express.git $ENKETO_EXPRESS_REPO_DIR
 cd $ENKETO_EXPRESS_REPO_DIR
 
-# Install Enketo Express
-# one of the byproducts of bootstrap.sh is it creates a directory "env"
-[ -d "env" ] || sudo -E sh $ENKETO_EXPRESS_REPO_DIR/setup/bootstrap.sh
-
 # Edit the Enketo Express configuration JSON so the `server url` field is set to the local KoBoCat server.
 CONFIG_FILE_PATH="$ENKETO_EXPRESS_REPO_DIR/config/config.json"
 python -c "import json;f=open('$CONFIG_FILE_PATH');config=json.loads(f.read());config['linked form and data server']['server url']='$KOBOCAT_URL';f2=open('$CONFIG_FILE_PATH~','w');f2.write(json.dumps(config, indent=4))"
 mv $CONFIG_FILE_PATH~ $CONFIG_FILE_PATH
+
+# Install and run Enketo Express.
+# one of the byproducts of bootstrap.sh is it creates a directory "env" when the shell variable $ENKETO_EXPRESS_USE_NODE_ENV is set to "true"
+[ -d "env" ] || sudo -E sh $ENKETO_EXPRESS_REPO_DIR/setup/bootstrap.sh
+
