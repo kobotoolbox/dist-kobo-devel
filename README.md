@@ -9,7 +9,7 @@ Installing Kobocat / Koboform Development Box
 
 	http://www.vagrantup.com/downloads.html
 
-1. Clone "kobotoolbox/dist-kobo-devel", branch: "vagrant"
+1. Clone "kobotoolbox/dist-kobo-devel"
 
 	git clone https://github.com/kobotoolbox/dist-kobo-devel.git -b vagrant
 
