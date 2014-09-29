@@ -3,7 +3,7 @@
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
 if [ -d /home/vagrant ]; then
-    SCRIPT_DIR=/vagrant/scripts
+    SCRIPT_DIR=/home/vagrant/dist-kobo-devel/scripts
 else
     THIS_SCRIPT_PATH=$(readlink -f "$0")
     SCRIPT_DIR=$(dirname "$THIS_SCRIPT_PATH")

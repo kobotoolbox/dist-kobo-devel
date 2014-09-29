@@ -23,7 +23,7 @@ export PIP_DOWNLOAD_CACHE="$HOME_VAGRANT/.pip_cache"
 
 # Directories.
 if [ -d /home/vagrant ]; then
-    SCRIPT_DIR=/vagrant/scripts
+    SCRIPT_DIR=/home/vagrant/dist-kobo-devel/scripts
 else
     THIS_SCRIPT_PATH=$(readlink -f "$0")
     SCRIPT_DIR=$(dirname "$THIS_SCRIPT_PATH")
@@ -66,6 +66,9 @@ export KOBO_PSQL_DB_USER="kobo"
 export KOBO_PSQL_DB_PASS="kobo"
 export DATABASE_URL="postgis://$KOBO_PSQL_DB_USER:$KOBO_PSQL_DB_PASS@$SERVER_IP:5432/$KOBO_PSQL_DB_NAME"
 
+export DEFAULT_KOBO_USER="kobo"
+export DEFUALT_KOBO_PASS="kobo"
+
 # Enketo-Express-related configurations.
 # For Enketo Express's installation script ('enketo-express/setup/bootstrap.sh').
 export ENKETO_EXPRESS_REPO_DIR="$HOME_VAGRANT/enketo-express"
@@ -105,6 +108,6 @@ run_koboform () {
 }
 
 
-if [ -f "$HOME_VAGRANT/$ENV_OVERRIDE_FILE" ]; then
+if [ -f "$V_R/$ENV_OVERRIDE_FILE" ]; then
 	. $V_R/$ENV_OVERRIDE_FILE
 fi

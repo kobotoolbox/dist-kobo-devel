@@ -5,7 +5,7 @@
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
 if [ -d /home/vagrant ]; then
-    SCRIPT_DIR=/vagrant/scripts
+    SCRIPT_DIR=/home/vagrant/dist-kobo-devel/scripts
 else
     THIS_SCRIPT_PATH=$(readlink -f "$0")
     SCRIPT_DIR=$(dirname "$THIS_SCRIPT_PATH")
@@ -14,6 +14,8 @@ fi
 # ============================
 
 install_info "Cloning KoBoCat code."
+
+[ -n "$KOBO_RESET_REPOS" ] && rm -rf $KOBOCAT_PATH
 
 # pull if directory exists
 # [ -d "$KOBOCAT_PATH" ] && { cd $KOBOCAT_PATH; git pull origin $KOBOCAT_BRANCH; }

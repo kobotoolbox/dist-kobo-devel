@@ -5,13 +5,15 @@ set -e
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
 if [ -d /home/vagrant ]; then
-    SCRIPT_DIR=/vagrant/scripts
+    SCRIPT_DIR=/home/vagrant/dist-kobo-devel/scripts
 else
     THIS_SCRIPT_PATH=$(readlink -f "$0")
     SCRIPT_DIR=$(dirname "$THIS_SCRIPT_PATH")
 fi
 . $SCRIPT_DIR/01_environment_vars.sh
 # ============================
+[ -n "$KOBO_SKIP_INSTALL" ] && exit 0
+
 
 install_info "Adding cron jobs."
 
@@ -21,7 +23,7 @@ cp $V_S/X_boot_launch_servers.sh $BOOT_LAUNCH_SCRIPT
 if [ $( crontab -l | grep boot_launch | wc -l ) = "0" ]; then
 	crontab -l | { cat; echo "@reboot sh $BOOT_LAUNCH_SCRIPT &"; } | crontab -
 	install_info "crontab added"
-	bash $V_S/run_on_reload.sh
+	sh $BOOT_LAUNCH_SCRIPT
 else
 	echo "crontab already added"
 fi
