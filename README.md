@@ -1,17 +1,13 @@
 Installing Kobocat / Koboform Development Box
 =============================================
 
-1. Ensure you have VirtualBox installed
+1. Ensure you have [VirtualBox](http://virtualbox.org) installed
 
-	http://virtualbox.org
-
-1. Download and install "Vagrant"
-
-	http://www.vagrantup.com/downloads.html
+1. Download and install [Vagrant](http://www.vagrantup.com/downloads.html)
 
 1. Clone "kobotoolbox/dist-kobo-devel"
 
-	git clone https://github.com/kobotoolbox/dist-kobo-devel.git -b vagrant
+	git clone https://github.com/kobotoolbox/dist-kobo-devel.git 
 
 1. Change directories
 
@@ -32,4 +28,5 @@ If the installation is successful, dist-kobo-devel should include the following 
 
  * kobocat
  * kobocat-template
- * koboform
+ * dkobo
+ * enketo-express
