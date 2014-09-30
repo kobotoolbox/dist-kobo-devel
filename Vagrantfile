@@ -4,15 +4,16 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "ubuntu/trusty32"
+
+  config.vm.box = ENV["VM_BOX"] or "ubuntu/trusty32"
   config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-i386-vagrant-disk1.box"
 
-  config.vm.network :forwarded_port, host: 8000, guest: 8000
-  config.vm.network :forwarded_port, host: 8001, guest: 8001
-  
-  # Copied from Enketo's `Vagrantfile`
-  config.vm.network :forwarded_port, host: 8005, guest: 8005
-  config.vm.network :forwarded_port, host: 35729, guest: 35729
+  port_number = (ENV["KOBO_PORT_NUMBER"] or 8000).to_i
+
+  # iterate through 8000, 8001, 8005, and 35729
+  [port_number, port_number+1, port_number+5, port_number+27729].each do |pn|
+    config.vm.network :forwarded_port, host: pn, guest: pn
+  end
 
   # Suppress subsequent stdin/tty complaints (for `root` user only).
   config.vm.provision :shell, inline: "sed -i 's/^mesg n$/tty -s \\&\\& mesg n/g' /root/.profile"
