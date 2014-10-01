@@ -8,7 +8,7 @@ set -e
 # EXTEND ENVIRONMENT VARIABLES
 if [ -d /home/vagrant ]; then
     # For Vagrant installations.
-    SCRIPT_DIR=/vagrant/scripts
+    SCRIPT_DIR=/home/vagrant/dist-kobo-devel/scripts
 else
     # Non-Vagrant.
     THIS_SCRIPT_PATH=$(readlink -f "$0")
