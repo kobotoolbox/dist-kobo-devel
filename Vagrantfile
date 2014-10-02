@@ -57,14 +57,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     sudo chown -R vagrant:vagrant /home/vagrant
 
     # ensure the environment variables are loaded in .profile and .bashrc
-    ENVS_FILE="/home/vagrant/scripts/01_environment_vars.sh"
-    if [ $(cat "/home/vagrant/.profile" | grep $ENVS_FILE | wc -l) = "0" ]; then
-      echo ". $ENVS_FILE" >> "/home/vagrant/.profile"
-      echo ". $ENVS_FILE" >> "/home/vagrant/.bashrc"
-    fi
+    src_file="/home/vagrant/scripts/01_environment_vars.sh"
+    for f in "/home/vagrant/.profile" "/etc/bash.bashrc" "/root/.profile"; do
+      if [ "$(sudo grep $src_file $f)" = "" ]; then
+        echo "sourcing '$src_file' in '$f'"
+        echo "[ -f $src_file ] && { . $src_file; }" | sudo tee -a $f > /dev/null
+      fi
+    done
 
     # in case of dns issue, uncomment this next line
-    echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
+    # echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
 
     # run the initial script which installs all 3 apps
     sh /home/vagrant/scripts/00_vagrant_up.sh
