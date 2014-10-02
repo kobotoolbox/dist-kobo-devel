@@ -1,12 +1,16 @@
 #!/usr/bin/env sh
 
+# You probably don't want to edit this file.
+# It just launches a script in the vagrant directory when it is made available to the OS
+# (if it's made available in the first 60 seconds after startup)
+
 # To be run with the crontab
 # @reboot sh /path/to/boot_launch_servers.sh
 
 # identical to 01_env...
-V_S="/vagrant/scripts"
+V_S="/home/vagrant/scripts"
 
-CRONLOG_DIR="$HOME/cronlog"
+CRONLOG_DIR="$HOME/logs"
 CRONLOG_LOGFILE="$CRONLOG_DIR/boot_launch_servers.log"
 
 # clean out the log

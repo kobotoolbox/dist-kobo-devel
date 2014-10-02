@@ -5,13 +5,15 @@
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
 if [ -d /home/vagrant ]; then
-    SCRIPT_DIR=/vagrant/scripts
+    SCRIPT_DIR=/home/vagrant/scripts
 else
     THIS_SCRIPT_PATH=$(readlink -f "$0")
     SCRIPT_DIR=$(dirname "$THIS_SCRIPT_PATH")
 fi
 . $SCRIPT_DIR/01_environment_vars.sh
 # ============================
+
+[ -n "$KOBO_SKIP_INSTALL" ] && exit 0
 
 set -e
 
@@ -46,4 +48,10 @@ sudo easy_install pip
 sudo pip install virtualenvwrapper
 
 sudo apt-get clean # Clear out cached packages.
+
+#if [ $(cat $HOME_VAGRANT/.profile | grep virtualenvwrapper | wc -l) = "0" ]; then
+#    echo 'export WORKON_HOME="$HOME/.virtualenvs"' >> $HOME_VAGRANT/.profile
+#    echo '. /usr/local/bin/virtualenvwrapper.sh' >> $HOME_VAGRANT/.profile
+#fi
+#. /usr/local/bin/virtualenvwrapper.sh
 
