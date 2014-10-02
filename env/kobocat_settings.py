@@ -1,5 +1,5 @@
 import os
-from common import *  # nopep8
+from onadata.settings.common import * 
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

@@ -3,13 +3,14 @@
 # ============================
 # EXTEND ENVIRONMENT VARIABLES
 if [ -d /home/vagrant ]; then
-    SCRIPT_DIR=/vagrant/scripts
+    SCRIPT_DIR=/home/vagrant/scripts
 else
     THIS_SCRIPT_PATH=$(readlink -f "$0")
     SCRIPT_DIR=$(dirname "$THIS_SCRIPT_PATH")
 fi
 . $SCRIPT_DIR/01_environment_vars.sh
 # ============================
+[ -n "$KOBO_SKIP_INSTALL" ] && exit 0
 
 KENV="kf"
 KENV_SHELL_EXTENDS="$V_E/env_koboform"
@@ -29,23 +30,24 @@ if [ ! -d "$VENV_LOCATION" ]; then
 		echo ". /usr/local/bin/virtualenvwrapper.sh" >> $PROFILE_PATH
 	fi
 
-	if [ $(cat $PROFILE_PATH | grep koborc | wc -l) = "0" ]; then
-		echo "source $V_E/koborc" >> $PROFILE_PATH
-	fi
+	# if [ $(cat $PROFILE_PATH | grep koborc | wc -l) = "0" ]; then
+	# 	echo "source $V_E/koborc" >> $PROFILE_PATH
+	# fi
 
 	# Ensure the profile is loaded (once).
 	[ ! ${KOBO_PROFILE_LOADED:-"false"} = "true" ] && . $PROFILE_PATH
 
-	if [ -d "$VENV_LOCATION" ]; then
+	if [ -f "$VIRTUALENVS_KF" ]; then
 		echo "Activating '$KENV' virtualenv"
 		workon $KENV
 	else
 		echo "Creating a new virtualenv"
+		. /usr/local/bin/virtualenvwrapper.sh
 		mkvirtualenv $KENV
-		echo "source $V_E/env_koboform" >> $VENV_LOCATION/bin/postactivate
 	fi
-
 	deactivate
+
+	echo ". $V_E/env_koboform" > $VENV_LOCATION/bin/postactivate
 
 else
 	install_info "Virtualenv already exists"

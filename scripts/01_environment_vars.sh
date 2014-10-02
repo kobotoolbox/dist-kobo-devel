@@ -23,15 +23,16 @@ export PIP_DOWNLOAD_CACHE="$HOME_VAGRANT/.pip_cache"
 
 # Directories.
 if [ -d /home/vagrant ]; then
-    SCRIPT_DIR=/vagrant/scripts
+    SCRIPT_DIR=/home/vagrant/scripts
 else
     THIS_SCRIPT_PATH=$(readlink -f "$0")
     SCRIPT_DIR=$(dirname "$THIS_SCRIPT_PATH")
 fi
 export V_R="$(readlink -f $SCRIPT_DIR/..)" # vagrant root
-export V_E="$V_R/env"
-export V_S="$V_R/scripts"
-export V_L="$V_R/logs"
+export V_E="$HOME_VAGRANT/env"
+export V_S="$HOME_VAGRANT/scripts"
+export V_L="$HOME_VAGRANT/logs"
+export SRC_DIR="$HOME_VAGRANT/src"
 # export KOBOCAT="kobocat"
 
 
@@ -49,16 +50,16 @@ export ENKETO_EXPRESS_SERVER_PORT="8005"
 
 export KOBOCAT_REPO="https://github.com/kobotoolbox/kobocat.git"
 export KOBOCAT_BRANCH="master"
-export KOBOCAT_PATH="$HOME_VAGRANT/kobocat"
+export KOBOCAT_PATH="$SRC_DIR/kobocat"
 
 export KOBOCAT_TEMPLATES_REPO="https://github.com/kobotoolbox/kobocat-template.git"
 export KOBOCAT_TEMPLATES_BRANCH="master"
-export KOBOCAT_TEMPLATES_PATH="$HOME_VAGRANT/kobocat-template"
+export KOBOCAT_TEMPLATES_PATH="$SRC_DIR/kobocat-template"
 
 export KOBOFORM_PREVIEW_SERVER="http://$SERVER_IP:$KOBOFORM_SERVER_PORT"
 export KOBOFORM_REPO="https://github.com/kobotoolbox/dkobo.git"
 export KOBOFORM_BRANCH="master"
-export KOBOFORM_PATH="$HOME_VAGRANT/koboform"
+export KOBOFORM_PATH="$SRC_DIR/koboform"
 
 export PSQL_ADMIN="postgres"
 export KOBO_PSQL_DB_NAME="kobotoolbox"
@@ -66,9 +67,12 @@ export KOBO_PSQL_DB_USER="kobo"
 export KOBO_PSQL_DB_PASS="kobo"
 export DATABASE_URL="postgis://$KOBO_PSQL_DB_USER:$KOBO_PSQL_DB_PASS@$SERVER_IP:5432/$KOBO_PSQL_DB_NAME"
 
+export DEFAULT_KOBO_USER="kobo"
+export DEFUALT_KOBO_PASS="kobo"
+
 # Enketo-Express-related configurations.
 # For Enketo Express's installation script ('enketo-express/setup/bootstrap.sh').
-export ENKETO_EXPRESS_REPO_DIR="$HOME_VAGRANT/enketo-express"
+export ENKETO_EXPRESS_REPO_DIR="$SRC_DIR/enketo-express"
 export ENKETO_EXPRESS_UPDATE_REPO="false"
 export ENKETO_EXPRESS_USE_NODE_ENV="true"
 # For KoBoForm.
@@ -79,7 +83,11 @@ export ENKETO_URL="http://$SERVER_IP:$ENKETO_EXPRESS_SERVER_PORT"
 export ENKETO_API_URL_PARTIAL="/api/v1"
 export ENKETO_PREVIEW_URL_PARTIAL="/preview"
 export ENKETO_PROTOCOL="http"
+
 [ -f $ENKETO_EXPRESS_REPO_DIR/config/config.json ] && export ENKETO_API_TOKEN=$(python -c "import json;f=open('$ENKETO_EXPRESS_REPO_DIR/config/config.json');print json.loads(f.read()).get('linked form and data server').get('api key')")
+# enk_token_file="~/.enketo-express-api-token.txt"
+# [ ! -f "$enk_token_file" ] && { python -c "import json;f=open('$ENKETO_EXPRESS_REPO_DIR/config/config.json');print json.loads(f.read()).get('linked form and data server').get('api key')" > $enk_token_file; }
+# export ENKETO_API_TOKEN=$(cat $enk_token_file)
 
 # django settings specific details
 export DJANGO_LIVE_RELOAD="False"
@@ -105,6 +113,17 @@ run_koboform () {
 }
 
 
-if [ -f "$HOME_VAGRANT/$ENV_OVERRIDE_FILE" ]; then
-	. $V_R/$ENV_OVERRIDE_FILE
+if [ -f "$V_E/$ENV_OVERRIDE_FILE" ]; then
+	. $V_E/$ENV_OVERRIDE_FILE
 fi
+
+# virtualenvwrapper is acting weird. will this substitute work?
+workon () {
+	. $HOME/.virtualenvs/$1/bin/activate && . $HOME/.virtualenvs/$1/bin/postactivate
+}
+mkvirtualenv () {
+	virtualenv $HOME/.virtualenvs/$1
+	touch $HOME/.virtualenvs/$1/bin/postactivate
+	workon $1
+}
+
