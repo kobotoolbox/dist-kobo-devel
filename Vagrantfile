@@ -1,20 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-inline_script = <<SCRIPT
-sed -i 's/^mesg n$/tty -s \\&\\& mesg n/g' /root/.profile
-mkdir -p /home/vagrant/src
-chown vagrant:vagrant /home/vagrant/src
-
-PROFILE_FILE="/home/vagrant/.profile"
-ENVS_FILE="/home/vagrant/scripts/01_environment_vars.sh"
-if [ $(cat $PROFILE_FILE | grep $ENVS_FILE | wc -l) = "0" ]; then
-  echo ". $ENVS_FILE" >> $PROFILE_FILE
-fi
-
-sh /home/vagrant/scripts/00_vagrant_up.sh
-SCRIPT
-
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -47,21 +33,40 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.memory = 1024
   end
 
-  # Suppress subsequent stdin/tty complaints (for `root` user only).
-  config.vm.provision :shell, inline: inline_script
-
   config.vm.synced_folder ".", "/vagrant", disabled: true
+
+
+  config.vm.synced_folder "./logs", "/home/vagrant/logs"
+  config.vm.synced_folder "./backups", "/home/vagrant/backups"
 
   config.vm.synced_folder "./scripts", "/home/vagrant/scripts", type: "rsync"
   config.vm.synced_folder "./env", "/home/vagrant/env", type: "rsync"
 
-  config.vm.synced_folder "./logs", "/home/vagrant/logs"
-  config.vm.synced_folder "./backups", "/home/vagrant/backups"
 
   if File.directory? "src"
     config.vm.synced_folder "./src", "/home/vagrant/src", type: "rsync"
   end
 
-  config.vm.provision :shell, inline: inline_script
+  config.vm.provision :shell, inline: <<SCRIPT
+    # Suppress subsequent stdin/tty complaints (for `root` user only).
+    sed -i 's/^mesg n$/tty -s \\&\\& mesg n/g' /root/.profile
 
+    # ensure a src directory exists and has the correct warnings
+    mkdir -p /home/vagrant/src
+    # make all directories in vagrant owned by vagrant
+    sudo chown -R vagrant:vagrant /home/vagrant
+
+    # ensure the environment variables are loaded in .profile and .bashrc
+    ENVS_FILE="/home/vagrant/scripts/01_environment_vars.sh"
+    if [ $(cat "/home/vagrant/.profile" | grep $ENVS_FILE | wc -l) = "0" ]; then
+      echo ". $ENVS_FILE" >> "/home/vagrant/.profile"
+      echo ". $ENVS_FILE" >> "/home/vagrant/.bashrc"
+    fi
+
+    # in case of dns issue, uncomment this next line
+    echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
+
+    # run the initial script which installs all 3 apps
+    sh /home/vagrant/scripts/00_vagrant_up.sh
+SCRIPT
 end
