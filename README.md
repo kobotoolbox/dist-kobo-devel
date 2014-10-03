@@ -11,12 +11,14 @@ Installing Kobocat / Koboform Development Box
 
 1. You can now run these commands from within this directory
 
- * `vagrant ssh`
- * `vagrant destroy` (deletes the vagrant box)
- * `vagrant halt` or `vagrant suspend`
- * `vagrant reload --provision` (reruns the init script)
- * `vagrant rsync` (runs a one-time sync of any commands in this directory)
- * `vagrant rsync-auto` (watches folders in the src directory for changes)
+ * `vagrant ssh` # ssh into the virtual machine
+ * `vagrant reload --provision` # reload the provision script after pulling the latest code
+
+Additional commands to know
+---------------------------
+ * `vagrant destroy` # deletes the vagrant box
+ * `vagrant halt` or `vagrant suspend` # shuts down the machine
+
 
 In development mode
 -------------------
