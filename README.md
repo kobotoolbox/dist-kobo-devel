@@ -14,6 +14,15 @@ Installing Kobocat / Koboform Development Box
  * `vagrant ssh` # ssh into the virtual machine
  * `vagrant reload --provision` # reload the provision script after pulling the latest code
 
+How to load from an existing .box file
+--------------------------------------
+ * Clone this repository.
+ * Set an environment variable `VM_BOX` to equal to the path to the box file, and then run `vagrant up`.
+
+_Example_
+
+`VM_BOX="file:///path/to/box.box" vagrant up`
+
 Additional commands to know
 ---------------------------
  * `vagrant destroy` # deletes the vagrant box
