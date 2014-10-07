@@ -16,7 +16,7 @@ if [ "$AUTOLAUNCH" = "0" ]; then
 	exit;
 fi
 
-[ -f "$HOME/cronlogs/boot_launch_servers.log" ] && { mv "$HOME/cronlogs/boot_launch_servers.log" $V_L; }
+[ -f "$HOME/boot_launch_servers.log" ] && { mv "$HOME/boot_launch_servers.log" $V_L; }
 
 # ensure logs dir exists
 mkdir -p $V_L

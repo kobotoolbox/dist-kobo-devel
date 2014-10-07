@@ -10,8 +10,7 @@
 # identical to 01_env...
 V_S="/home/vagrant/scripts"
 
-CRONLOG_DIR="$HOME/cronlogs"
-CRONLOG_LOGFILE="$CRONLOG_DIR/boot_launch_servers.log"
+CRONLOG_LOGFILE="$HOME/boot_launch_servers.log"
 
 # clean out the log
 mkdir -p $CRONLOG_DIR
