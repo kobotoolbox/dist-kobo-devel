@@ -42,11 +42,11 @@ su - root -c        "bash $V_S/kc_60_environment_setup.bash"
 su - vagrant -c     "bash $V_S/kf_10_virtualenvs.bash"
 su - vagrant -c     "sh   $V_S/kf_20_clone_code.sh"
 su - vagrant -c     "bash $V_S/kf_30_install_pip_requirements.bash"
-su - vagrant -c     "HOME=$VAGRANT_HOME sh   $V_S/kf_40_npm_installs.sh"
+su - vagrant -c     "HOME=$HOME_VAGRANT sh   $V_S/kf_40_npm_installs.sh"
 su - vagrant -c     "bash $V_S/kf_50_migrate_db.bash"
 
 # Enketo Express:
-su - vagrant -c     "bash $V_S/enketo_install.bash"
+su - root -c        "bash $V_S/enketo_install.bash"
 
 su - vagrant -c     "sh   $V_S/09_add_cronjobs.sh"
 

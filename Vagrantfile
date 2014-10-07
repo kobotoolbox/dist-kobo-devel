@@ -12,9 +12,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-i386-vagrant-disk1.box"
   end
 
-  if Vagrant.has_plugin?("vagrant-cachier")
-    config.cache.scope = :box
-  end
+  # if Vagrant.has_plugin?("vagrant-cachier")
+  #  config.cache.scope = :box
+  # end
 
   starting_port_number = (ENV['KOBO_PORT_NUMBER'] or "8000").to_i
 
@@ -36,8 +36,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
 
-  config.vm.synced_folder "./logs", "/home/vagrant/logs"
-  config.vm.synced_folder "./backups", "/home/vagrant/backups"
+  config.vm.synced_folder "./logs", "/home/vagrant/logs", owner: "vagrant", group: "vagrant"
+  config.vm.synced_folder "./backups", "/home/vagrant/backups", owner: "vagrant", group: "vagrant"
 
   config.vm.synced_folder "./scripts", "/home/vagrant/scripts", type: "rsync"
   config.vm.synced_folder "./env", "/home/vagrant/env", type: "rsync"
@@ -45,6 +45,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   if File.directory? "src"
     config.vm.synced_folder "./src", "/home/vagrant/src", type: "rsync"
+  end
+
+  if ENV.keys.include? "KOBO_OFFLINE"
+    launch_script = "echo 'export KOBO_OFFLINE=1' > /home/vagrant/env/KOBO_OFFLINE.sh"
+  else
+    launch_script = "sh /home/vagrant/scripts/00_vagrant_up.sh"
   end
 
   config.vm.provision :shell, inline: <<SCRIPT
@@ -68,7 +74,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # in case of dns issue, uncomment this next line
     # echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
 
-    # run the initial script which installs all 3 apps
-    sh /home/vagrant/scripts/00_vagrant_up.sh
+    #{launch_script}
 SCRIPT
 end

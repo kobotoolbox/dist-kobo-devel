@@ -36,8 +36,13 @@ export SRC_DIR="$HOME_VAGRANT/src"
 # export KOBOCAT="kobocat"
 
 
-# deployment / server details
+# override the server IP if it is set
 export SERVER_IP="127.0.0.1"
+[ -f "$V_E/SERVER_IP.sh" ] && { . $V_E/SERVER_IP.sh; }
+
+[ -f "$V_E/KOBO_OFFLINE.sh" ] && { . $V_E/KOBO_OFFLINE.sh; }
+
+# deployment / server details
 export KOBOFORM_SERVER="$SERVER_IP"
 export KOBOFORM_SERVER_PORT="8000"
 export KOBOCAT_SERVER="$SERVER_IP"
@@ -75,6 +80,8 @@ export DEFAULT_KOBO_PASS="kobo"
 export ENKETO_EXPRESS_REPO_DIR="$SRC_DIR/enketo-express"
 export ENKETO_EXPRESS_UPDATE_REPO="false"
 export ENKETO_EXPRESS_USE_NODE_ENV="true"
+export ENKETO_EXPRESS_NODE_ENV="$HOME_VAGRANT/nodeenv"
+
 # For KoBoForm.
 export ENKETO_SERVER="http://$SERVER_IP:$ENKETO_EXPRESS_SERVER_PORT"
 export ENKETO_PREVIEW_URI="/preview"
