@@ -1,31 +1,6 @@
-#!/usr/bin/env bash
-
-# scripts/enketo_install.bash
-
-set -e
-
-# ============================
-# EXTEND ENVIRONMENT VARIABLES
-if [ -d /home/vagrant ]; then
-    SCRIPT_DIR=/home/vagrant/scripts
-else
-    THIS_SCRIPT_PATH=$(readlink -f "$0")
-    SCRIPT_DIR=$(dirname "$THIS_SCRIPT_PATH")
-fi
-. $SCRIPT_DIR/01_environment_vars.sh
-# ============================
-
-cd $HOME_VAGRANT
-
-[ -d "$ENKETO_EXPRESS_REPO_DIR" ] || git clone https://github.com/kobotoolbox/enketo-express.git $ENKETO_EXPRESS_REPO_DIR
-cd $ENKETO_EXPRESS_REPO_DIR
-
-# Edit the Enketo Express configuration JSON so the `server url` field is set to the local KoBoCat server.
-CONFIG_FILE_PATH="$ENKETO_EXPRESS_REPO_DIR/config/config.json"
-python -c "import json;f=open('$CONFIG_FILE_PATH');config=json.loads(f.read());config['linked form and data server']['server url']='$KOBOCAT_URL';f2=open('$CONFIG_FILE_PATH~','w');f2.write(json.dumps(config, indent=4))"
-mv $CONFIG_FILE_PATH~ $CONFIG_FILE_PATH
-
-# Install and run Enketo Express.
-# one of the byproducts of bootstrap.sh is it creates a directory "env" when the shell variable $ENKETO_EXPRESS_USE_NODE_ENV is set to "true"
-[ -d "env" ] || sudo -E sh $ENKETO_EXPRESS_REPO_DIR/setup/bootstrap.sh
-
+su - vagrant -c     "sh $V_S/enketo/10_clone_code.sh"
+su - root -c        "sh $V_S/enketo/20_apt_installs.sh"
+su - root -c        "sh $V_S/enketo/30_start_redis.sh"
+su - vagrant -c     "sh $V_S/enketo/40_npm_installs.sh"
+su - vagrant -c     "sh $V_S/enketo/50_build_statics.sh"
+su - root -c        "sh $V_S/enketo/60_start_pm2.sh"

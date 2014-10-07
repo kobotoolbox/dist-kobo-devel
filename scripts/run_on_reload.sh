@@ -16,6 +16,8 @@ if [ "$AUTOLAUNCH" = "0" ]; then
 	exit;
 fi
 
+[ -f "$HOME/cronlogs/boot_launch_servers.log" ] && { mv "$HOME/cronlogs/boot_launch_servers.log" $V_L; }
+
 # ensure logs dir exists
 mkdir -p $V_L
 
@@ -33,5 +35,4 @@ if [ -f "$V_S/run_koboform.bash" ]; then
 fi
 
 # Start PM2 to manage running Enketo if not already done.
-sudo sh -E -c "cd $ENKETO_EXPRESS_REPO_DIR && . env/bin/activate && pm2 describe enketo || pm2 start app.js -n enketo"
-
+sh -c "cd $ENKETO_EXPRESS_REPO_DIR && . $ENKETO_EXPRESS_NODE_ENV/bin/activate && pm2 describe enketo || pm2 start app.js -n enketo" >> "$V_L/pm2.log" 2>&1 &

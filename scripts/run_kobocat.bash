@@ -16,5 +16,5 @@ fi
 workon kc
 
 cd $KOBOCAT_PATH
-
+python manage.py celeryd -l DEBUG > $V_L/celeryd.log 2>&1 &
 python manage.py runserver 0.0.0.0:$KOBOCAT_SERVER_PORT
