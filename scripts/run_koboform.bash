@@ -17,7 +17,7 @@ workon kf
 
 cd $KOBOFORM_PATH
 
-if [ -n "$LIVE_RELOAD" ]; then
+if [ -n "$DJANGO_LIVE_RELOAD" ]; then
 	python manage.py gruntserver 0.0.0.0:$KOBOFORM_SERVER_PORT
 else
 	python manage.py runserver 0.0.0.0:$KOBOFORM_SERVER_PORT
