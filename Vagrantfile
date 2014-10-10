@@ -48,7 +48,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   if ENV.keys.include? "KOBO_OFFLINE"
-    launch_script = "echo 'export KOBO_OFFLINE=1' > /home/vagrant/env/KOBO_OFFLINE.sh"
+    launch_script = "echo 'export KOBO_OFFLINE=1' > /home/vagrant/env/KOBO_OFFLINE.sh; sh /home/vagrant/boot_launch_servers.sh"
   else
     launch_script = "sh /home/vagrant/scripts/00_vagrant_up.sh"
   end

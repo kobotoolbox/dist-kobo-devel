@@ -23,3 +23,5 @@ cp $V_S/X_boot_launch_servers.sh $BOOT_LAUNCH_SCRIPT
 echo "$(crontab -l)" | grep "$BOOT_LAUNCH_SCRIPT" || {
 	crontab -l | { cat; echo "@reboot sh $BOOT_LAUNCH_SCRIPT &"; } | crontab -;
 }
+
+[ "$AUTOLAUNCH" = "1" ] && { sh "$BOOT_LAUNCH_SCRIPT"; }
