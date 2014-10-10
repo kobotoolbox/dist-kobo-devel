@@ -25,7 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.network :forwarded_port, host: hpn, guest: gpn
   end
 
-  if ENV["LIVE_RELOAD"]
+  if ENV["DJANGO_LIVE_RELOAD"]
     config.vm.network :forwarded_port, host: 35729, guest: 35729
   end
 
@@ -36,7 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
 
-  config.vm.synced_folder "./logs", "/home/vagrant/logs", owner: "vagrant", group: "vagrant"
+  # config.vm.synced_folder "./logs", "/home/vagrant/logs", owner: "vagrant", group: "vagrant"
   config.vm.synced_folder "./backups", "/home/vagrant/backups", owner: "vagrant", group: "vagrant"
 
   config.vm.synced_folder "./scripts", "/home/vagrant/scripts", type: "rsync"
@@ -61,6 +61,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     mkdir -p /home/vagrant/src
     # make all directories in vagrant owned by vagrant
     sudo chown -R vagrant:vagrant /home/vagrant
+    # continue getting permissions errors on these scripts...
+    sudo chmod -R 777 /home/vagrant/scripts
 
     # ensure the environment variables are loaded in .profile and .bashrc
     src_file="/home/vagrant/scripts/01_environment_vars.sh"
