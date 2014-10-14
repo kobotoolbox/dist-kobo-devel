@@ -22,7 +22,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   [0, 1, 5].each do |pn|
     hpn = starting_port_number + pn
     gpn = 8000 + pn
-    puts "host: #{hpn}, guest: #{gpn}"
     config.vm.network :forwarded_port, host: hpn, guest: gpn
   end
 
