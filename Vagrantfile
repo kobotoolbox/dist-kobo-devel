@@ -22,6 +22,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   [0, 1, 5].each do |pn|
     hpn = starting_port_number + pn
     gpn = 8000 + pn
+    puts "host: #{hpn}, guest: #{gpn}"
     config.vm.network :forwarded_port, host: hpn, guest: gpn
   end
 
@@ -47,11 +48,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.synced_folder "./src", "/home/vagrant/src", type: "rsync"
   end
 
+  commands = []
   if ENV.keys.include? "KOBO_OFFLINE"
-    launch_script = "echo 'export KOBO_OFFLINE=1' > /home/vagrant/env/KOBO_OFFLINE.sh; sh /home/vagrant/boot_launch_servers.sh"
+    commands << "echo 'export KOBO_OFFLINE=1' > /home/vagrant/env/KOBO_OFFLINE.sh"
+    commands << "su - vagrant -c 'bash $V_S/kc_50_migrate_db.bash'"
+    commands << "su - vagrant -c 'bash $V_S/kf_50_migrate_db.bash'"
+    commands << "su - vagrant -c 'sh /home/vagrant/scripts/09_add_cronjobs.sh'"
   else
-    launch_script = "sh /home/vagrant/scripts/00_vagrant_up.sh"
+    commands << "sh /home/vagrant/scripts/00_vagrant_up.sh"
   end
+  launch_script = commands.join('; ')
 
   config.vm.provision :shell, inline: <<SCRIPT
     # Suppress subsequent stdin/tty complaints (for `root` user only).
