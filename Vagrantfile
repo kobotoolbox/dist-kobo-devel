@@ -4,6 +4,11 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  
+  sync_type = "rsync"
+  if RUBY_PLATFORM.include? "mingw32"
+    sync_type = ""
+  end
 
   if ENV.keys.include? "VM_BOX"
     config.vm.box = ENV["VM_BOX"]
@@ -39,12 +44,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.vm.synced_folder "./logs", "/home/vagrant/logs", owner: "vagrant", group: "vagrant"
   config.vm.synced_folder "./backups", "/home/vagrant/backups", owner: "vagrant", group: "vagrant"
 
-  config.vm.synced_folder "./scripts", "/home/vagrant/scripts", type: "rsync"
-  config.vm.synced_folder "./env", "/home/vagrant/env", type: "rsync"
+  config.vm.synced_folder "./scripts", "/home/vagrant/scripts", type: sync_type
+  config.vm.synced_folder "./env", "/home/vagrant/env", type: sync_type
 
 
   if File.directory? "src"
-    config.vm.synced_folder "./src", "/home/vagrant/src", type: "rsync"
+    config.vm.synced_folder "./src", "/home/vagrant/src", type: sync_type
   end
 
   if ENV.keys.include? "KOBO_OFFLINE"
