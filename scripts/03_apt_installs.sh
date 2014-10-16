@@ -31,6 +31,7 @@ sudo apt-get -y --force-yes install \
     libatlas-base-dev \
     libjpeg-dev \
     python-numpy \
+    python-pandas \
     python-software-properties \
     openjdk-6-jre \
     zlib1g-dev \

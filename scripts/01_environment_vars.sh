@@ -129,7 +129,7 @@ workon () {
 	. $HOME/.virtualenvs/$1/bin/activate && . $HOME/.virtualenvs/$1/bin/postactivate
 }
 mkvirtualenv () {
-	virtualenv $HOME/.virtualenvs/$1
+	virtualenv $HOME/.virtualenvs/$1 --system-site-packages
 	touch $HOME/.virtualenvs/$1/bin/postactivate
 	workon $1
 }
