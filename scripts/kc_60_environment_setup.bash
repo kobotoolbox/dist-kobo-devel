@@ -15,6 +15,9 @@ fi
 if [ $(cat /etc/mongod.conf | egrep "^journal= true" | wc -l) = "0" ]; then
 	sudo bash -c 'echo -e "\n# KoBoCat: Ensure journaling is enabled.\njournal= true" >> /etc/mongod.conf'
 fi
+if [ $(cat /etc/mongod.conf | egrep "^smallfiles= true" | wc -l) = "0" ]; then
+	sudo bash -c 'echo -e "\n# KoBoCat: Ensure journaling uses smallfiles.\nsmallfiles= true" >> /etc/mongod.conf'
+fi
 
 # Bring the configuration change into effect.
 sudo service mongod restart
