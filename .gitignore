@@ -1,4 +1,5 @@
 .vagrant
+*.pyc
 env.sh
 node_modules
 kobocat
