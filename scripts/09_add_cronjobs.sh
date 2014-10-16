@@ -17,8 +17,7 @@ fi
 
 install_info "Adding cron jobs."
 
-BOOT_LAUNCH_SCRIPT="$HOME_VAGRANT/boot_launch_servers.sh"
-cp $V_S/X_boot_launch_servers.sh $BOOT_LAUNCH_SCRIPT
+BOOT_LAUNCH_SCRIPT="$V_S/run_on_reload.sh"
 
 echo "$(crontab -l)" | grep "$BOOT_LAUNCH_SCRIPT" || {
 	crontab -l | { cat; echo "@reboot sh $BOOT_LAUNCH_SCRIPT &"; } | crontab -;
