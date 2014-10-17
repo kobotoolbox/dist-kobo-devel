@@ -13,7 +13,7 @@ fi
 
 # Ensure the profile is loaded (once).
 [ ! ${KOBO_PROFILE_LOADED:-"false"} = "true" ] && . $HOME_VAGRANT/.profile
-workon kc
+kobo_workon kc
 
 cd $KOBOCAT_PATH
 python manage.py celeryd -l DEBUG > $V_L/celeryd.log 2>&1 &

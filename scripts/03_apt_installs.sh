@@ -45,14 +45,4 @@ sudo apt-get -y --force-yes install \
     python-virtualenv \
     nodejs
 
-sudo easy_install pip
-sudo pip install virtualenvwrapper
-
 sudo apt-get clean # Clear out cached packages.
-
-#if [ $(cat $HOME_VAGRANT/.profile | grep virtualenvwrapper | wc -l) = "0" ]; then
-#    echo 'export WORKON_HOME="$HOME/.virtualenvs"' >> $HOME_VAGRANT/.profile
-#    echo '. /usr/local/bin/virtualenvwrapper.sh' >> $HOME_VAGRANT/.profile
-#fi
-#. /usr/local/bin/virtualenvwrapper.sh
-
