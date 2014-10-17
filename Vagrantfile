@@ -49,7 +49,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 
   if File.directory? "src"
-    config.vm.synced_folder "./src", "/home/vagrant/src", type: sync_type
+    config.vm.synced_folder "./src", "/home/vagrant/src"
   end
 
   commands = []
