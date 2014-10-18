@@ -18,7 +18,7 @@ fi
 
 # Ensure the profile is loaded (once).
 [ ! ${KOBO_PROFILE_LOADED:-"false"} = "true" ] && . $PROFILE_PATH
-workon kf
+kobo_workon kf
 
 cd $KOBOFORM_PATH
 pip install -r requirements.txt

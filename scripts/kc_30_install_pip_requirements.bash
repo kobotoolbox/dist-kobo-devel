@@ -21,7 +21,7 @@ cd $KOBOCAT_PATH
 # Ensure the profile is loaded (once).
 [ ! ${KOBO_PROFILE_LOADED:-"false"} = "true" ] && . $PROFILE_PATH
 
-workon kc
+kobo_workon kc
 
 if [ "$VIRTUAL_ENV" = "" ]; then
 	echo "Virtualenv was not activated properly"

@@ -87,7 +87,7 @@ export ENKETO_SERVER="http://$SERVER_IP:$ENKETO_EXPRESS_SERVER_PORT"
 export ENKETO_PREVIEW_URI="/preview"
 # For KoBoCat.
 export ENKETO_URL="http://$SERVER_IP:$ENKETO_EXPRESS_SERVER_PORT"
-export ENKETO_API_URL_PARTIAL="/api/v1"
+export ENKETO_API_URL_PARTIAL="/api/v2"
 export ENKETO_PREVIEW_URL_PARTIAL="/preview"
 export ENKETO_PROTOCOL="http"
 
@@ -111,26 +111,17 @@ ENV_OVERRIDE_FILE="env.sh"
 export AUTOLAUNCH="1"
 
 
-run_kobocat () {
-	bash -c ". $PROFILE_PATH && workon kc && cd $KOBOCAT_PATH && python manage.py runserver 0.0.0.0:$KOBOCAT_SERVER_PORT"
-}
-
-run_koboform () {
-	bash -c ". $PROFILE_PATH && workon kf && cd $KOBOFORM_PATH && python manage.py gruntserver 0.0.0.0:$KOBOFORM_SERVER_PORT"
-}
-
-
 if [ -f "$V_E/$ENV_OVERRIDE_FILE" ]; then
 	. $V_E/$ENV_OVERRIDE_FILE
 fi
 
 # virtualenvwrapper is acting weird. will this substitute work?
-workon () {
+kobo_workon () {
 	. $HOME/.virtualenvs/$1/bin/activate && . $HOME/.virtualenvs/$1/bin/postactivate
 }
-mkvirtualenv () {
-	virtualenv $HOME/.virtualenvs/$1
+kobo_mkvirtualenv () {
+	virtualenv $HOME/.virtualenvs/$1 --system-site-packages
 	touch $HOME/.virtualenvs/$1/bin/postactivate
-	workon $1
+	kobo_workon $1
 }
 

@@ -13,7 +13,7 @@ fi
 
 # Ensure the profile is loaded (once).
 [ ! ${KOBO_PROFILE_LOADED:-"false"} = "true" ] && . $HOME_VAGRANT/.profile
-workon kf
+kobo_workon kf
 
 cd $KOBOFORM_PATH
 

@@ -9,12 +9,11 @@ apt-get install -y libxml2-dev \
                    redis-server \
                    git \
                    libxslt1-dev \
-                   python-pip \
                    python-software-properties \
                    python \
                    g++ \
                    make
 
-pip install nodeenv
+easy_install nodeenv
 
 # install dependencies, development tools, node, grunt

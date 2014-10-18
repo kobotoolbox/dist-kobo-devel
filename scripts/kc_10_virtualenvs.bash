@@ -25,14 +25,6 @@ if [ ! -d "$VENV_LOCATION" ]; then
 	cd $HOME_VAGRANT
 
 	touch $PROFILE_PATH # In case the file doesn't exist
-	# if [ $(cat $PROFILE_PATH | grep virtualenvwrapper | wc -l) = "0" ]; then
-	# 	echo "export WORKON_HOME='$HOME_VAGRANT/.virtualenvs'" >> $PROFILE_PATH
-	# 	echo ". /usr/local/bin/virtualenvwrapper.sh" >> $PROFILE_PATH
-	# fi
-
-	# if [ $(cat $PROFILE_PATH | grep koborc | wc -l) = "0" ]; then
-	# 	echo "source $V_E/koborc" >> $PROFILE_PATH
-	# fi
 
 	if [ $(cat $PROFILE_PATH | grep KOBO_PROFILE_LOADED | wc -l) = "0" ]; then
 		echo 'export KOBO_PROFILE_LOADED="true"' >> $PROFILE_PATH
@@ -43,10 +35,10 @@ if [ ! -d "$VENV_LOCATION" ]; then
 
 	if [ -f "$VIRTUALENVS_KC" ]; then
 		echo "Activating '$KENV' virtualenv"
-		workon kc
+		kobo_workon kc
 	else
 		echo "Creating a new virtualenv"
-		mkvirtualenv $KENV
+		kobo_mkvirtualenv $KENV
 	fi
 
 	# if [ -f "/usr/lib/i386-linux-gnu/libjpeg.so" ]; then

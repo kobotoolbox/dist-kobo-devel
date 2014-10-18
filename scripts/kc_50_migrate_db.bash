@@ -19,7 +19,7 @@ cd $KOBOCAT_PATH
 
 # Ensure the profile is loaded (once).
 [ ! ${KOBO_PROFILE_LOADED:-"false"} = "true" ] && . $PROFILE_PATH
-workon kc
+kobo_workon kc
 
 python manage.py syncdb --noinput
 python manage.py migrate --noinput
