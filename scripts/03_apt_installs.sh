@@ -45,4 +45,6 @@ sudo apt-get -y --force-yes install \
     python-virtualenv \
     nodejs
 
+sudo easy_install pip
+
 sudo apt-get clean # Clear out cached packages.
