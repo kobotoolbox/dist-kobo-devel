@@ -12,10 +12,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   if ENV.keys.include? "VM_BOX"
     config.vm.box = ENV["VM_BOX"]
+    requires_initial_installation = false
   else
     config.vm.box = "ubuntu/trusty32"
     config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-i386-vagrant-disk1.box"
+    requires_initial_installation = true
   end
+
+  # if we want to manually trigger the "00_vagrant_up" script without starting from ubuntu/trusty
+  requires_initial_installation = true  if ENV.keys.include? "RUN_KOBO_INSTALL_SCRIPTS"
 
   # if Vagrant.has_plugin?("vagrant-cachier")
   #  config.cache.scope = :box
@@ -40,7 +45,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
-
   # config.vm.synced_folder "./logs", "/home/vagrant/logs", owner: "vagrant", group: "vagrant"
   config.vm.synced_folder "./backups", "/home/vagrant/backups", owner: "vagrant", group: "vagrant"
 
@@ -53,15 +57,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   commands = []
-  if ENV.keys.include? "KOBO_OFFLINE"
-    commands << "echo 'export KOBO_OFFLINE=1' > /home/vagrant/env/KOBO_OFFLINE.sh"
-    commands << "su - vagrant -c 'bash $V_S/kc_50_migrate_db.bash'"
-    commands << "su - vagrant -c 'bash $V_S/kf_50_migrate_db.bash'"
-    commands << "su - vagrant -c 'sh /home/vagrant/scripts/09_add_cronjobs.sh'"
-  else
+  if requires_initial_installation
     commands << "sh /home/vagrant/scripts/00_vagrant_up.sh"
+  else
+    commands << "sh /home/vagrant/scripts/00_vagrant_reload.sh"
   end
-  launch_script = commands.join('; ')
 
   config.vm.provision :shell, inline: <<SCRIPT
     # Suppress subsequent stdin/tty complaints (for `root` user only).
@@ -86,6 +86,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # in case of dns issue, uncomment this next line
     # echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
 
-    #{launch_script}
+    #{commands.join('; ')}
 SCRIPT
 end
