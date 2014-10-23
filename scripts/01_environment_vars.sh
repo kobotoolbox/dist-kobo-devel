@@ -43,12 +43,17 @@ export SERVER_IP="127.0.0.1"
 [ -f "$V_E/KOBO_OFFLINE.sh" ] && { . $V_E/KOBO_OFFLINE.sh; }
 
 # deployment / server details
-export KOBOFORM_SERVER="$SERVER_IP"
+
+# the following variable should be overridden for non-localhost deployments
+export KOBOFORM_URL="http://localhost:8000"
+
 export KOBOFORM_SERVER_PORT="8000"
-export KOBOCAT_SERVER="$SERVER_IP"
+
+# the following variable should be overridden for non-localhost deployments
+export KOBOCAT_URL="http://localhost:8001"
+
 export KOBOCAT_SERVER_PORT="8001"
-export KOBOFORM_URL="http://$KOBOFORM_SERVER:$KOBOFORM_SERVER_PORT"
-export KOBOCAT_URL="http://$KOBOCAT_SERVER:$KOBOCAT_SERVER_PORT"
+export KOBOCAT_INTERNAL_URL="http://localhost:8001"
 export ENKETO_EXPRESS_SERVER_PORT="8005"
 
 # export DIST_KOBO_DEVEL="dist-kobo-devel"
@@ -83,10 +88,16 @@ export ENKETO_EXPRESS_USE_NODE_ENV="true"
 export ENKETO_EXPRESS_NODE_ENV="$HOME_VAGRANT/nodeenv"
 
 # For KoBoForm.
-export ENKETO_SERVER="http://$SERVER_IP:$ENKETO_EXPRESS_SERVER_PORT"
+
+# the following variable should be overridden for non-localhost deployments
+export ENKETO_SERVER="http://localhost:8005"
+
 export ENKETO_PREVIEW_URI="/preview"
 # For KoBoCat.
-export ENKETO_URL="http://$SERVER_IP:$ENKETO_EXPRESS_SERVER_PORT"
+
+# the following variable should be overridden for non-localhost deployments
+export ENKETO_URL="http://localhost:8005"
+
 export ENKETO_API_URL_PARTIAL="/api/v2"
 export ENKETO_PREVIEW_URL_PARTIAL="/preview"
 export ENKETO_PROTOCOL="http"
