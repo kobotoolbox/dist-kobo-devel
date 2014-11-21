@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://kf.kbtdev.org/" />
+<title>Preview Form Test (KF)</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Preview Form Test (KF)</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=.forms-header__title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=.forms__card__title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=.forms__card__title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=.form-title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=xlf-preview</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=xlf-preview</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=.enketo-holder iframe</td>
+	<td></td>
+</tr>
+<!--Interactions/assertions within the Enketo preview 'iframe'.-->
+<!--WARNING: The 'selectFrame' command doesn't export to python, so a manual edit is necessary.-->
+<tr>
+	<td>selectFrame</td>
+	<td>css=.enketo-holder iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=.preview #form-title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=.preview #form-title</td>
+	<td>Selenium test form title.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=.preview .question-label</td>
+	<td>Selenium test question label.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=.preview .question label:nth-child(1) .option-label</td>
+	<td>Selenium test question choice 1.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=.preview .question label:nth-child(2) .option-label</td>
+	<td>Selenium test question choice 2.</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=.preview .question label:nth-child(1)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=.preview #validate-form</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=.preview #validate-form</td>
+	<td></td>
+</tr>
+<!--Wait for validation to complete (validation button progress bar will disappear).-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=.preview #validate-form i</td>
+	<td></td>
+</tr>
+<!--Ensure that no validation warning was reported.-->
+<tr>
+	<td>assertText</td>
+	<td>css=#dialog-alert .modal-header h3</td>
+	<td></td>
+</tr>
+<!--Switch back out of the Enketo 'iframe'-->
+<!--WARNING: The 'selectWindow' command doesn't export to python, so a manual edit is necessary.-->
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=.enketo-holder .enketo-iframe-icon</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=.enketo-holder .enketo-iframe-icon</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>css=.enketo-holder</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=.forms__card__title</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://kf.kbtdev.org/" />
+<title>Upload XLS Test</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Upload XLS Test</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=.forms-header__title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>css=.forms__card</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=.forms-empty__button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=.forms-empty__button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=.forms__addform__drop--bottom-centered .forms__addform__xls input</td>
+	<td></td>
+</tr>
+<!--WARNING: The following command exports to Python as two commands, a 'clear' (undesired) and a 'send_keys' (desired). Manually edit the export.-->
+<tr>
+	<td>type</td>
+	<td>css=.forms__addform__drop--bottom-centered .forms__addform__xls input</td>
+	<td>/tmp/Selenium_test_form_title.xls</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=.form-title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=.form-title</td>
+	<td>Selenium test form title.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=.card__header-title</td>
+	<td>Selenium test question label.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=.card--selectquestion__expansion li:nth-child(1) span</td>
+	<td>Selenium test question choice 1.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=.card--selectquestion__expansion li:nth-child(2) span</td>
+	<td>Selenium test question choice 2.</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=.forms__card__title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=.forms__card__title</td>
+	<td>Selenium test form title.</td>
+</tr>
+</tbody></table>
+</body>
+</html>
