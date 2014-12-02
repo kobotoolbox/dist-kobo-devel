@@ -66,7 +66,8 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/technical.html#install-requires-vs-requirements-files
     install_requires=[
-                      'selenium'
+                      'selenium',
+                      'nose'
     ],
 
     # List additional groups of dependencies here (e.g. development dependencies).
