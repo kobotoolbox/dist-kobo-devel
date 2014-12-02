@@ -50,8 +50,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder "./env", "/home/vagrant/env", type: sync_type
 
 
-  if File.directory? "src"
-    config.vm.synced_folder "./src", "/home/vagrant/src", type: sync_type
+  if File.directory? "src/koboform"
+    config.vm.synced_folder "./src/koboform", "/home/vagrant/src/koboform", type: sync_type, rsync__exclude: ["/node_modules", "/jsapp/components"]
+  end
+
+  if File.directory? "src/kobocat"
+    config.vm.synced_folder "./src/kobocat", "/home/vagrant/src/kobocat", type: sync_type, rsync__exclude: "/node_modules"
+  end
+
+  if File.directory? "src/kobocat-template"
+    config.vm.synced_folder "./src/kobocat-template", "/home/vagrant/src/kobocat-template", type: sync_type
   end
 
   commands = []
