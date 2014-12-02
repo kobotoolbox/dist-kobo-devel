@@ -6,12 +6,10 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   sync_type = "rsync"
-  if RUBY_PLATFORM.include? "mingw32"
-    sync_type = ""
-  end
 
   if ENV.keys.include? "VM_BOX"
-    config.vm.box = ENV["VM_BOX"]
+    config.vm.box = "custom-pre-built-box"
+    config.vm.box_url = ENV["VM_BOX"]
     requires_initial_installation = false
   else
     config.vm.box = "ubuntu/trusty32"
@@ -53,7 +51,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 
   if File.directory? "src"
-    config.vm.synced_folder "./src", "/home/vagrant/src"
+    config.vm.synced_folder "./src", "/home/vagrant/src", type: sync_type
   end
 
   commands = []
