@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://kc.kbtdev.org/" />
+<title>Enter Data Test</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Enter Data Test</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=Selenium test form title.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Selenium test form title.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=.dashboard__button-enter-data</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=.dashboard__button-enter-data</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=form-title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#form-title</td>
+	<td>Selenium test form title.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=.question-label</td>
+	<td>Selenium test question label.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=.question label:nth-child(1) .option-label</td>
+	<td>Selenium test question choice 1.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=.question label:nth-child(2) .option-label</td>
+	<td>Selenium test question choice 2.</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=.question label:nth-child(1)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>id=submit-form</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=submit-form</td>
+	<td></td>
+</tr>
+<!--Ensure that the data was submitted and no alerts were generated.-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=#feedback-bar p</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementNotPresent</td>
+	<td>css=#feedback-bar p</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=#dialog-alert .modal-header h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=.queue-length</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>selenium_test/forms/Selenium_test_form_title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=.dashboard__submissions .dashboard__group-label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=.dashboard__submissions .dashboard__group-label</td>
+	<td>Submissions (1)</td>
+</tr>
+</tbody></table>
+</body>
+</html>
