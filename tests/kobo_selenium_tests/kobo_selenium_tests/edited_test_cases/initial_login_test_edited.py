@@ -38,7 +38,7 @@ class InitialLoginTestTemplate(unittest.TestCase):
             time.sleep(1)
         else: self.fail("time out")
         # WARNING: The 'runScript' command doesn't export to python, so a manual edit is necessary.
-        driver.execute_script('''window.trackJs.configure({ userId: "selenium" })''')
+        driver.execute_script('''window.trackJs && window.trackJs.configure({ userId: "selenium" })''')
         self.assertFalse(self.is_element_present(By.CSS_SELECTOR, ".forms__card"))
     
     def is_element_present(self, how, what):
