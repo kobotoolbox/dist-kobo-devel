@@ -37,7 +37,7 @@ fi
 
 # for unified database configurations
 pip install dj-database-url
-
-pip install -r $KOBOCAT_PATH/requirements/common.pip
+pip install -r $KOBOCAT_PATH/requirements/base.pip
+pip install -r $KOBOCAT_PATH/requirements/dev.pip
 
 sudo -u root pip install pybamboo
