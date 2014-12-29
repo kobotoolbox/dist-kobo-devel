@@ -169,16 +169,17 @@ class Test_Selenium(empty_test.EmptyTest):
         test_case_class= create_form_test_edited.CreateFormTestTemplate
         test_method_name= test_case_class.test_create_form_test_template.__name__
         test_case_class.__dict__[test_method_name](self)
-        
-    # TODO: Address 'iframe' issues and re-activate this test.
-    def test_step_04_preview_form_kf(self):
+
+
+    # TODO: Check that this test is compatible with testing against Vagrant.
+    def test_step_04_preview_created_form_kf(self):
         # KoBoForm test.
         self.base_url= self.KOBOFORM_URL
   
         # Do a duck typing magic trick so this 'TestCase' descendant can use a test method of a sibling descendant.
         test_case_class= preview_form_test_edited.PreviewFormTestTemplate
         test_method_name= test_case_class.test_preview_form_test_template.__name__
-        #test_case_class.__dict__[test_method_name](self)
+        test_case_class.__dict__[test_method_name](self)
  
  
     def test_step_05_export_xls(self):
@@ -212,8 +213,12 @@ class Test_Selenium(empty_test.EmptyTest):
         test_method_name= test_case_class.test_upload_xls_test_template.__name__
         test_case_class.__dict__[test_method_name](self)
  
- 
-    def test_step_08_deploy_form(self):
+
+    def test_step_08_preview_imported_form_kf(self):
+        self.test_step_04_preview_created_form_kf()
+
+
+    def test_step_09_deploy_form(self):
         # KoBoForm test.
         self.base_url= self.KOBOFORM_URL
  
@@ -223,7 +228,7 @@ class Test_Selenium(empty_test.EmptyTest):
         test_case_class.__dict__[test_method_name](self)
  
  
-    def test_step_09_enter_data(self):
+    def test_step_10_enter_data(self):
         # KoBoCAT test.
         self.base_url= self.KOBOCAT_URL
  
@@ -233,7 +238,7 @@ class Test_Selenium(empty_test.EmptyTest):
         test_case_class.__dict__[test_method_name](self)
  
  
-    def test_step_10_download_entered_data(self):
+    def test_step_11_download_entered_data(self):
         # KoBoCAT test.
         self.base_url= self.KOBOCAT_URL
  
@@ -243,7 +248,7 @@ class Test_Selenium(empty_test.EmptyTest):
         test_case_class.__dict__[test_method_name](self)
  
  
-    def test_step_11_delete_project_test(self):
+    def test_step_12_delete_project_test(self):
         # KoBoCAT test.
         self.base_url= self.KOBOCAT_URL
  
@@ -253,11 +258,11 @@ class Test_Selenium(empty_test.EmptyTest):
         test_case_class.__dict__[test_method_name](self)
  
  
-    def test_step_12_delete_form_test(self):
+    def test_step_13_delete_form_test(self):
         self.test_step_06_delete_form()
  
  
-    def test_step_13_logout(self):
+    def test_step_14_logout(self):
         # KoBoCAT test.
         self.base_url= self.KOBOCAT_URL
  
