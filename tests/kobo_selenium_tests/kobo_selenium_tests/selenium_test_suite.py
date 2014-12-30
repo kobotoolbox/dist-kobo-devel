@@ -48,7 +48,7 @@ class Test_Selenium(empty_test.EmptyTest):
         profile.set_preference('browser.download.folderList', 2) # custom location
         profile.set_preference('browser.download.manager.showWhenStarting', False)
         profile.set_preference('browser.download.dir', '/tmp')
-        profile.set_preference('browser.helperApps.neverAsk.saveToDisk', 'application/vnd.ms-excel')
+        profile.set_preference('browser.helperApps.neverAsk.saveToDisk', 'application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
                 
         cls.driver = webdriver.Firefox(profile)
         cls.driver.implicitly_wait(30)
