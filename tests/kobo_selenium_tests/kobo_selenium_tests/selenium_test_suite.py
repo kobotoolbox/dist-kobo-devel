@@ -7,8 +7,10 @@ Created on Oct 31, 2014
 from __future__ import absolute_import
 import unittest
 import os
+import time
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 from .selenium_ide_exported import empty_test
 from .selenium_ide_exported import export_xls_test
@@ -17,6 +19,8 @@ from .selenium_ide_exported import deploy_form_test
 from .selenium_ide_exported import enter_data_test
 from .selenium_ide_exported import download_entered_data_test
 from .selenium_ide_exported import delete_project_test
+from .selenium_ide_exported import verify_no_projects_test
+from .selenium_ide_exported import verify_no_forms_test
 from .selenium_ide_exported import logout_test
 from .edited_test_cases import initial_login_test_edited
 from .edited_test_cases import create_form_test_edited
@@ -64,8 +68,8 @@ class Test_Selenium(empty_test.EmptyTest):
 
 
     # Record the base URLs to use for KoBoForm and KoBoCAT
-    KOBOFORM_URL= os.environ.get('KOBOFORM_URL', 'http://kf.kbtdev.org/')
-    KOBOCAT_URL= os.environ.get('KOBOCAT_URL', 'http://kc.kbtdev.org/')
+    KOBOFORM_URL= os.environ.get('KOBOFORM_URL', 'http://kf.kobotoolbox.org/')
+    KOBOCAT_URL= os.environ.get('KOBOCAT_URL', 'http://kc.kobotoolbox.org/')
 
 #     # SCIENCE!!! Want to automatically generate test methods, but it seems like it will require 'metaclass' magic... http://stackoverflow.com/a/13579703/1877326
 #     # Tuples of the step number, base URL for the step, Selenium 'TestCase' subclass, and test method.  
@@ -141,7 +145,68 @@ class Test_Selenium(empty_test.EmptyTest):
 #          logout_test.LogoutTest.test_logout
 #         ),
 #     ]
+
+
+    def delete_all_forms(self):
+        # Open the page and wait for it to load.
+        self.driver.get(self.KOBOFORM_URL)
+        for _ in range(60):
+            try:
+                if self.is_element_present(By.CSS_SELECTOR, ".forms-header__title"): break
+            except: pass
+            time.sleep(1)
+        else: self.fail("time out")
+
+        # Wait for the forms list or lack thereof to load.
+        form_cards= []
+        for _ in range(60):
+            try:
+                if self.is_element_present(By.CSS_SELECTOR, ".info-list"):
+                    form_cards= self.driver.find_elements_by_css_selector(".info-list .forms__card")
+                    break
+            except: pass
+            try:
+                if self.is_element_present(By.CSS_SELECTOR, ".container.empty") \
+                  and not self.is_element_present(By.CSS_SELECTOR, ".ng-hide .container.empty"): break
+            except: pass
+            time.sleep(1)
         
+        # Run through form deletion once for each form detected (not infinite scroll compatible).
+        for _ in xrange(len(form_cards)):
+            # Is calling a function defined below considered bad form?
+            self.test_step_08_delete_form()
+
+
+    def delete_all_projects(self):
+        # Open the page and wait for it to load.
+        self.driver.get(self.KOBOCAT_URL)
+        for _ in range(60):
+            try:
+                if self.is_element_present(By.CSS_SELECTOR, ".projects-list__header"): break
+            except: pass
+            time.sleep(1)
+        else: self.fail("time out")
+
+        # Wait for the projects list or lack thereof to load.
+        project_rows= []
+        for _ in range(60):
+            try:
+                if self.is_element_present(By.CSS_SELECTOR, ".published_forms__table"):
+                    project_rows= self.driver.find_elements_by_css_selector(".published_forms__table tr.published_forms__form")
+                    break
+            except: pass
+            try:
+                if self.is_element_present(By.CSS_SELECTOR, ".projects__empty"): break
+            except: pass
+            time.sleep(1)
+        
+        # Run through project deletion once for each project detected (not infinite scroll compatible).
+        for _ in xrange(len(project_rows)):
+            # Is calling a function defined below considered bad form?
+            self.test_step_14_delete_project_test()
+
+
+    # Test steps.
 
     # TODO: Intercept the generated registration e-mail to a file and test the supplied link.
 #     def test_step_01_register_user(self):
@@ -161,7 +226,15 @@ class Test_Selenium(empty_test.EmptyTest):
         test_case_class.__dict__[test_method_name](self)
 
 
-    def test_step_03_create_form(self):
+    def test_step_03_delete_all_forms(self):
+        self.delete_all_forms()
+
+
+    def test_step_04_delete_all_projects(self):
+        self.delete_all_projects()
+
+
+    def test_step_05_create_form(self):
         # KoBoForm test.
         self.base_url= self.KOBOFORM_URL
  
@@ -172,7 +245,7 @@ class Test_Selenium(empty_test.EmptyTest):
 
 
     # TODO: Check that this test is compatible with testing against Vagrant.
-    def test_step_04_preview_created_form_kf(self):
+    def test_step_06_preview_created_form_kf(self):
         # KoBoForm test.
         self.base_url= self.KOBOFORM_URL
   
@@ -182,7 +255,7 @@ class Test_Selenium(empty_test.EmptyTest):
         test_case_class.__dict__[test_method_name](self)
  
  
-    def test_step_05_export_xls(self):
+    def test_step_07_export_xls(self):
         # KoBoForm test.
         self.base_url= self.KOBOFORM_URL
  
@@ -194,7 +267,7 @@ class Test_Selenium(empty_test.EmptyTest):
         # TODO: Test that the file was indeed (newly) exported and can be read by 'pyxform'.
  
  
-    def test_step_06_delete_form(self):
+    def test_step_08_delete_form(self):
         # KoBoForm test.
         self.base_url= self.KOBOFORM_URL
  
@@ -204,7 +277,7 @@ class Test_Selenium(empty_test.EmptyTest):
         test_case_class.__dict__[test_method_name](self)
  
  
-    def test_step_07_upload_xls(self):
+    def test_step_09_upload_xls(self):
         # KoBoForm test.
         self.base_url= self.KOBOFORM_URL
  
@@ -214,11 +287,11 @@ class Test_Selenium(empty_test.EmptyTest):
         test_case_class.__dict__[test_method_name](self)
  
 
-    def test_step_08_preview_imported_form_kf(self):
-        self.test_step_04_preview_created_form_kf()
+    def test_step_10_preview_imported_form_kf(self):
+        self.test_step_06_preview_created_form_kf()
 
 
-    def test_step_09_deploy_form(self):
+    def test_step_11_deploy_form(self):
         # KoBoForm test.
         self.base_url= self.KOBOFORM_URL
  
@@ -228,7 +301,7 @@ class Test_Selenium(empty_test.EmptyTest):
         test_case_class.__dict__[test_method_name](self)
  
  
-    def test_step_10_enter_data(self):
+    def test_step_12_enter_data(self):
         # KoBoCAT test.
         self.base_url= self.KOBOCAT_URL
  
@@ -238,7 +311,7 @@ class Test_Selenium(empty_test.EmptyTest):
         test_case_class.__dict__[test_method_name](self)
  
  
-    def test_step_11_download_entered_data(self):
+    def test_step_13_download_entered_data(self):
         # KoBoCAT test.
         self.base_url= self.KOBOCAT_URL
  
@@ -246,9 +319,11 @@ class Test_Selenium(empty_test.EmptyTest):
         test_case_class= download_entered_data_test.DownloadEnteredDataTest
         test_method_name= test_case_class.test_download_entered_data.__name__
         test_case_class.__dict__[test_method_name](self)
- 
- 
-    def test_step_12_delete_project_test(self):
+
+
+    # Cleanup steps.
+
+    def test_step_14_delete_project_test(self):
         # KoBoCAT test.
         self.base_url= self.KOBOCAT_URL
  
@@ -256,16 +331,36 @@ class Test_Selenium(empty_test.EmptyTest):
         test_case_class= delete_project_test.DeleteProjectTest
         test_method_name= test_case_class.test_delete_project.__name__
         test_case_class.__dict__[test_method_name](self)
- 
- 
-    def test_step_13_delete_form_test(self):
-        self.test_step_06_delete_form()
- 
- 
-    def test_step_14_logout(self):
+
+
+    def test_step_15_verify_no_projects(self):
         # KoBoCAT test.
         self.base_url= self.KOBOCAT_URL
  
+        # Do a duck typing magic trick so this 'TestCase' descendant can use a test method of a sibling descendant.
+        test_case_class= verify_no_projects_test.VerifyNoProjectsTest
+        test_method_name= test_case_class.test_verify_no_projects.__name__
+        test_case_class.__dict__[test_method_name](self)
+
+
+    def test_step_16_delete_form_test(self):
+        self.test_step_08_delete_form()
+
+
+    def test_step_17_verify_no_forms(self):
+        # KoBoFrom test.
+        self.base_url= self.KOBOFORM_URL
+ 
+        # Do a duck typing magic trick so this 'TestCase' descendant can use a test method of a sibling descendant.
+        test_case_class= verify_no_forms_test.VerifyNoFormsTest
+        test_method_name= test_case_class.test_verify_no_forms.__name__
+        test_case_class.__dict__[test_method_name](self)
+
+
+    def test_step_18_logout(self):
+        # KoBoCAT test.
+        self.base_url= self.KOBOCAT_URL
+
         # Do a duck typing magic trick so this 'TestCase' descendant can use a test method of a sibling descendant.
         test_case_class= logout_test.LogoutTest
         test_method_name= test_case_class.test_logout.__name__

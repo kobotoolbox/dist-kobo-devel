@@ -18,8 +18,20 @@ class DeleteProjectTest(unittest.TestCase):
     def test_delete_project(self):
         driver = self.driver
         driver.get(self.base_url + "")
-        self.assertTrue(self.is_element_present(By.LINK_TEXT, "Selenium test form title."))
-        driver.find_element_by_link_text("Selenium test form title.").click()
+        for i in range(60):
+            try:
+                if self.is_element_present(By.CSS_SELECTOR, ".projects-list__header"): break
+            except: pass
+            time.sleep(1)
+        else: self.fail("time out")
+        for i in range(60):
+            try:
+                if self.is_element_present(By.CSS_SELECTOR, ".published_forms__table"): break
+            except: pass
+            time.sleep(1)
+        else: self.fail("time out")
+        self.assertTrue(self.is_element_present(By.CSS_SELECTOR, ".published_forms__cell--project a"))
+        driver.find_element_by_css_selector(".published_forms__cell--project a").click()
         for i in range(60):
             try:
                 if self.is_element_present(By.CSS_SELECTOR, ".single-project__toggle-settings .fa-cog"): break
