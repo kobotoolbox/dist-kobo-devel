@@ -182,7 +182,7 @@ class Test_Selenium(empty_test.EmptyTest):
         self.driver.get(self.KOBOCAT_URL)
         for _ in range(60):
             try:
-                if self.is_element_present(By.CSS_SELECTOR, ".projects-list__header"): break
+                if self.is_element_present(By.CSS_SELECTOR, ".projects__advanced"): break
             except: pass
             time.sleep(1)
         else: self.fail("time out")
@@ -194,11 +194,9 @@ class Test_Selenium(empty_test.EmptyTest):
                 if self.is_element_present(By.CSS_SELECTOR, ".published_forms__table"):
                     project_rows= self.driver.find_elements_by_css_selector(".published_forms__table tr.published_forms__form")
                     break
+                else:
+                    break
             except: pass
-            try:
-                if self.is_element_present(By.CSS_SELECTOR, ".projects__empty"): break
-            except: pass
-            time.sleep(1)
         
         # Run through project deletion once for each project detected (not infinite scroll compatible).
         for _ in xrange(len(project_rows)):
