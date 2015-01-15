@@ -32,8 +32,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>css=.dashboard__button-enter-data</td>
+	<td>storeAttribute</td>
+	<td>css=.dashboard__button-enter-data@href</td>
+	<td>data_entry_url</td>
+</tr>
+<!--WARNING: The 'open' command doesn't export correctly to Python, always behaving as if a relative address has been provided, so a manual edit is necessary.-->
+<tr>
+	<td>open</td>
+	<td>${data_entry_url}</td>
 	<td></td>
 </tr>
 <tr>

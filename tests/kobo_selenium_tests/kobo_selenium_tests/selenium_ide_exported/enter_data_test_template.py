@@ -7,7 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 
-class EnterDataTest(unittest.TestCase):
+class EnterDataTestTemplate(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
@@ -15,7 +15,7 @@ class EnterDataTest(unittest.TestCase):
         self.verificationErrors = []
         self.accept_next_alert = True
     
-    def test_enter_data(self):
+    def test_enter_data_test_edited(self):
         driver = self.driver
         driver.get(self.base_url + "")
         self.assertTrue(self.is_element_present(By.LINK_TEXT, "Selenium test form title."))
@@ -26,7 +26,9 @@ class EnterDataTest(unittest.TestCase):
             except: pass
             time.sleep(1)
         else: self.fail("time out")
-        driver.find_element_by_css_selector(".dashboard__button-enter-data").click()
+        data_entry_url = driver.find_element_by_css_selector(".dashboard__button-enter-data").get_attribute("href")
+        # WARNING: The 'open' command doesn't export correctly to Python, always behaving as if a relative address has been provided, so a manual edit is necessary.
+        driver.get(self.base_url + data_entry_url)
         for i in range(60):
             try:
                 if self.is_element_present(By.ID, "form-title"): break
