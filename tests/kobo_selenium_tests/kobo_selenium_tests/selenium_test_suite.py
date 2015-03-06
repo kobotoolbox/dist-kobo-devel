@@ -32,10 +32,18 @@ from .selenium_ide_exported import logout_test
 class Test_Selenium(empty_test.EmptyTest):
 
     DEFAULT_WAIT_SECONDS= 10
+    MAX_SUITE_TIME_MINUTES= 10
+    timed_out= False
+
+    def check_timeout(self, status_message=''):
+        minutes_elapsed= (time.time() - self.suite_start_time) / 60
+        if minutes_elapsed >= self.MAX_SUITE_TIME_MINUTES:
+            self.timed_out= True
+            raise Exception('Test suite timed out: ' + status_message)
 
     # Don't use the inherited, automatically-generated setup and teardown methods.
     def setUp(self):
-        pass
+        self.check_timeout()
 
     def tearDown(self):
         pass
@@ -57,6 +65,8 @@ class Test_Selenium(empty_test.EmptyTest):
         cls.driver.maximize_window()
         cls.verificationErrors = []
         cls.accept_next_alert = True
+
+        cls.suite_start_time= time.time()
 
     @classmethod
     def tearDownClass(cls):
