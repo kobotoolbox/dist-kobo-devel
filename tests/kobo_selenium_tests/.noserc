@@ -1,3 +1,4 @@
 [nosetests]
 tests=./kobo_selenium_tests/selenium_test_suite.py
 nocapture=1
+verbosity=3
