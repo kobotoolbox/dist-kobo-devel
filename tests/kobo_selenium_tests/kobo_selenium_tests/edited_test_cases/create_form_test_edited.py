@@ -2,10 +2,9 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
-import unittest, time, re
+import unittest, time
 
 class CreateFormTestTemplate(unittest.TestCase):
     def setUp(self):
@@ -14,47 +13,64 @@ class CreateFormTestTemplate(unittest.TestCase):
         self.base_url = "http://kf.kbtdev.org/"
         self.verificationErrors = []
         self.accept_next_alert = True
-    
+
     def test_create_form_test_template(self):
         driver = self.driver
+
+        # Load the KoBoForm page.
         driver.get(self.base_url + "")
-        for i in range(60):
+
+        # Wait for the form list's header to load.
+        for _ in range(self.DEFAULT_WAIT_SECONDS):
             try:
                 if self.is_element_present(By.CSS_SELECTOR, ".forms-header__title"): break
             except: pass
             time.sleep(1)
         else: self.fail("time out")
+
+        # Assert that there are no pre-existing forms.
         self.assertFalse(self.is_element_present(By.CSS_SELECTOR, ".forms__card"))
+
+        # Click to add a new form.
         self.assertTrue(self.is_element_present(By.CSS_SELECTOR, ".forms-empty__button"))
         driver.find_element_by_css_selector(".forms-empty__button").click()
-        for i in range(60):
+
+        # Wait for the option to start a new form to appear.
+        for _ in range(self.DEFAULT_WAIT_SECONDS):
             try:
                 if self.is_element_present(By.CSS_SELECTOR, ".forms__addform__start"): break
             except: pass
             time.sleep(1)
         else: self.fail("time out")
+
         # Click the form creation button using JavaScript to avoid element not visible errors.
         # WARNING: The 'runScript' command doesn't export to python, so a manual edit is necessary.
         driver.execute_script('''$(".forms__addform__start").click();''')
-        for i in range(60):
+        for _ in range(self.DEFAULT_WAIT_SECONDS):
             try:
                 if self.is_element_present(By.CSS_SELECTOR, ".form-title"): break
             except: pass
             time.sleep(1)
         else: self.fail("time out")
+
+        # Wait for the draft form to load as indicated by the title being shown.
         driver.find_element_by_css_selector(".form-title").click()
-        for i in range(60):
+        for _ in range(self.DEFAULT_WAIT_SECONDS):
             try:
                 if self.is_element_present(By.CSS_SELECTOR, ".survey-header__title input"): break
             except: pass
             time.sleep(1)
         else: self.fail("time out")
+
+        # Change the form title and verify the change.
         driver.find_element_by_css_selector(".survey-header__title input").send_keys(Keys.SHIFT, Keys.END, Keys.SHIFT, Keys.DELETE)
         driver.find_element_by_css_selector(".survey-header__title input").send_keys("Selenium test form title.", Keys.ENTER)
         self.assertEqual("Selenium test form title.", driver.find_element_by_css_selector(".form-title").text)
+
         self.assertTrue(self.is_element_present(By.CSS_SELECTOR, ".survey-editor .fa-plus"))
         driver.find_element_by_css_selector(".survey-editor .fa-plus").click()
-        for i in range(60):
+
+        for _ in range(self.DEFAULT_WAIT_SECONDS):
             try:
                 if self.is_element_present(By.CSS_SELECTOR, ".row__questiontypes__form > input"): break
             except: pass
@@ -107,17 +123,17 @@ class CreateFormTestTemplate(unittest.TestCase):
             time.sleep(1)
         else: self.fail("time out")
         self.assertEqual("Selenium test form title.", driver.find_element_by_css_selector(".forms__card__title").text)
-    
+
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
         except NoSuchElementException, e: return False
         return True
-    
+
     def is_alert_present(self):
         try: self.driver.switch_to_alert()
         except NoAlertPresentException, e: return False
         return True
-    
+
     def close_alert_and_get_its_text(self):
         try:
             alert = self.driver.switch_to_alert()
@@ -128,7 +144,7 @@ class CreateFormTestTemplate(unittest.TestCase):
                 alert.dismiss()
             return alert_text
         finally: self.accept_next_alert = True
-    
+
     def tearDown(self):
         self.driver.quit()
         self.assertEqual([], self.verificationErrors)

@@ -14,7 +14,7 @@ class DownloadEnteredDataTest(unittest.TestCase):
         self.base_url = "http://kc.kbtdev.org/"
         self.verificationErrors = []
         self.accept_next_alert = True
-    
+
     def test_download_entered_data(self):
         driver = self.driver
         driver.get(self.base_url + "")
@@ -36,11 +36,11 @@ class DownloadEnteredDataTest(unittest.TestCase):
         driver.find_element_by_link_text("XLS").click()
         for i in range(60):
             try:
-                if self.is_element_present(By.CSS_SELECTOR, ".page-header"): break
+                if self.is_element_present(By.CSS_SELECTOR, ".data-page__header"): break
             except: pass
             time.sleep(1)
         else: self.fail("time out")
-        self.assertEqual("EXCEL Exports (Selenium_test_form_title)", driver.find_element_by_css_selector(".page-header").text)
+        self.assertIsNotNone(re.compile('excel', re.IGNORECASE).search(driver.find_element_by_css_selector(".data-page__header").text))
         for i in range(60):
             try:
                 if self.is_element_present(By.CSS_SELECTOR, ".refresh-export-progress"): break
@@ -54,17 +54,17 @@ class DownloadEnteredDataTest(unittest.TestCase):
             time.sleep(1)
         else: self.fail("time out")
         driver.find_element_by_css_selector("#forms-table a").click()
-    
+
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
         except NoSuchElementException, e: return False
         return True
-    
+
     def is_alert_present(self):
         try: self.driver.switch_to_alert()
         except NoAlertPresentException, e: return False
         return True
-    
+
     def close_alert_and_get_its_text(self):
         try:
             alert = self.driver.switch_to_alert()
@@ -75,7 +75,7 @@ class DownloadEnteredDataTest(unittest.TestCase):
                 alert.dismiss()
             return alert_text
         finally: self.accept_next_alert = True
-    
+
     def tearDown(self):
         self.driver.quit()
         self.assertEqual([], self.verificationErrors)
