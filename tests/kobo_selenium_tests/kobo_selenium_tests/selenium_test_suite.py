@@ -8,6 +8,7 @@ from __future__ import absolute_import
 import unittest
 import os
 import time
+import logging
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -59,6 +60,12 @@ class Test_Selenium(empty_test.EmptyTest):
         profile.set_preference('browser.download.manager.showWhenStarting', False)
         profile.set_preference('browser.download.dir', '/tmp')
         profile.set_preference('browser.helperApps.neverAsk.saveToDisk', 'application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+        # http://stackoverflow.com/a/15400334/1877326
+        # Disable debug logging.
+        selenium_logger = logging.getLogger('selenium.webdriver.remote.remote_connection')
+        # Only display possible problems
+        selenium_logger.setLevel(logging.WARN)
 
         cls.driver = webdriver.Firefox(profile)
         cls.driver.implicitly_wait(30)
