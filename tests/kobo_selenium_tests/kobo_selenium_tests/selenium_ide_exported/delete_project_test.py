@@ -14,7 +14,7 @@ class DeleteProjectTest(unittest.TestCase):
         self.base_url = "http://kc.kbtdev.org/"
         self.verificationErrors = []
         self.accept_next_alert = True
-    
+
     def test_delete_project(self):
         driver = self.driver
         driver.get(self.base_url + "")
@@ -54,34 +54,34 @@ class DeleteProjectTest(unittest.TestCase):
         driver.find_element_by_css_selector("button.single-project__button.single-project__button-delete").click()
         for i in range(60):
             try:
-                if self.is_element_present(By.CSS_SELECTOR, ".modal .btn-primary"): break
+                if self.is_element_present(By.CSS_SELECTOR, "div:not(.kc-hide) #delete-form .form-submit"): break
             except: pass
             time.sleep(1)
         else: self.fail("time out")
         for i in range(60):
             try:
-                if driver.find_element_by_css_selector(".modal .btn-primary").is_displayed(): break
+                if driver.find_element_by_css_selector("div:not(.kc-hide) #delete-form .form-submit").is_displayed(): break
             except: pass
             time.sleep(1)
         else: self.fail("time out")
-        driver.find_element_by_css_selector(".modal .btn-primary").click()
+        driver.find_element_by_css_selector("div:not(.kc-hide) #delete-form .form-submit").click()
         for i in range(60):
             try:
                 if self.is_element_present(By.CSS_SELECTOR, ".projects-list__header"): break
             except: pass
             time.sleep(1)
         else: self.fail("time out")
-    
+
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
         except NoSuchElementException, e: return False
         return True
-    
+
     def is_alert_present(self):
         try: self.driver.switch_to_alert()
         except NoAlertPresentException, e: return False
         return True
-    
+
     def close_alert_and_get_its_text(self):
         try:
             alert = self.driver.switch_to_alert()
@@ -92,7 +92,7 @@ class DeleteProjectTest(unittest.TestCase):
                 alert.dismiss()
             return alert_text
         finally: self.accept_next_alert = True
-    
+
     def tearDown(self):
         self.driver.quit()
         self.assertEqual([], self.verificationErrors)
