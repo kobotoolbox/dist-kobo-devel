@@ -75,7 +75,8 @@ export PSQL_ADMIN="postgres"
 export KOBO_PSQL_DB_NAME="kobotoolbox"
 export KOBO_PSQL_DB_USER="kobo"
 export KOBO_PSQL_DB_PASS="kobo"
-export DATABASE_URL="postgis://$KOBO_PSQL_DB_USER:$KOBO_PSQL_DB_PASS@$SERVER_IP:5432/$KOBO_PSQL_DB_NAME"
+export DATABASE_SERVER_IP=${DATABASE_SERVER_IP:-"localhost"}
+export DATABASE_URL="postgis://$KOBO_PSQL_DB_USER:$KOBO_PSQL_DB_PASS@$DATABASE_SERVER_IP:5432/$KOBO_PSQL_DB_NAME"
 
 export DEFAULT_KOBO_USER="kobo"
 export DEFAULT_KOBO_PASS="kobo"
@@ -84,8 +85,6 @@ export DEFAULT_KOBO_PASS="kobo"
 # For Enketo Express's installation script ('enketo-express/setup/bootstrap.sh').
 export ENKETO_EXPRESS_REPO_DIR="$SRC_DIR/enketo-express"
 export ENKETO_EXPRESS_UPDATE_REPO="false"
-export ENKETO_EXPRESS_USE_NODE_ENV="true"
-export ENKETO_EXPRESS_NODE_ENV="$HOME_VAGRANT/nodeenv"
 
 # For KoBoForm.
 
