@@ -39,5 +39,4 @@ if [ -f "$V_S/run_koboform.bash" ]; then
 fi
 
 # Start PM2 to manage running Enketo if not already done.
-#sh -c "sh $V_S/enketo/60_start_pm2.sh" >> "$V_L/pm2.log" 2>&1 &
 sh -c "pm2 describe enketo || pm2 start $ENKETO_EXPRESS_REPO_DIR/app.js -n enketo" >> "$V_L/pm2.log" 2>&1 &
