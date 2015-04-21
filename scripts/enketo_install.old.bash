@@ -22,7 +22,8 @@ cd $ENKETO_EXPRESS_REPO_DIR
 
 # Edit the Enketo Express configuration JSON so the `server url` field is set to the local KoBoCat server.
 CONFIG_FILE_PATH="$ENKETO_EXPRESS_REPO_DIR/config/config.json"
-python -c "import json;f=open('$CONFIG_FILE_PATH');config=json.loads(f.read());config['linked form and data server']['server url']='$KOBOCAT_URL';f2=open('$CONFIG_FILE_PATH~','w');f2.write(json.dumps(config, indent=4))"
+[ -f $CONFIG_FILE_PATH ] || echo "{}" >> $CONFIG_FILE_PATH
+python -c "import json;f=open('$CONFIG_FILE_PATH');config=json.loads(f.read());config.setdefault('linked form and data server',{})['server url']='$KOBOCAT_URL';f2=open('$CONFIG_FILE_PATH~','w');f2.write(json.dumps(config, indent=4))"
 mv $CONFIG_FILE_PATH~ $CONFIG_FILE_PATH
 
 # Install and run Enketo Express.
