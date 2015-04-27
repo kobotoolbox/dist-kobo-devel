@@ -27,7 +27,7 @@ mkdir -p $V_L
 # move the logs
 [ -f "$V_L/kobocat.log" ] && { mv "$V_L/kobocat.log" "$V_L/kobocat.log.1"; }
 [ -f "$V_L/koboform.log" ] && { mv "$V_L/koboform.log" "$V_L/koboform.log.1"; }
-[ -f "$V_L/pm2.log" ] && { mv "$V_L/pm2.log" "$V_L/pm2.log.1"; }
+[ -f "$V_L/enketo.log" ] && { mv "$V_L/enketo.log" "$V_L/enketo.log.1"; }
 
 # start the servers
 if [ -f "$V_S/run_kobocat.bash" ]; then
@@ -39,4 +39,5 @@ if [ -f "$V_S/run_koboform.bash" ]; then
 fi
 
 # Start PM2 to manage running Enketo if not already done.
-sh -c "pm2 describe enketo || pm2 start $ENKETO_EXPRESS_REPO_DIR/app.js -n enketo" >> "$V_L/pm2.log" 2>&1 &
+#sh -c "pm2 describe enketo || pm2 start $ENKETO_EXPRESS_REPO_DIR/app.js -n enketo" >> "$V_L/pm2.log" 2>&1 &
+$( cd $ENKETO_EXPRESS_REPO_DIR && grunt develop >> $V_L/enketo.log 2>&1 ) &

@@ -99,9 +99,10 @@ export ENKETO_URL="http://localhost:8005"
 
 export ENKETO_API_URL_PARTIAL="/api/v2"
 export ENKETO_PREVIEW_URL_PARTIAL="/preview"
+export ENKETO_OFFLINE_SURVEYS=${ENKETO_OFFLINE_SURVEYS:-"True"}
 export ENKETO_PROTOCOL="http"
 
-[ -f $ENKETO_EXPRESS_REPO_DIR/config/config.json ] && export ENKETO_API_TOKEN=$(python -c "import json;f=open('$ENKETO_EXPRESS_REPO_DIR/config/config.json');print json.loads(f.read()).get('linked form and data server').get('api key')")
+export ENKETO_API_TOKEN=${ENKETO_API_TOKEN:-"enketorules"}
 # enk_token_file="~/.enketo-express-api-token.txt"
 # [ ! -f "$enk_token_file" ] && { python -c "import json;f=open('$ENKETO_EXPRESS_REPO_DIR/config/config.json');print json.loads(f.read()).get('linked form and data server').get('api key')" > $enk_token_file; }
 # export ENKETO_API_TOKEN=$(cat $enk_token_file)
