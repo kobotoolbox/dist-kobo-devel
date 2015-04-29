@@ -48,4 +48,4 @@ sudo apt-get -y --force-yes install \
 
 sudo easy_install pip
 
-sudo apt-get clean # Clear out cached packages.
+[ $CLEAN_APT_CACHE = "True" ] && sudo apt-get clean # Clear out cached packages.
