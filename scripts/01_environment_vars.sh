@@ -37,7 +37,7 @@ export SRC_DIR="$HOME_VAGRANT/src"
 
 
 # override the server IP if it is set
-export SERVER_IP="127.0.0.1"
+export SERVER_IP=${SERVER_IP:-"127.0.0.1"}
 [ -f "$V_E/SERVER_IP.sh" ] && { . $V_E/SERVER_IP.sh; }
 
 [ -f "$V_E/KOBO_OFFLINE.sh" ] && { . $V_E/KOBO_OFFLINE.sh; }
@@ -45,12 +45,12 @@ export SERVER_IP="127.0.0.1"
 # deployment / server details
 
 # the following variable should be overridden for non-localhost deployments
-export KOBOFORM_URL="http://localhost:8000"
+export KOBOFORM_URL=${KOBOFORM_URL:-"http://localhost:8000"}
 
-export KOBOFORM_SERVER_PORT="8000"
+export KOBOFORM_SERVER_PORT=${KOBOFORM_SERVER_PORT:-"8000"}
 
 # the following variable should be overridden for non-localhost deployments
-export KOBOCAT_URL="http://localhost:8001"
+export KOBOCAT_URL=${KOBOCAT_URL:-"http://localhost:8001"}
 
 export KOBOCAT_SERVER_PORT="8001"
 export KOBOCAT_INTERNAL_URL="http://localhost:8001"
