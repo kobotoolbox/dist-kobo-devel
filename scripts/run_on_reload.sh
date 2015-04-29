@@ -39,5 +39,5 @@ if [ -f "$V_S/run_koboform.bash" ]; then
 fi
 
 # Start PM2 to manage running Enketo if not already done.
-#sh -c "pm2 describe enketo || pm2 start $ENKETO_EXPRESS_REPO_DIR/app.js -n enketo" >> "$V_L/pm2.log" 2>&1 &
+#sh -c "pm2 describe enketo || pm2 start $ENKETO_EXPRESS_REPO_DIR/app.js -n enketo" >> "$V_L/enketo.log" 2>&1 &
 $( cd $ENKETO_EXPRESS_REPO_DIR && grunt develop >> $V_L/enketo.log 2>&1 ) &
