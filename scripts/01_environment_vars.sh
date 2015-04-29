@@ -97,7 +97,7 @@ export ENKETO_PREVIEW_URI=${ENKETO_PREVIEW_URI:-"/preview"}
 # the following variable should be overridden for non-localhost deployments
 export ENKETO_URL=${ENKETO_URL:-"http://localhost:8005"}
 
-export ENKETO_API_URL_PARTIAL=${ENKETO_API_URL_PARTIAL:-"/api/v2"}
+export ENKETO_API_ROOT=${ENKETO_API_ROOT:-"/api/v2"}
 export ENKETO_PREVIEW_URL_PARTIAL=${ENKETO_PREVIEW_URL_PARTIAL:-"/preview"}
 export ENKETO_OFFLINE_SURVEYS=${ENKETO_OFFLINE_SURVEYS:-"True"}
 export ENKETO_PROTOCOL=${ENKETO_PROTOCOL:-"http"}
