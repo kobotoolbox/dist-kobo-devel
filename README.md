@@ -19,9 +19,9 @@ How to load from an existing .box file
  * Clone this repository.
  * Set an environment variable `VM_BOX` to equal to the path to the box file, and then run `vagrant up`.
 
-_Example_
+_Linux/OS X example_
 
-`VM_BOX="file:///path/to/box.box" vagrant up`
+`export VM_BOX="file:///path/to/box.box" vagrant up`
 
 Additional commands to know
 ---------------------------
