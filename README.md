@@ -21,7 +21,7 @@ How to load from an existing .box file
 
 _Linux/OS X example_
 
-`export VM_BOX="file:///path/to/box.box" vagrant up`
+`export VM_BOX="file:///path/to/box.box" && vagrant up`
 
 Additional commands to know
 ---------------------------
