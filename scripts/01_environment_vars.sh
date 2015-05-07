@@ -19,8 +19,6 @@ else
     [ ! `whoami` = "root" ] && export PROFILE_PATH=$HOME_VAGRANT/.profile
 fi
 
-export PIP_DOWNLOAD_CACHE=${PIP_DOWNLOAD_CACHE:-"$HOME_VAGRANT/.pip_cache"}
-
 # Directories.
 if [ -d /home/vagrant ]; then
     SCRIPT_DIR=/home/vagrant/scripts
@@ -33,8 +31,13 @@ export V_E=${V_E:-"$HOME_VAGRANT/env"}
 export V_S=${V_S:-"$HOME_VAGRANT/scripts"}
 export V_L=${V_L:-"$HOME_VAGRANT/logs"}
 export SRC_DIR=${SRC_DIR:-"$HOME_VAGRANT/src"}
-# export KOBOCAT=${KOBOCAT:-"kobocat"}
 
+ENV_OVERRIDE_FILE="env.sh"
+if [ -f "$V_E/$ENV_OVERRIDE_FILE" ]; then
+    . $V_E/$ENV_OVERRIDE_FILE
+fi
+
+export PIP_DOWNLOAD_CACHE=${PIP_DOWNLOAD_CACHE:-"$HOME_VAGRANT/.pip_cache"}
 
 # override the server IP if it is set
 export SERVER_IP=${SERVER_IP:-"127.0.0.1"}
@@ -82,26 +85,22 @@ export DEFAULT_KOBO_USER=${DEFAULT_KOBO_USER:-"kobo"}
 export DEFAULT_KOBO_PASS=${DEFAULT_KOBO_PASS:-"kobo"}
 
 # Enketo-Express-related configurations.
-# For Enketo Express's installation script ('enketo-express/setup/bootstrap.sh').
 export ENKETO_EXPRESS_REPO_DIR=${ENKETO_EXPRESS_REPO_DIR:-"$SRC_DIR/enketo-express"}
 export ENKETO_EXPRESS_UPDATE_REPO=${ENKETO_EXPRESS_UPDATE_REPO:-"false"}
 
 # For KoBoForm.
-
 # the following variable should be overridden for non-localhost deployments
 export ENKETO_SERVER=${ENKETO_SERVER:-"http://localhost:8005"}
 
 export ENKETO_PREVIEW_URI=${ENKETO_PREVIEW_URI:-"/preview"}
-# For KoBoCat.
 
+# For KoBoCat.
 # the following variable should be overridden for non-localhost deployments
 export ENKETO_URL=${ENKETO_URL:-"http://localhost:8005"}
-
 export ENKETO_API_ROOT=${ENKETO_API_ROOT:-"/api/v2"}
-export ENKETO_PREVIEW_URL_PARTIAL=${ENKETO_PREVIEW_URL_PARTIAL:-"/preview"}
 export ENKETO_OFFLINE_SURVEYS=${ENKETO_OFFLINE_SURVEYS:-"True"}
+export ENKETO_API_ENDPOINT_PREVIEW=${ENKETO_API_ENDPOINT_PREVIEW:-"/preview"}
 export ENKETO_PROTOCOL=${ENKETO_PROTOCOL:-"http"}
-
 export ENKETO_API_TOKEN=${ENKETO_API_TOKEN:-"enketorules"}
 # enk_token_file="~/.enketo-express-api-token.txt"
 # [ ! -f "$enk_token_file" ] && { python -c "import json;f=open('$ENKETO_EXPRESS_REPO_DIR/config/config.json');print json.loads(f.read()).get('linked form and data server').get('api key')" > $enk_token_file; }
@@ -114,7 +113,6 @@ export DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:-"P2Nerc3oG2564z5mHTGUhAoh2CzOMVenW
 
 export CLEAN_APT_CACHE=${CLEAN_APT_CACHE:-"True"}
 
-ENV_OVERRIDE_FILE="env.sh"
 
 # export CSRF_COOKIE_DOMAIN=${CSRF_COOKIE_DOMAIN:-".local.kobotoolbox.org"}
 # localhost is not a valid CSRF_COOKIE_DOMAIN in chrome
@@ -123,9 +121,6 @@ ENV_OVERRIDE_FILE="env.sh"
 export AUTOLAUNCH=${AUTOLAUNCH:-"1"}
 
 
-if [ -f "$V_E/$ENV_OVERRIDE_FILE" ]; then
-	. $V_E/$ENV_OVERRIDE_FILE
-fi
 
 # virtualenvwrapper is acting weird. will this substitute work?
 kobo_workon () {
