@@ -23,6 +23,10 @@ _Linux/OS X example_
 
 `export VM_BOX="file:///path/to/box.box" && vagrant up`
 
+_Windows example_
+
+`set VM_BOX=box.box && vagrant up`
+
 Additional commands to know
 ---------------------------
  * `vagrant destroy` # deletes the vagrant box
