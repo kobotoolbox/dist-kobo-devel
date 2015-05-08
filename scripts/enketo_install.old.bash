@@ -27,5 +27,4 @@ python -c "import json;f=open('$CONFIG_FILE_PATH');config=json.loads(f.read());c
 mv $CONFIG_FILE_PATH~ $CONFIG_FILE_PATH
 
 # Install and run Enketo Express.
-# one of the byproducts of bootstrap.sh is it creates a directory "env" when the shell variable $ENKETO_EXPRESS_USE_NODE_ENV is set to "true"
 sudo -E sh $ENKETO_EXPRESS_REPO_DIR/setup/bootstrap.sh

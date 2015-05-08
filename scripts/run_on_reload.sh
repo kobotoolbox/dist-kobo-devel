@@ -39,5 +39,6 @@ if [ -f "$V_S/run_koboform.bash" ]; then
 fi
 
 # Start PM2 to manage running Enketo if not already done.
+# FIXME: Revert to using PM2 pending closure of https://github.com/kobotoolbox/enketo-express/issues/195
 #sh -c "pm2 describe enketo || pm2 start $ENKETO_EXPRESS_REPO_DIR/app.js -n enketo" >> "$V_L/enketo.log" 2>&1 &
 $( cd $ENKETO_EXPRESS_REPO_DIR && grunt develop >> $V_L/enketo.log 2>&1 ) &
