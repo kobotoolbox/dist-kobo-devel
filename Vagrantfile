@@ -22,9 +22,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # if we want to manually trigger the "00_vagrant_up" script without starting from ubuntu/trusty
   requires_initial_installation = true  if ENV.keys.include? "RUN_KOBO_INSTALL_SCRIPTS"
 
-  # if Vagrant.has_plugin?("vagrant-cachier")
-  #  config.cache.scope = :box
-  # end
+#  if Vagrant.has_plugin?("vagrant-cachier")
+#    config.cache.scope = :box
+#  end
 
   starting_port_number = (ENV['KOBO_PORT_NUMBER'] or "8000").to_i
 
@@ -45,6 +45,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
+  # Note: Synced folders are unavailable while being synced and should be waited on.
   # config.vm.synced_folder "./logs", "/home/vagrant/logs", owner: "vagrant", group: "vagrant"
   config.vm.synced_folder "./backups", "/home/vagrant/backups", owner: "vagrant", group: "vagrant"
 
