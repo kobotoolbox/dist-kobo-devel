@@ -6,12 +6,10 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   sync_type = "rsync"
-  if RUBY_PLATFORM.include? "mingw32"
-    sync_type = ""
-  end
 
   if ENV.keys.include? "VM_BOX"
-    config.vm.box = ENV["VM_BOX"]
+    config.vm.box = "custom-pre-built-box"
+    config.vm.box_url = ENV["VM_BOX"]
     requires_initial_installation = false
   else
     config.vm.box = "ubuntu/trusty32"
@@ -53,8 +51,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder "./env", "/home/vagrant/env", type: sync_type
 
 
-  if File.directory? "src"
-    config.vm.synced_folder "./src", "/home/vagrant/src"
+  if File.directory? "src/koboform"
+    config.vm.synced_folder "./src/koboform", "/home/vagrant/src/koboform", type: sync_type, rsync__exclude: ["/node_modules", "/jsapp/components"]
+  end
+
+  if File.directory? "src/kobocat"
+    config.vm.synced_folder "./src/kobocat", "/home/vagrant/src/kobocat", type: sync_type, rsync__exclude: "/node_modules"
+  end
+
+  if File.directory? "src/kobocat-template"
+    config.vm.synced_folder "./src/kobocat-template", "/home/vagrant/src/kobocat-template", type: sync_type
   end
 
   commands = []
