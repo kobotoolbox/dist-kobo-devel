@@ -19,6 +19,7 @@ cd $HOME_VAGRANT
 
 [ -d "$ENKETO_EXPRESS_REPO_DIR" ] || git clone https://github.com/kobotoolbox/enketo-express.git $ENKETO_EXPRESS_REPO_DIR
 cd $ENKETO_EXPRESS_REPO_DIR
+git submodule update --init --recursive
 
 # Edit the Enketo Express configuration JSON so the `server url` field is set to the local KoBoCat server.
 CONFIG_FILE_PATH="$ENKETO_EXPRESS_REPO_DIR/config/config.json"
