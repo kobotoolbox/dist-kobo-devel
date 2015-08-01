@@ -19,8 +19,6 @@ fi
 # FIXME: Sloppy wait for rsync completion so the server can be run using synced directories.
 sleep 30
 
-[ -f "$HOME/boot_launch_servers.log" ] && { mv "$HOME/boot_launch_servers.log" $V_L; }
-
 # ensure logs dir exists
 mkdir -p $V_L
 
@@ -38,5 +36,6 @@ if [ -f "$V_S/run_koboform.bash" ]; then
 	bash "$V_S/run_koboform.bash" >> "$V_L/koboform.log" 2>&1 &
 fi
 
-# Start PM2 to manage running Enketo if not already done.
-sh -c "pm2 describe enketo || pm2 start $ENKETO_EXPRESS_REPO_DIR/app.js -n enketo" >> "$V_L/enketo.log" 2>&1 &
+if [ -f "$V_S/run_enketo.bash" ]; then
+	bash "$V_S/run_enketo.bash" >> "$V_L/enketo.log" 2>&1 &
+fi

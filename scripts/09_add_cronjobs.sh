@@ -17,10 +17,12 @@ fi
 
 install_info "Adding cron jobs."
 
-BOOT_LAUNCH_SCRIPT="$V_S/run_on_reload.sh"
+RUN_ON_RELOAD_SCRIPT="$V_S/run_on_reload.sh"
+RUN_ON_RELOAD_LOG=$V_L/run_on_reload.log
 
-echo "$(crontab -l)" | grep "$BOOT_LAUNCH_SCRIPT" || {
-	crontab -l | { cat; echo "@reboot sh $BOOT_LAUNCH_SCRIPT &"; } | crontab -;
+# At boot, rotate the log for starting up KoBo, then start KoBo.
+echo "$(crontab -l)" | grep "$RUN_ON_RELOAD_SCRIPT" || {
+	crontab -l | { cat; echo "@reboot ([ -f $RUN_ON_RELOAD_LOG ] && mv $RUN_ON_RELOAD_LOG $RUN_ON_RELOAD_LOG.1) ; sh $RUN_ON_RELOAD_SCRIPT >> $RUN_ON_RELOAD_LOG 2>&1 &"; } | crontab -;
 }
 
-[ "$AUTOLAUNCH" = "1" ] && { sh "$BOOT_LAUNCH_SCRIPT"; }
+[ "$AUTOLAUNCH" = "1" ] && { sh "$RUN_ON_RELOAD_SCRIPT"; }
