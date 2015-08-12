@@ -61,6 +61,12 @@ export ENKETO_EXPRESS_SERVER_PORT=${ENKETO_EXPRESS_SERVER_PORT:-"8005"}
 
 # export DIST_KOBO_DEVEL=${DIST_KOBO_DEVEL:-"dist-kobo-devel"}
 
+if [ $KOBO_USE_STABLE_BRANCHES == "True" ]; then
+    KOBOCAT_BRANCH=vagrant_stable
+    KOBOCAT_TEMPLATES_BRANCH=vagrant_stable
+    KOBOFORM_BRANCH=vagrant_stable
+fi
+
 export KOBOCAT_REPO=${KOBOCAT_REPO:-"https://github.com/kobotoolbox/kobocat.git"}
 export KOBOCAT_BRANCH=${KOBOCAT_BRANCH:-"master"}
 export KOBOCAT_PATH=${KOBOCAT_PATH:-"$SRC_DIR/kobocat"}
