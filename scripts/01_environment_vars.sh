@@ -61,7 +61,7 @@ export ENKETO_EXPRESS_SERVER_PORT=${ENKETO_EXPRESS_SERVER_PORT:-"8005"}
 
 # export DIST_KOBO_DEVEL=${DIST_KOBO_DEVEL:-"dist-kobo-devel"}
 
-if [ $KOBO_USE_STABLE_BRANCHES == "True" ]; then
+if [ test $KOBO_USE_STABLE_BRANCHES == "True" ]; then
     KOBOCAT_BRANCH=vagrant_stable
     KOBOCAT_TEMPLATES_BRANCH=vagrant_stable
     KOBOFORM_BRANCH=vagrant_stable
