@@ -13,6 +13,9 @@ fi
 
 cd $ENKETO_EXPRESS_REPO_DIR
 
+# Update Enketo's config. in case the IP address setting has changed since last run.
+sh $V_S/enketo/update_enketo_configs.sh
+
 if [ ! -f subsequent_run ]; then
 	# Execute directly using NPM the first time as a workaround for
 	# https://github.com/kobotoolbox/enketo-express/issues/228
