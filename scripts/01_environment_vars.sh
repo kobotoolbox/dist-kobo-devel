@@ -39,29 +39,26 @@ fi
 
 export PIP_DOWNLOAD_CACHE=${PIP_DOWNLOAD_CACHE:-"$HOME_VAGRANT/.pip_cache"}
 
-# override the server IP if it is set
-export SERVER_IP=${SERVER_IP:-"127.0.0.1"}
-[ -f "$V_E/SERVER_IP.sh" ] && { . $V_E/SERVER_IP.sh; }
+
 
 [ -f "$V_E/KOBO_OFFLINE.sh" ] && { . $V_E/KOBO_OFFLINE.sh; }
 
 # deployment / server details
 
-# the following variable should be overridden for non-localhost deployments
-export KOBOFORM_URL=${KOBOFORM_URL:-"http://localhost:8000"}
+export KOBO_SERVER_IP=${KOBO_SERVER_IP:-"127.0.0.1"}
 
 export KOBOFORM_SERVER_PORT=${KOBOFORM_SERVER_PORT:-"8000"}
+export KOBOFORM_URL=${KOBOFORM_URL:-"http://$KOBO_SERVER_IP:$KOBOFORM_SERVER_PORT"}
 
-# the following variable should be overridden for non-localhost deployments
-export KOBOCAT_URL=${KOBOCAT_URL:-"http://localhost:8001"}
 
 export KOBOCAT_SERVER_PORT=${KOBOCAT_SERVER_PORT:-"8001"}
+export KOBOCAT_URL=${KOBOCAT_URL:-"http://$KOBO_SERVER_IP:$KOBOCAT_SERVER_PORT"}
 export KOBOCAT_INTERNAL_URL=${KOBOCAT_INTERNAL_URL:-"http://localhost:8001"}
+
 export ENKETO_EXPRESS_SERVER_PORT=${ENKETO_EXPRESS_SERVER_PORT:-"8005"}
 
-# export DIST_KOBO_DEVEL=${DIST_KOBO_DEVEL:-"dist-kobo-devel"}
 
-if [ $KOBO_USE_STABLE_BRANCHES == "True" ]; then
+if [ ! -z $KOBO_USE_STABLE_BRANCHES ]; then
     KOBOCAT_BRANCH=vagrant_stable
     KOBOCAT_TEMPLATES_BRANCH=vagrant_stable
     KOBOFORM_BRANCH=vagrant_stable
@@ -75,7 +72,7 @@ export KOBOCAT_TEMPLATES_REPO=${KOBOCAT_TEMPLATES_REPO:-"https://github.com/kobo
 export KOBOCAT_TEMPLATES_BRANCH=${KOBOCAT_TEMPLATES_BRANCH:-"master"}
 export KOBOCAT_TEMPLATES_PATH=${KOBOCAT_TEMPLATES_PATH:-"$SRC_DIR/kobocat-template"}
 
-export KOBOFORM_PREVIEW_SERVER=${KOBOFORM_PREVIEW_SERVER:-"http://$SERVER_IP:$KOBOFORM_SERVER_PORT"}
+export KOBOFORM_PREVIEW_SERVER=${KOBOFORM_PREVIEW_SERVER:-"http://$KOBO_SERVER_IP:$KOBOFORM_SERVER_PORT"}
 export KOBOFORM_REPO=${KOBOFORM_REPO:-"https://github.com/kobotoolbox/dkobo.git"}
 export KOBOFORM_BRANCH=${KOBOFORM_BRANCH:-"master"}
 export KOBOFORM_PATH=${KOBOFORM_PATH:-"$SRC_DIR/koboform"}
@@ -95,14 +92,11 @@ export ENKETO_EXPRESS_REPO_DIR=${ENKETO_EXPRESS_REPO_DIR:-"$SRC_DIR/enketo-expre
 export ENKETO_EXPRESS_UPDATE_REPO=${ENKETO_EXPRESS_UPDATE_REPO:-"false"}
 
 # For KoBoForm.
-# the following variable should be overridden for non-localhost deployments
-export ENKETO_SERVER=${ENKETO_SERVER:-"http://localhost:8005"}
-
+export ENKETO_SERVER=${ENKETO_SERVER:-"http://$KOBO_SERVER_IP:$ENKETO_EXPRESS_SERVER_PORT"}
 export ENKETO_PREVIEW_URI=${ENKETO_PREVIEW_URI:-"/preview"}
 
 # For KoBoCat.
-# the following variable should be overridden for non-localhost deployments
-export ENKETO_URL=${ENKETO_URL:-"http://localhost:8005"}
+export ENKETO_URL=${ENKETO_URL:-"http://$KOBO_SERVER_IP:$ENKETO_EXPRESS_SERVER_PORT"}
 export ENKETO_API_ROOT=${ENKETO_API_ROOT:-"/api/v2"}
 export ENKETO_OFFLINE_SURVEYS=${ENKETO_OFFLINE_SURVEYS:-"True"}
 export ENKETO_API_ENDPOINT_PREVIEW=${ENKETO_API_ENDPOINT_PREVIEW:-"/preview"}
@@ -137,4 +131,3 @@ kobo_mkvirtualenv () {
 	touch $HOME/.virtualenvs/$1/bin/postactivate
 	kobo_workon $1
 }
-

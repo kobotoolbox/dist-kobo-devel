@@ -7,6 +7,6 @@ if [ $# = "0" ]; then
     exit 1
 fi
 
-echo "export SERVER_IP='$1'" > $V_E/SERVER_IP.sh
+echo "export KOBO_SERVER_IP='$1'" > $V_E/SERVER_IP.sh
 
 sh $V_S/enketo/update_enketo_configs.sh
