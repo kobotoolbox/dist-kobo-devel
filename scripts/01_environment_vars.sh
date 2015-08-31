@@ -58,7 +58,7 @@ export KOBOCAT_INTERNAL_URL=${KOBOCAT_INTERNAL_URL:-"http://localhost:8001"}
 export ENKETO_EXPRESS_SERVER_PORT=${ENKETO_EXPRESS_SERVER_PORT:-"8005"}
 
 
-if [ test $KOBO_USE_STABLE_BRANCHES == "True" ]; then
+if [ ! -z $KOBO_USE_STABLE_BRANCHES ]; then
     KOBOCAT_BRANCH=vagrant_stable
     KOBOCAT_TEMPLATES_BRANCH=vagrant_stable
     KOBOFORM_BRANCH=vagrant_stable
