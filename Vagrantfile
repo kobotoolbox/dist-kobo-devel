@@ -26,13 +26,30 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 #    config.cache.scope = :box
 #  end
 
-  starting_port_number = (ENV['KOBO_PORT_NUMBER'] or "8000").to_i
+  KOBOFORM_SERVER_PORT=8000
+  KOBOCAT_SERVER_PORT=8001
+  ENKETO_EXPRESS_SERVER_PORT=8005
 
-  # 8000, 8001, 8005
-  [0, 1, 5].each do |pn|
-    hpn = starting_port_number + pn
-    gpn = 8000 + pn
-    config.vm.network :forwarded_port, host: hpn, guest: gpn
+  # Read in any port number overrides.
+  begin
+    File.open('env/env.sh').each_line do |line|
+      # Skip commented lines
+      next if line[/^[[:blank:]]*#/]
+      if line[/KOBOFORM_SERVER_PORT/]
+        KOBOFORM_SERVER_PORT= /[^#]*KOBOFORM_SERVER_PORT=(\d+)/.match(line)[1].to_i
+      elsif line[/KOBOCAT_SERVER_PORT/]
+        KOBOCAT_SERVER_PORT= /[^#]*KOBOCAT_SERVER_PORT=(\d+)/.match(line)[1].to_i
+      elsif line[/ENKETO_EXPRESS_SERVER_PORT/]
+        ENKETO_EXPRESS_SERVER_PORT= /[^#]*ENKETO_EXPRESS_SERVER_PORT=(\d+)/.match(line)[1].to_i
+      end
+    end
+    p 'Environment override file detected.'
+  rescue
+    # Ignore cases where `env/env.sh` doesn't exist.
+  end
+
+  [KOBOFORM_SERVER_PORT, KOBOCAT_SERVER_PORT, ENKETO_EXPRESS_SERVER_PORT].each do |port_number|
+    config.vm.network :forwarded_port, host: port_number, guest: port_number
   end
 
   if ENV["DJANGO_LIVE_RELOAD"]
