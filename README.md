@@ -1,5 +1,13 @@
-Installing Kobocat / Koboform Development Box
-=============================================
+Please note
+===========
+
+This project is no longer supported
+-----------------------------------
+
+Oct 29, 2015: We will be transitioning over to a containerized setup in order to better keep our production and offline development in sync. Please check back in November for a docker installation instructions.
+
+Vagrant Installation of Kobo Development Box
+============================================
 
 1. ensure you have [virtualbox](http://virtualbox.org) and [vagrant](http://www.vagrantup.com/downloads.html) installed
 
