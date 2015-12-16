@@ -1,5 +1,5 @@
 import os
-from onadata.settings.common import * 
+from onadata.settings.common import *
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -14,6 +14,14 @@ DATABASES = {
 }
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'mlfs33^s1l4xf6a36$0xsrgcpj_dd*sisfo6HOktYXB9y')
+
+MONGO_DATABASE = {
+    'HOST': 'localhost',
+    'PORT': 27017,
+    'NAME': 'formhub',
+    'USER': '',
+    'PASSWORD': '',
+}
 
 TESTING_MODE = False
 if len(sys.argv) >= 2 and (sys.argv[1] == "test"):
@@ -32,6 +40,17 @@ if TESTING_MODE:
     #TEST_RUNNER = 'djcelery.contrib.test_runner.CeleryTestSuiteRunner'
 else:
     MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media/')
+
+if MONGO_DATABASE.get('USER') and MONGO_DATABASE.get('PASSWORD'):
+    MONGO_CONNECTION_URL = (
+        "mongodb://%(USER)s:%(PASSWORD)s@%(HOST)s:%(PORT)s") % MONGO_DATABASE
+else:
+    MONGO_CONNECTION_URL = "mongodb://%(HOST)s:%(PORT)s" % MONGO_DATABASE
+
+MONGO_CONNECTION = MongoClient(
+    MONGO_CONNECTION_URL, safe=True, j=True, tz_aware=True)
+
+MONGO_DB = MONGO_CONNECTION[MONGO_DATABASE['NAME']]
 
 if PRINT_EXCEPTION and DEBUG:
     MIDDLEWARE_CLASSES += ('utils.middleware.ExceptionLoggingMiddleware',)
