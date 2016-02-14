@@ -1,5 +1,7 @@
 import os
-from onadata.settings.common import * 
+from pymongo import MongoClient
+from onadata.settings.common import *
+import dj_database_url
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -7,13 +9,22 @@ TEMPLATE_STRING_IF_INVALID = ''
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-import dj_database_url
 
 DATABASES = {
-    'default': dj_database_url.config(default="sqlite:///%s/db.sqlite3" % BASE_DIR)
+    'default': dj_database_url.config(default="sqlite:///%s/db.sqlite3" %
+                                      BASE_DIR)
 }
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'mlfs33^s1l4xf6a36$0xsrgcpj_dd*sisfo6HOktYXB9y')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY',
+                            'mlfs33^s1l4xf6a36$0xsrgcpj_dd*sisfo6HOktYXB9y')
+
+MONGO_DATABASE = {
+    'HOST': 'localhost',
+    'PORT': 27017,
+    'NAME': 'formhub',
+    'USER': '',
+    'PASSWORD': '',
+}
 
 TESTING_MODE = False
 if len(sys.argv) >= 2 and (sys.argv[1] == "test"):
@@ -29,9 +40,19 @@ if TESTING_MODE:
     CELERY_ALWAYS_EAGER = True
     BROKER_BACKEND = 'memory'
     ENKETO_API_TOKEN = 'abc'
-    #TEST_RUNNER = 'djcelery.contrib.test_runner.CeleryTestSuiteRunner'
 else:
     MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media/')
+
+if MONGO_DATABASE.get('USER') and MONGO_DATABASE.get('PASSWORD'):
+    MONGO_CONNECTION_URL = (
+        "mongodb://%(USER)s:%(PASSWORD)s@%(HOST)s:%(PORT)s") % MONGO_DATABASE
+else:
+    MONGO_CONNECTION_URL = "mongodb://%(HOST)s:%(PORT)s" % MONGO_DATABASE
+
+MONGO_CONNECTION = MongoClient(
+    MONGO_CONNECTION_URL, safe=True, j=True, tz_aware=True)
+
+MONGO_DB = MONGO_CONNECTION[MONGO_DATABASE['NAME']]
 
 if PRINT_EXCEPTION and DEBUG:
     MIDDLEWARE_CLASSES += ('utils.middleware.ExceptionLoggingMiddleware',)
@@ -41,21 +62,30 @@ if TESTING_MODE:
     MONGO_DB.instances.drop()
 
 # include the kobocat-template directory
-TEMPLATE_OVERRIDE_ROOT_DIR = os.path.join(PROJECT_ROOT, '..', '..', 'kobocat-template')
-TEMPLATE_DIRS = ( os.path.join(PROJECT_ROOT, TEMPLATE_OVERRIDE_ROOT_DIR, 'templates'), ) + TEMPLATE_DIRS
-STATICFILES_DIRS += ( os.path.join(PROJECT_ROOT, TEMPLATE_OVERRIDE_ROOT_DIR, 'static'), )
+TEMPLATE_OVERRIDE_ROOT_DIR = os.path.join(
+    PROJECT_ROOT, '..', '..', 'kobocat-template')
 
-KOBOFORM_SERVER=os.environ.get("KOBOFORM_SERVER", "localhost")
-KOBOFORM_SERVER_PORT=os.environ.get("KOBOFORM_SERVER_PORT", "8000")
-KOBOFORM_SERVER_PROTOCOL=os.environ.get("KOBOFORM_SERVER_PROTOCOL", "http")
-KOBOFORM_LOGIN_AUTOREDIRECT=True
-KOBOFORM_URL=os.environ.get("KOBOFORM_URL", "http://localhost:8000")
+TEMPLATE_DIRS = (
+    os.path.join(PROJECT_ROOT, TEMPLATE_OVERRIDE_ROOT_DIR, 'templates'),
+    ) + TEMPLATE_DIRS
+
+STATICFILES_DIRS += (
+    os.path.join(PROJECT_ROOT, TEMPLATE_OVERRIDE_ROOT_DIR, 'static'),
+    )
+
+KOBOFORM_SERVER = os.environ.get("KOBOFORM_SERVER", "localhost")
+KOBOFORM_SERVER_PORT = os.environ.get("KOBOFORM_SERVER_PORT", "8000")
+KOBOFORM_SERVER_PROTOCOL = os.environ.get("KOBOFORM_SERVER_PROTOCOL", "http")
+KOBOFORM_LOGIN_AUTOREDIRECT = True
+KOBOFORM_URL = os.environ.get("KOBOFORM_URL", "http://localhost:8000")
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'onadata.koboform.context_processors.koboform_integration',
 ) + TEMPLATE_CONTEXT_PROCESSORS
 
-MIDDLEWARE_CLASSES = ('onadata.koboform.redirect_middleware.ConditionalRedirects', ) + MIDDLEWARE_CLASSES
+MIDDLEWARE_CLASSES = (
+    'onadata.koboform.redirect_middleware.ConditionalRedirects',
+    ) + MIDDLEWARE_CLASSES
 
 CSRF_COOKIE_DOMAIN = os.environ.get('CSRF_COOKIE_DOMAIN', None)
 
@@ -63,7 +93,7 @@ if CSRF_COOKIE_DOMAIN:
     SESSION_COOKIE_DOMAIN = CSRF_COOKIE_DOMAIN
     SESSION_COOKIE_NAME = 'kobonaut'
 
-SESSION_SERIALIZER='django.contrib.sessions.serializers.JSONSerializer'
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 # for debugging
 # print "KOBOFORM_SERVER=%s" % KOBOFORM_SERVER
