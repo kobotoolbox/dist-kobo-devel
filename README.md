@@ -4,7 +4,10 @@ Please note
 This project is no longer supported
 -----------------------------------
 
-Oct 29, 2015: We will be transitioning over to a containerized setup in order to better keep our production and offline development in sync. Please check back in November for a docker installation instructions.
+We have transitioned over to a containerized setup in order to better keep our production and development work in sync. 
+
+Please see the [`kobo-docker` installation steps for more details](https://github.com/kobotoolbox/kobo-docker).
+
 
 Vagrant Installation of Kobo Development Box
 ============================================
