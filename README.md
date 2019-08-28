@@ -6,7 +6,7 @@ This project is no longer supported
 
 We have transitioned over to a containerized setup in order to better keep our production and development work in sync. 
 
-Please see the [`kobo-docker` installation steps for more details](https://github.com/kobotoolbox/kobo-docker). Windows and OS X support are forthcoming.
+Please see the [`kobo-install` installation steps for more details](https://github.com/kobotoolbox/kobo-install). Linux and OS X are supported. Docker for Windows is not supported at this time; however, you may run `kobo-install` on Windows using a virtual machine (e.g. VirtualBox).
 
 
 Vagrant Installation of Kobo Development Box
