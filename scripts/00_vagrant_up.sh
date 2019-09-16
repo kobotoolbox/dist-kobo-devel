@@ -48,6 +48,6 @@ su - vagrant -c     "bash $V_S/kf_50_migrate_db.bash"
 # Enketo Express:
 su - root -c        "bash $V_S/enketo_install.old.bash"
 
-su - vagrant -c     "sh   $V_S/09_add_cronjobs.sh"
+su - root -c     "sh   $V_S/09_add_cronjobs.sh"
 
 echo "Done with installation"

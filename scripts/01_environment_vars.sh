@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 # ENVIRONMENT PRESETS ALREADY IN /vagrant/koborc 	# <-- checked into the repository
 # THIS FILE PULLS IN THE ENVIRONMENT AS DEFINED IN /vagrant/(env_kobocat|env_koboform) # respectively, for each project
 # THESE VALUES MAY BE OVERRIDDEN BY /vagrant/env.sh (optional file) # <-- not checked into the repository
@@ -53,7 +51,7 @@ export KOBOFORM_URL=${KOBOFORM_URL:-"http://$KOBO_SERVER_IP:$KOBOFORM_SERVER_POR
 
 export KOBOCAT_SERVER_PORT=${KOBOCAT_SERVER_PORT:-"8001"}
 export KOBOCAT_URL=${KOBOCAT_URL:-"http://$KOBO_SERVER_IP:$KOBOCAT_SERVER_PORT"}
-export KOBOCAT_INTERNAL_URL=${KOBOCAT_INTERNAL_URL:-"http://localhost:8001"}
+export KOBOCAT_INTERNAL_URL=${KOBOCAT_INTERNAL_URL:-"http://localhost:$KOBOCAT_SERVER_PORT"}
 
 export ENKETO_EXPRESS_SERVER_PORT=${ENKETO_EXPRESS_SERVER_PORT:-"8005"}
 
